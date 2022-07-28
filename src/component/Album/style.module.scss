@@ -1,0 +1,132 @@
+@import '../../theme/vars.scss';
+.album{
+	height: 100%;
+	display: flex;
+	padding: 0 8px;
+	color: $color-light;
+	.list{
+		flex: 1;
+	}
+}
+.info{
+	display: flex;
+	flex-direction: column;
+	padding: 12px 18px;
+	border-radius: 4px;
+	//box-shadow:0 0 8px 0 rgba(0, 0, 0, .2);
+	width: 40%;
+	height: 92%;
+	.top{
+		width: 100%;
+		display: flex;
+		> div:nth-child(2) {
+			width: calc(100% - 180px);
+		}
+	}
+	.cover{
+		width: 160px;
+		height: 160px;
+		border-radius: 8px;
+		overflow: hidden;
+		margin-right: 12px;
+		flex-shrink: 0;
+	}
+	.description {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-line-clamp: 5;
+		/* autoprefixer: off */
+		-webkit-box-orient: vertical;
+		/* autoprefixer: on */
+	}
+	.name{
+		background: rgba(0, 0, 0, 1);
+	  color: white;
+		border-radius: 2px;
+		flex-grow: 0;
+		width: 100%;
+		padding: 4px 8px;
+	}
+
+	.detail{
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		align-items: flex-start;
+		flex: 1;
+		padding: 24px 0;
+
+		&>div{
+			margin-bottom: 24px;
+			&.name {
+				font-size: 20px;
+			}
+		}
+	}
+	.creator{
+		display: flex;
+		align-items: center;
+		flex-grow: 0;
+		margin: 24px 0;
+		.creatorAvatar{
+			display: inline-block;
+			width: 24px;
+			height: 24px;
+			border-radius: 50%;
+			overflow: hidden;
+			margin-right: 12px;
+		}
+		.creatorNickname{
+			vertical-align: middle;
+		}
+	}
+	.tags{
+		display: flex;
+		align-items: center;
+		color: $color-light;
+		div{
+			margin-right: 8px;
+		}
+	}
+	.number {
+		color: $color-normal;
+		&:nth-of-type(2) {
+			margin-left: 12px;
+		}
+	}
+	.counts{
+		align-self: flex-end;
+		display: flex;
+		flex-shrink: 0;
+		span{
+			font-size: 12px !important;
+			margin-right: 12px;
+		}
+	}
+	.operations {
+		border: 1px solid #eee;
+		padding: 6px 8px;
+		border-radius: 16px;
+		display: flex;
+		align-self: center;
+		box-shadow: 0 0 8px 0 #ddd;
+		div {
+			padding: 0 16px;
+			cursor: pointer;
+			border-right: 1px solid #eee;
+			&:nth-child(3) {
+				border-right: none;
+			}
+			&:hover{
+				color: #7BA3FF;
+			}
+		}
+	}
+}
+.listWrapper {
+	flex: 1;
+	height: calc(100vh - 108px);
+	padding: 0 24px 12px 24px;
+	align-self: flex-start;
+}

@@ -1,0 +1,121 @@
+.contentWrapper {
+	height: 100%;
+	padding: 24px;
+	.switchButton {
+		position: absolute;
+		top: 50%;
+		width: 32px;
+		height: 32px;
+		line-height: 32px;
+		border-radius: 50%;
+		border: 1px solid #efefef;
+		color: #ddd;
+		transform: translateY(-50%);
+		cursor: pointer;
+		z-index: 222;
+		text-align: center;
+		&:hover{
+			border: 1px solid #ddd;
+			color: #aaa;
+		}
+		&.prevButton{
+			left: 12px;
+		}
+		&.nextButton{
+			right: 12px;
+		}
+	}
+	.albumsWrapper {
+		position: relative;
+		left: 36px;
+		right: 0;
+		top: 50%;
+		bottom: 0;
+		width: calc(50% - 36px);
+		height: 65%;
+		transform: translateY(-50%);
+		overflow: hidden;
+	}
+	.album {
+		position: absolute;
+		right: 0;
+		flex-direction: column;
+		width: 240px;
+		height: 240px;
+		margin-bottom: 10px;
+		border-radius: 4px;
+		overflow: hidden;
+		cursor: pointer;
+		transition: all ease-in-out .2s;
+		display: none;
+		&.current, &.prev, &.prev2, &.next{
+			display: flex;
+		}
+		&.current{
+			z-index: 333;
+		}
+		&.prev2{
+			transform: translate3d(-200px, 0px, 20px) scale(.7);
+			z-index: 111;
+		}
+		&.prev{
+			transform: translate3d(-100px, 0px, 20px) scale(.8);
+			z-index: 222;
+		}
+		&.next{
+			transform: translateX(240px);
+		}
+		img{
+			width: 100%;
+			height: 100%;
+			transition: .3s;
+		}
+	}
+	.currentAlbum {
+		position: absolute;
+		top: 55%;
+		right: 36px;
+		height: calc(60% - 36px);
+		transform: translateY(-50%);
+		width: calc(50% - 36px);
+		padding: 0 24px;
+		text-align: left;
+		box-sizing: border-box;
+		z-index: 222;
+		>div {
+			position: absolute;
+		}
+		.name{
+			font-size: 32px;
+			margin-bottom: 48px;
+		}
+		.info {
+			margin-bottom: 48px;
+			color: #aaa;
+			top: 45%;
+			&>span{
+				margin-right: 12px;
+			}
+			.number{
+				font-size: 16px;
+				color: #999;
+			}
+		}
+		.buttons{
+			top: 70%
+		}
+		.button{
+			display: inline-block;
+			padding: 12px 24px;
+			background: linear-gradient(to right, #7BA3FF, #57E1E7);
+			color: #fff;
+			margin-right: 24px;
+			cursor: pointer;
+			&.link{
+				background: transparent;
+				border: 1px solid #ddd;
+				color: #777;
+			}
+		}
+	}
+}

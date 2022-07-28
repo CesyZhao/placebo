@@ -1,0 +1,46 @@
+@import '../../theme/vars';
+.wrapper{
+	height: 100%;
+	box-sizing: border-box;
+	font-size: 12px;
+	text-align: left;
+	white-space: nowrap;
+	display: flex;
+	flex-direction: column;
+	padding-top: 12px;
+	.songInfo{
+		//text-align: center;
+		h1{
+			margin-bottom: 8px;
+		}
+	}
+}
+.lyric{
+	margin-top: 24px;
+	flex: 1;
+	//text-align: center;
+	box-sizing: border-box;
+	overflow-y: scroll;
+}
+.scroller{
+	padding: 0 0 12px 0;
+	list-style: none;
+	.scrollItem{
+		list-style: none;
+		// overflow: hidden;
+		//white-space: nowrap;
+		color: $color-light-1;
+	}
+	.active{
+		color: $color-normal;
+	}
+}
+.lyricRow,.tlyricRow{
+	line-height: 24px;
+	font-size: 13px;
+	white-space: normal;
+}
+.tlyricRow{
+	line-height: 20px;
+	font-size: 12px;
+}

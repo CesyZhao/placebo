@@ -1,0 +1,41 @@
+.menusWrapper {
+	display: flex;
+	padding: 12px 24px;
+	justify-content: center;
+	align-items: center;
+}
+.menus {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	a {
+		text-decoration: none;
+		color: inherit;
+		cursor: pointer;
+	}
+}
+
+.menuItem {
+	margin-right: 24px;
+	font-size: 14px;
+	cursor: pointer;
+}
+
+.userAvatar {
+	display: inline-block;
+	background: #fff;
+	border-radius: 4px;
+	cursor: pointer;
+	align-self: flex-end;
+}
+
+.avatarWrapper {
+	width: 20px;
+	height: 20px;
+	border-radius: 2px;
+	overflow: hidden;
+	img {
+		height: 100%;
+	}
+}

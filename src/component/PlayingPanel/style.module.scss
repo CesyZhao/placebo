@@ -1,0 +1,149 @@
+.playingPanel{
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	width: 100%;
+	transition: all .3s ease-in-out;
+	z-index: 444;
+}
+canvas{
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+:global {
+	.playing-panel-enter {
+		top: 608px;
+	}
+	.playing-panel-enter-active {
+		top: 0;
+	}
+	.playing-panel-exit {
+		top: 0;
+	}
+	.playing-panel-exit-active {
+		top: 608px;
+	}
+}
+.currentSongWrapper{
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	background: rgba(255, 255, 255, .7);
+	overflow: hidden;
+	z-index: 3;
+	// display: flex;
+	.visualizorWrapper{
+		position: absolute;
+		top: 0;
+		width: 500px;
+		z-index: 5;
+		transition: all .3s ease-in-out;
+		height: 100%;
+		overflow: hidden;
+	}
+	&.lyricMode{
+		&::before, &::after{
+			width: 104px;
+		}
+		.visualizorWrapper{
+			width: 548px;
+		}
+	}
+	.lyricWrapper{
+		position: absolute;
+		right: 0;
+		width: calc(100% - 500px);
+		font-size: 16px;
+		height: 90%;
+		padding-top: 24px;
+		padding-right: 12px;
+	}
+	.toolbar{
+		position: absolute;
+		bottom: 60px;
+		left: 0;
+		width: 500px;
+		height: 60px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		//background: rgba(4, 4, 4, .3);
+		i{
+			display: inline-block;
+			width: 40px;
+			height: 40px;
+			font-size: 20px;
+			line-height: 40px;
+			text-align: center;
+			margin-right: 16px;
+			border: 1px solid rgba(170, 170, 170, .3);
+			border-radius: 50%;
+			cursor: pointer;
+			&:nth-last-child(1){
+				margin-right: 0;
+			}
+		}
+	}
+	.imgWrapper{
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		width: 500px;
+		z-index: 6;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.img{
+		width: 150px;
+		height: 150px;
+		border-radius: 50%;
+		background: #fff;
+		z-index: 3;
+		overflow: hidden;
+		// margin-bottom: 72px;
+		img{
+			width: 100%;
+		}
+	}
+}
+.blurCover{
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	overflow: hidden;
+	z-index: 2;
+	background: rgba(4, 4, 4, 1);
+	img{
+		width: 102%;
+		height: 102%;
+		filter: blur(15px);
+	}
+}
+.iconDismiss{
+	position: absolute;
+	left: 80px;
+	top: 4px;
+	transform: rotate(-90deg);
+	cursor: pointer;
+	z-index: 6;
+	-webkit-app-region: no-drag;
+}
+.info{
+	position: absolute;
+	right: 16px;
+	bottom: 36px;
+	width: 160px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	&:hover{
+		color: #f500d8;
+	}
+}

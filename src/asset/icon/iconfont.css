@@ -1,0 +1,183 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 1181468 */
+  src: url('iconfont.woff2?t=1657965972669') format('woff2'),
+       url('iconfont.woff?t=1657965972669') format('woff'),
+       url('iconfont.ttf?t=1657965972669') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-shoucang:before {
+  content: "\e666";
+}
+
+.icon-24gl-play:before {
+  content: "\ea6d";
+}
+
+.icon-yishoucang_huaban1:before {
+  content: "\e615";
+}
+
+.icon-refresh:before {
+  content: "\e6a2";
+}
+
+.icon-yinle1:before {
+  content: "\e605";
+}
+
+.icon-heart:before {
+  content: "\e68e";
+}
+
+.icon-heart1:before {
+  content: "\e963";
+}
+
+.icon-comment:before {
+  content: "\e60e";
+}
+
+.icon-expand1:before {
+  content: "\e927";
+}
+
+.icon-expand-o:before {
+  content: "\e647";
+}
+
+.icon-expand:before {
+  content: "\e668";
+}
+
+.icon-tubiaozhizuomoban-:before {
+  content: "\e60a";
+}
+
+.icon-ios-heartbeat:before {
+  content: "\e60d";
+}
+
+.icon-share_icon:before {
+  content: "\e663";
+}
+
+.icon-nan:before {
+  content: "\e661";
+}
+
+.icon-nv:before {
+  content: "\e662";
+}
+
+.icon-zan:before {
+  content: "\e645";
+}
+
+.icon-close:before {
+  content: "\e69e";
+}
+
+.icon-Minimize:before {
+  content: "\e70d";
+}
+
+.icon-ios-shuffle:before {
+  content: "\e6ef";
+}
+
+.icon-ios-singleCirculation:before {
+  content: "\e81d";
+}
+
+.icon-ios-listCirculation:before {
+  content: "\e6f2";
+}
+
+.icon-iosplay:before {
+  content: "\e81c";
+}
+
+.icon-ios-fastforward:before {
+  content: "\e600";
+}
+
+.icon-ios-rewind:before {
+  content: "\e7f7";
+}
+
+.icon-ios-pause:before {
+  content: "\e6ed";
+}
+
+.icon-you:before {
+  content: "\e63b";
+}
+
+.icon-menu:before {
+  content: "\e63d";
+}
+
+.icon-aui-icon-comment:before {
+  content: "\e607";
+}
+
+.icon-diandiandianshu:before {
+  content: "\e679";
+}
+
+.icon-yinliang:before {
+  content: "\e611";
+}
+
+.icon-paihangbang:before {
+  content: "\e6ae";
+}
+
+.icon-friend_light:before {
+  content: "\e7e3";
+}
+
+.icon-xianxing_diantai:before {
+  content: "\e61c";
+}
+
+.icon-user11:before {
+  content: "\e667";
+}
+
+.icon-shezhi:before {
+  content: "\e67e";
+}
+
+.icon-iconmore:before {
+  content: "\e604";
+}
+
+.icon-sousuo1:before {
+  content: "\e66f";
+}
+
+.icon-lishijilu:before {
+  content: "\e671";
+}
+
+.icon-zidingyitoutu:before {
+  content: "\e67f";
+}
+
+.icon-fanhui:before {
+  content: "\e68c";
+}
+
+.icon-gengduo:before {
+  content: "\e68d";
+}
+

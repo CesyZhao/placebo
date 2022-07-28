@@ -1,0 +1,163 @@
+@import "../../theme/vars";
+
+$controller-height: 48px;
+.controller{
+	height: $controller-height;
+	box-sizing: border-box;
+	// background: #fff;
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 2;
+	box-shadow: 0 0 2px 0 rgba(0, 0, 0, .4);
+	.progressBar{
+		width: 100%;
+		height: 1.5px;
+		position: absolute;
+		top: -2px;
+		.progress{
+			height: 100%;
+			width: 100%;
+			background: linear-gradient(to right, #7BA3FF, #57E1E7);
+			box-shadow: 0 0 8px 0 #9B30FF;
+			will-change: transform;   /* 通过will-change告知浏览器提前做好优化准备 */
+			animation-timing-function: linear;
+			animation-name: play;
+		}
+	}
+	.progress.playing {
+		animation-play-state: running;
+	}
+	.progress.paused {
+		animation-play-state: paused;
+	}
+	.cover{
+		position: absolute;
+		width: 100%;
+		height: $controller-height;
+		overflow: hidden;
+		cursor: pointer;
+		z-index: -1;
+		img{
+			height: auto !important;
+			transform: translateY(-50%);
+			filter: blur(20px);
+		}
+	}
+	.contents{
+		position: relative;
+		z-index: 2;
+		display: flex;
+		justify-content: space-between;
+		height: 100%;
+		background-color: rgba(255, 255, 255, .4);
+		.coverWrapper{
+			display: flex;
+			align-items: center;
+			width: 30%;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			img{
+				width: 40px;
+				margin-left: 12px;
+			}
+		}
+		.info{
+			padding-left: 12px;
+			text-align: left;
+			width: calc(100% - 48px);
+			>div:nth-child(1){
+				//font-size: 13px;
+				line-height: 16px;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				margin-bottom: 8px;
+				span {
+					margin: 4px;
+					&:nth-child(1) {
+						margin-left: 0;
+					}
+					&:nth-child(2) {
+						margin-left: 0;
+						color: $color-light;
+					}
+				}
+			}
+			>div:nth-child(2){
+				font-size: 11px;
+				display: flex;
+				color: $color-light;
+				div{
+					width: 120px;
+					flex-shrink: 0;
+					overflow: hidden;
+					white-space: nowrap;
+					text-overflow: ellipsis;
+				}
+			}
+			.time{
+				margin-left: 8px;
+				white-space: nowrap;
+			}
+		}
+		.controls,.ops{
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			i, span{
+				margin-left: 32px;
+				cursor: pointer;
+				font-size: 20px;
+			}
+		}
+		.controls{
+			width: 30%;
+			padding-right: 24px;
+			justify-content: flex-end;
+			i:nth-child(3){
+				font-size: 18px;
+			}
+			span {
+				font-size: 13px;
+				padding: 2px 4px;
+				border-top: 1px solid #444;
+				border-bottom: 1px solid #444;
+			}
+		}
+		.comments{
+			margin-left: 36px;
+			padding: 2px 0;
+			border-top: 1px solid #fff;
+			border-bottom: 1px solid #fff;
+		}
+		.ops{
+			flex: 1;
+			justify-content: center;
+			i:nth-child(1){
+				margin-left: 0;
+			}
+		}
+	}
+}
+
+@keyframes play {     /* 通过transform来启用GPU加速，跳过重排重绘阶段 */
+	0% {
+		transform: translateX(-50%) scaleX(0);  /* 用 scaleX 来代替 width */
+	}
+
+	to {
+		transform: translateX(0) scaleX(1);
+	}
+}
+
+@keyframes replay {
+	0% {
+		transform: translateX(-50%) scaleX(0);
+	}
+
+	to {
+		transform: translateX(0) scaleX(1);
+	}
+}
