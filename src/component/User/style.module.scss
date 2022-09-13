@@ -1,0 +1,95 @@
+@import "../../theme/vars";
+.user{
+	height: 100%;
+	padding: 8px;
+	display: flex;
+	.userProfile{
+		width: 328px;
+		//background: red;
+		padding: 8px;
+		display: flex;
+		flex-direction: column;
+		box-shadow: 0 5px 15px -10px rgba(0, 0, 0, .4);
+		.userAvatar{
+			display: flex;
+			img{
+				width: 160px;
+				height: 160px;
+				border-radius: 8px;
+			}
+		}
+		.userInfo{
+			flex: 1;
+			margin-left: 12px;
+			text-align: left;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			.userLevel{
+				padding: 2px 0;
+				// background: rgba(255, 255, 255, .2);
+				border-radius: 2px;
+				margin-right: 8px;
+			}
+		}
+		.userNickname{
+			background: rgba(0, 0, 0, 1);
+			color: white;
+			border-radius: 2px;
+			flex-grow: 0;
+			width: 100%;
+			padding: 4px 8px;
+		}
+		.male{
+			color: lightblue;
+		}
+		.female{
+			color: pink;
+		}
+		.userSocialInfo{
+			display: flex;
+			width: 120px;
+			justify-content: space-between;
+		}
+		.userSignature{
+			margin-left: 12px;
+			align-self: flex-end;
+			color: $color-light;
+		}
+	}
+	.userListHeader{
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 8px 0;
+		margin-bottom: 12px;
+		background: linear-gradient(to right, #ffffff 0%, #ffffff calc(40% - 5px), rgb(244, 243, 243) calc(40% - 5px), rgb(244, 243, 243) 100%);
+		position: sticky;
+		top: 0;
+	}
+	.userPlaylists{
+		flex: 1;
+		overflow: auto;
+		margin: 12px 0;
+	}
+	.userList{
+		display: flex;
+		flex-wrap: wrap;
+		.userListItem:nth-child(6n) {
+			margin-right: 0;
+		}
+	}
+	.userListItem{
+		width: 140px;
+		height: 140px;
+		margin-bottom: 24px;
+		margin-right: 12px;
+		text-align: left;
+		cursor: pointer;
+		flex-shrink: 0;
+		img{
+			width: 140px;
+			height: 140px;
+		}
+	}
+}

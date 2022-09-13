@@ -1,9 +1,9 @@
-import React, {useCallback, useRef, useState} from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import styles from './style.module.scss';
 import { useNavigate } from 'react-router-dom';
 // @ts-ignore
 import md5 from "spark-md5";
-import {checkQrCodeStatus, getAccount, getQrCode, getQrKey, login} from "../../api/user";
+import {checkQrCodeStatus, getAccount, getQrCode, getQrKey, getUserDetail, login} from "../../api/user";
 import {useMount, useRequest} from "ahooks";
 import {
 	AccountResponse,
@@ -27,6 +27,16 @@ const Login = () => {
 
 	const phoneRef = useRef<HTMLInputElement>(null);
 	const passwordRef = useRef<HTMLInputElement>(null);
+
+	const dispatch = useAppDispatch();
+
+	const [message, setMessage] = useState('');
+
+	const [qrCode, setQrCode] = useState('');
+	const [qrKey, setQrKey] = useState('');
+
+	let timer: any = useRef();
+
 	const handleSign = useCallback(async () => {
 		// 先清掉错误提示
 		setErrorText('');
@@ -38,57 +48,71 @@ const Login = () => {
 		} catch (e) {
 			setErrorText('Invalid phone number or password!')
 		}
-	}, [phoneRef, passwordRef])
+	}, [phoneRef, passwordRef]);
 
 	const clearError = useCallback(() =>	setErrorText(''), []);
 
-	const dispatch = useAppDispatch();
-	const { run: getAccountInfo } = useRequest<AccountResponse, any>(getAccount, {
-		manual: true,
-		onSuccess(data) {
-			const { profile } = data;
-			dispatch(updateUser(profile));
+	const getAccountInfo = useCallback(async () => {
+		try {
+			const { profile } = await getAccount();
+			const { level } = await getUserDetail(profile.userId);
+			dispatch(updateUser({ ...profile, level }));
 			goHome();
+		} catch (e) {
+			setErrorText('Something went wrong, please try again!');
 		}
-	})
+	}, []);
 
-	const [message, setMessage] = useState('');
-	const { run: checkQrStatus } = useRequest<QRCodeStatusResponse, any>(checkQrCodeStatus, {
-		manual: true,
-		pollingInterval: 3000,
-		onSuccess(result) {
-			setMessage(QRCodeStatusMap.get(result.code) || '');
-			if (result.code === QRCodeStatus.Authorized) {
+	const checkQrStatus = useCallback(async (qrKey: string) => {
+		try {
+			const { code } = await checkQrCodeStatus(qrKey);
+			setMessage(QRCodeStatusMap.get(code) || '');
+			if (code === QRCodeStatus.Authorized) {
 				getAccountInfo();
 			}
+		} catch (e) {
+			// setErrorText('Something went wrong, please try again!');
 		}
-	})
+	}, []);
 
-	const [qrCode, setQrCode] = useState('');
-	const { loading: qrCreating, run: getQrUrl } = useRequest<QRCodeResponse, any>(getQrCode, {
-		manual: true,
-		onSuccess(result) {
-			setQrCode(result.qrimg);
-			checkQrStatus(qrKey);
+	const getQrUrl = useCallback(async (qrKey: string) => {
+		try {
+			console.log('+++++++++')
+			const { qrimg } = await getQrCode(qrKey);
+			setQrCode(qrimg);
+			timer.current = setInterval(() => {
+				console.log('timer-----------');
+				checkQrStatus(qrKey);
+			}, 3000);
+		} catch (e) {
+			// setErrorText('Something went wrong, please try again!');
 		}
-	});
+	}, [timer]);
 
-	const [qrKey, setQrKey] = useState('');
-	const { loading, run: getQrKeyString } = useRequest<QRKeyResponse, any>(getQrKey, {
-		manual: true,
-		onSuccess(result) {
-			setQrKey(result.unikey);
-			getQrUrl(result.unikey);
+	const getQrKeyString = useCallback(async () => {
+		try {
+			console.log('///////////////');
+			const { unikey } = await getQrKey();
+			setQrKey(unikey);
+			getQrUrl(unikey);
+		} catch (e) {
+			// setErrorText('Something went wrong, please try again!');
 		}
-	});
+	}, []);
 
 	const refreshRrCode = useCallback(() => {
+		clearInterval(timer.current);
 		getQrUrl(qrKey);
-	}, [qrKey])
+	}, [qrKey]);
 
-	useMount(() => {
+	useEffect(() => {
 		getQrKeyString();
-	});
+
+		return () => {
+			clearInterval(timer.current);
+		}
+	}, [])
+
  	return (
 		<>
 			<div className={styles.loginHeader}>

@@ -7,6 +7,7 @@ import Album from "../Album";
 import Controller from "../Controller";
 import PlayingPanel from "../PlayingPanel";
 import Top from "../Top";
+import User from "../User";
 
 const RouteContainer = () => {
 	return (
@@ -17,6 +18,7 @@ const RouteContainer = () => {
 					<Route path="/" element={<Home />}></Route>
 					<Route path="/album/:id" element={<Album />}></Route>
 					<Route path="/topList" element={<Top />}></Route>
+					<Route path="/user" element={<User />}></Route>
 				</Routes>
 			</div>
 			<Controller></Controller>

@@ -3,7 +3,6 @@ import RouteContainer from "./component/RouteContainer";
 import "./App.css"
 import { Route, Routes } from "react-router-dom";
 import Login from "./component/Login";
-import Controller from "./component/Controller";
 
 export default function App() {
   return (

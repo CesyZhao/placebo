@@ -3,18 +3,18 @@ import { menus } from "../../defination/menu";
 import styles from './style.module.scss';
 import { useAppSelector } from '../../store/hooks';
 import {
-	userProfile
+	userAvatar
 } from '../../store/module/user';
 import {Link, useNavigate} from "react-router-dom";
 import { isEmpty } from 'lodash';
 
 const Menu = () => {
 	const navigate = useNavigate();
-	const user = useAppSelector(userProfile);
-	const signed = !isEmpty(user);
+	const avatar = useAppSelector(userAvatar);
+	const signed = !isEmpty(avatar);
 	const handleAvatarClick = useCallback(() => {
-		!signed && navigate('/login');
-	}, []);
+		navigate(signed ? '/user' : '/login');
+	}, [signed]);
 	return (
 		<div className={styles.menusWrapper}>
 			<div className={styles.menus}>
@@ -33,7 +33,7 @@ const Menu = () => {
 			<div className={styles.avatarWrapper} onClick={handleAvatarClick}>
 				{
 					signed
-						? <img src={user.avatarUrl} alt=""/>
+						? <img className={styles.userAvatar} src={avatar} alt=""/>
 						: <span className={styles.userAvatar} ><i className="iconfont icon-user11"></i></span>
 				}
 			</div>

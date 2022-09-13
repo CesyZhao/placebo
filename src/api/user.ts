@@ -4,7 +4,7 @@ import {
 	QRCodeResponse,
 	UserSignInEntity,
 	QRCodeStatusResponse,
-	AccountResponse
+	AccountResponse, UserDetailResponse
 } from "../defination/user";
 
 export const login = (form: UserSignInEntity) => {
@@ -26,4 +26,8 @@ export const checkQrCodeStatus = (key: string): Promise<QRCodeStatusResponse> =>
 
 export const getAccount = (): Promise<AccountResponse> => {
 	return http.get('/user/account', { rawData: true } as RequestConfig);
+}
+
+export const getUserDetail = (id: number): Promise<UserDetailResponse> => {
+	return http.get(`/user/detail?uid=${id}`, { rawData: true } as RequestConfig);
 }

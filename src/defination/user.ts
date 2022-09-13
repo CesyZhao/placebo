@@ -58,10 +58,19 @@ export interface Profile {
 	userId: number;
 }
 
+export interface UnionProfile extends Profile {
+	level: number;
+}
+
 export interface AccountResponse {
 	account: Account;
 	profile: Profile;
 	code: number;
+}
+
+export interface UserDetailResponse {
+	level: number;
+	profile: Profile;
 }
 
 export const QRCodeStatusMap = new Map(
