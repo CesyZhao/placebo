@@ -1,15 +1,33 @@
-import React, {useCallback} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import { isEmpty } from "lodash";
 import { useAppSelector } from "../../store/hooks";
 import { userProfile } from "../../store/module/user";
 import styles from "./style.module.scss";
+import { useMount } from "ahooks";
+import {getVipInfo} from "../../api/user";
+import LazyImage from "../LazyImage";
 
 const User = () => {
   const profile = useAppSelector(userProfile);
+  const [vipLevelUrl, setVipLevelUrl] = useState('')
 
   const handleLogout = useCallback(() => {
 
   }, []);
+
+  const getVip = useCallback(async () => {
+    try {
+      const { redVipDynamicIconUrl } = await getVipInfo()
+      console.log('redVipDynamicIconUrl:', redVipDynamicIconUrl)
+      setVipLevelUrl(redVipDynamicIconUrl)
+    } catch (e) {
+      console.log(e)
+    }
+  }, [])
+
+  useMount(() => {
+    getVip()
+  })
 
   return (
     !isEmpty(profile)
@@ -17,19 +35,18 @@ const User = () => {
       <div className={styles.user}>
         <div className={styles.userProfile}>
           <div className={styles.userAvatar}>
-            <img src={profile.avatarUrl}></img>
+            <LazyImage url={profile.avatarUrl}></LazyImage>
+            <div className={styles.userInfo}>
+              <LazyImage url={vipLevelUrl}></LazyImage>
+              <span className={styles.userLevel}>Lv.{profile.level} </span>
+              <span className={`${styles.gender} ${ profile.gender === 1 ? styles.male : styles.female }`}><i className={`iconfont ${ profile.gender === 1 ? 'icon-nan male' : 'icon-nv female' }`}></i> </span>
+              <span className={styles.userSignature}> {profile.signature} </span>
+            </div>
           </div>
-          <div className={styles.userInfo}>
-            <span>
-              {/*<span className="pc-user-level">Lv.{profile.level} </span>*/}
-              <span className={styles.userLevel}><i className={`iconfont ${ profile.gender === 1 ? 'icon-nan male' : 'icon-nv female' }`}></i> </span>
-            </span>
-          </div>
+
           <span className={styles.userNickname}>
               {profile.nickname}
-            </span>
-          <span className={styles.userSignature}> {profile.signature} </span>
-          <span className="iconfont icon-tubiaozhizuomoban-" title="登出" onClick={handleLogout}></span>
+          </span>
         </div>
         <div className={styles.userPlaylists}>
           <div className="pc-user-createdList">

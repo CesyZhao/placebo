@@ -9,7 +9,6 @@
 		padding: 8px;
 		display: flex;
 		flex-direction: column;
-		box-shadow: 0 5px 15px -10px rgba(0, 0, 0, .4);
 		.userAvatar{
 			display: flex;
 			img{
@@ -23,13 +22,34 @@
 			margin-left: 12px;
 			text-align: left;
 			display: flex;
-			flex-direction: column;
 			justify-content: space-between;
+			align-items: center;
+			align-self: flex-start;
+			flex-wrap: wrap;
+			img {
+				width: 48px;
+				height: 16px;
+			}
 			.userLevel{
-				padding: 2px 0;
-				// background: rgba(255, 255, 255, .2);
-				border-radius: 2px;
+				padding: 2px 4px;
+			  background: rgba(222, 222, 222, .7);
+				border-radius: 4px;
 				margin-right: 8px;
+			}
+			.gender {
+				padding: 2px 4px;
+				border-radius: 2px;
+				i {
+					font-size: 12px !important;
+				}
+				&.male {
+					background: lightblue;
+					color: cornflowerblue;
+				}
+				&.female {
+					background: pink;
+					color: #e0245e;
+				}
 			}
 		}
 		.userNickname{
@@ -39,12 +59,8 @@
 			flex-grow: 0;
 			width: 100%;
 			padding: 4px 8px;
-		}
-		.male{
-			color: lightblue;
-		}
-		.female{
-			color: pink;
+			font-size: 20px;
+			margin-top: 48px;
 		}
 		.userSocialInfo{
 			display: flex;
@@ -52,8 +68,9 @@
 			justify-content: space-between;
 		}
 		.userSignature{
-			margin-left: 12px;
-			align-self: flex-end;
+			width: 100%;
+			font-size: 16px;
+			margin: 48px 0 0;
 			color: $color-light;
 		}
 	}

@@ -56,6 +56,7 @@ export interface Profile {
 	shortUserName: string;
 	signature: string;
 	userId: number;
+	level: number;
 }
 
 export interface UnionProfile extends Profile {
@@ -80,3 +81,7 @@ export const QRCodeStatusMap = new Map(
 		[QRCodeStatus.Authorized, 'Authorized'],
 	]
 );
+
+export interface UserVipInfoResponse {
+	redVipDynamicIconUrl: string;
+}

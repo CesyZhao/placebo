@@ -68,14 +68,18 @@
 		display: flex;
 		align-items: center;
 		flex-grow: 0;
-		margin: 24px 0;
+		margin: 12px 0 20px 0;
 		.creatorAvatar{
 			display: inline-block;
-			width: 24px;
-			height: 24px;
+			width: 36px;
+			height: 36px;
 			border-radius: 4px;
 			overflow: hidden;
 			margin-right: 12px;
+			flex-shrink: 0;
+			img {
+				width: 100%;
+			}
 		}
 		.creatorNickname{
 			vertical-align: middle;

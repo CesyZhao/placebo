@@ -51,7 +51,8 @@ const Album = () => {
 						<div className={styles.right}>
 							<div className={styles.creator}>
               <span className={styles.creatorAvatar}>
-                <img src={album.creator.avatarUrl}></img>
+	              <LazyImage url={album.creator.avatarUrl}></LazyImage>
+                {/*<img src={album.creator.avatarUrl}></img>*/}
               </span>
 								<span className={styles.creatorNickname}>{album.creator.nickname}</span>
 							</div>

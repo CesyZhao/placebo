@@ -1,4 +1,4 @@
-import React, {useCallback, useRef, useState} from "react";
+import React, {useCallback, useEffect, useRef, useState} from "react";
 import style from './style.module.scss';
 import {useMount} from "ahooks";
 
@@ -12,9 +12,9 @@ const LazyImage = (props: Props) => {
   const [url, setUrl] = useState('');
   const ref: any = useRef();
 
-  useMount(() => {
+  useEffect(() => {
     setUrl(props.url + '?param=100y100')
-  })
+  }, [props])
 
   const onImageLoad = useCallback(() => {
     const { width } = ref.current;

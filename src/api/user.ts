@@ -4,7 +4,7 @@ import {
 	QRCodeResponse,
 	UserSignInEntity,
 	QRCodeStatusResponse,
-	AccountResponse, UserDetailResponse
+	AccountResponse, UserDetailResponse, UserVipInfoResponse
 } from "../defination/user";
 
 export const login = (form: UserSignInEntity) => {
@@ -30,4 +30,8 @@ export const getAccount = (): Promise<AccountResponse> => {
 
 export const getUserDetail = (id: number): Promise<UserDetailResponse> => {
 	return http.get(`/user/detail?uid=${id}`, { rawData: true } as RequestConfig);
+}
+
+export const getVipInfo = (): Promise<UserVipInfoResponse> => {
+	return http.get(`/vip/info`);
 }
