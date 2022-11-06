@@ -19,7 +19,7 @@ const LazyImage = (props: Props) => {
   const onImageLoad = useCallback(() => {
     const { width } = ref.current;
     setUrl(props.url + `?param=${width}y${width}`)
-  }, [ref])
+  }, [ref, props])
 
   return (
     <img ref={ref} alt="lazyImage" className={style.lazyImage} src={url} onLoad={onImageLoad} />

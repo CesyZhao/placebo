@@ -23,3 +23,13 @@ export function formatDuration(duration: number){
 	let second = Math.floor(duration / 1000 - minutes * 60);
 	return `${pad(minutes)}:${pad(second)}`;
 }
+
+
+export function getAge(birthday: number) {
+	//出生时间 毫秒
+	const birthDayTime = new Date(birthday).getTime();
+	//当前时间 毫秒
+	const nowTime = new Date().getTime();
+	//一年毫秒数(365 * 86400000 = 31536000000)
+	return Math.ceil((nowTime-birthDayTime)/31536000000);
+}
