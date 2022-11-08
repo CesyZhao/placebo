@@ -42,24 +42,28 @@ const PlayingPanel = () => {
 		if (showPlayingPanel) {
 			const context = ref.current?.getContext('2d');
 			const wave = new Wave(Player, context as any);
-			wave.addAnimation(new wave.animations.Glob({
-				fillColor: { gradient: ["#9B30FF", "#7BA3FF", "#57E1E7"], rotate: 45 },
+			const commonOptions = {
 				lineColor: "transparent",
-				glow: { strength: 15, color: "#7BA3FF" },
-				lineWidth: 10,
+				lineWidth: 0,
 				count: 20,
-				diameter: 200,
 				rounded: true,
+				frequencyBand: "highs",
 				mirroredX: true
-			}));
+			}
+			// @ts-ignore
 			wave.addAnimation(new wave.animations.Glob({
-				fillColor: { gradient: ["#57E1E7", "#7BA3FF", "#9B30FF"], rotate: 135 },
-				lineColor: "transparent",
-				glow: { strength: 15, color: "#7BA3FF" },
-				lineWidth: 10,
-				count: 20,
+				fillColor: { gradient: ["#9B30FF", "#7BA3FF", "#57E1E7"], rotate: 70 },
+				glow: { strength: 35, color: "#7BA3FF" },
+				diameter: 220,
+				...commonOptions
+			}));
+			// @ts-ignore
+			wave.addAnimation(new wave.animations.Glob({
+				fillColor: { gradient: ["#57E1E7", "#7BA3FF", "#9B30FF"], rotate: 90 },
+				glow: { strength: 35, color: "#9B30FF" },
         diameter: 160,
-				rounded: true
+				...commonOptions,
+				count: 25
 			}));
 		}
 	}, [showPlayingPanel])

@@ -1,7 +1,6 @@
 import { IAnimation } from "./types"
 
 import { Glob, IGlobOptions } from "./animations/Glob";
-import Player from "../../component/Controller/Player";
 
 export class Wave {
     public animations = {

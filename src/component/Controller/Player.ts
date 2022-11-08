@@ -1,6 +1,6 @@
 import { Howl, Howler } from 'howler';
 
-const BYTE_ARRAY_LENGTH = 2048;
+const BYTE_ARRAY_LENGTH = 4096;
 
 interface Option {
   onPlay: () => void;
