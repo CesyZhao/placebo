@@ -1,17 +1,19 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../store';
-import {AvailableMusic, Mode, ModeList, SwitchDirection} from "../../defination/music";
+import {AvailableAlbum, AvailableMusic, Mode, ModeList, SwitchDirection} from "../../defination/music";
 
 
 export interface ControllerState {
 	playingMusic: AvailableMusic,
 	playingList: AvailableMusic[],
+	playingAlbum: AvailableAlbum,
 	mode: Mode
 }
 
 const initialState: ControllerState = {
 	playingMusic: {} as AvailableMusic,
 	playingList: [] as AvailableMusic[],
+	playingAlbum: {} as AvailableAlbum,
 	mode: Mode.List
 };
 
@@ -30,17 +32,17 @@ export const userSlice = createSlice({
 			let nextIndex, nextSong
 			let tracks = playingList;
 			let index = tracks.findIndex(e => +e.id === +playingMusic.id);
-			console.log(index, 'index-----');
 			nextIndex = payload === SwitchDirection.Prev
 				? --index >= 0 ? index : tracks.length - 1
 				: ++index < tracks.length ? index : 0;
 			nextSong = tracks[nextIndex];
-			console.log(nextIndex, 'nextSong-------');
 			state.playingMusic = nextSong;
 		},
 		updatePlayingList(state, action: PayloadAction<AvailableMusic[]>) {
-			console.log()
 			state.playingList = action.payload;
+		},
+		updatePlayingAlbum(state, action: PayloadAction<AvailableAlbum>) {
+			state.playingAlbum = action.payload;
 		},
 		updateMode(state) {
 			const currentMode = state.mode;
@@ -51,13 +53,14 @@ export const userSlice = createSlice({
 	},
 });
 
-export const { updatePlayingMusic, updatePlayingList, updateMode, switchMusic } = userSlice.actions;
+export const { updatePlayingMusic, updatePlayingList, updateMode, switchMusic, updatePlayingAlbum } = userSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
 export const playingMusic = (state: RootState) => state.controller.playingMusic;
 export const playingList = (state: RootState) => state.controller.playingList;
+export const playingAlbum = (state: RootState) => state.controller.playingAlbum;
 export const mode = (state: RootState) => state.controller.mode;
 
 export default userSlice.reducer;

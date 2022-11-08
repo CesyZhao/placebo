@@ -57,6 +57,12 @@ export interface AlbumDetail {
 	playlist: PlayList;
 }
 
+export interface AvailableAlbum {
+	id: number;
+	name: string;
+	playlist: AvailableMusic[]
+}
+
 export enum Mode {
 	List = 'list',
 	Shuffle = 'shuffle',

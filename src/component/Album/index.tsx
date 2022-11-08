@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useMemo, useState} from "react";
 import styles from "./style.module.scss";
 import { useParams } from "react-router-dom";
 import { useMount } from "ahooks";
@@ -8,12 +8,19 @@ import { humanNumber } from "../../util/number";
 import LazyImage from "../LazyImage";
 import List from "../List";
 import { formatList } from "../../util/audio";
-import {playingMusic, updatePlayingList, updatePlayingMusic} from "../../store/module/controller";
+import {
+	playingMusic,
+	updatePlayingList,
+	updatePlayingMusic,
+	playingList,
+	updatePlayingAlbum, playingAlbum
+} from "../../store/module/controller";
 import {useAppDispatch, useAppSelector} from "../../store/hooks";
 
 const Album = () => {
 	const { id = 0 } = useParams();
 	const music = useAppSelector(playingMusic) || {};
+	const currentAlbum = useAppSelector(playingAlbum) || {};
 
 	const [album, setAlbum] = useState({} as PlayList);
 	const [list, setList] = useState([] as AvailableMusic[]);
@@ -30,15 +37,19 @@ const Album = () => {
 		}
 	}, [])
 
-	useMount(() => {
-		getSongList();
-	})
-
 	const dispatch = useAppDispatch();
 	const handleSongPlay = useCallback((song: AvailableMusic) => {
 		dispatch(updatePlayingMusic(song));
-		dispatch(updatePlayingList(list));
+		dispatch(updatePlayingAlbum({ playlist: list, id: album.id, name: album.name}));
 	}, [list])
+
+	const isCurrentList = useMemo(() => {
+		return album.id === currentAlbum.id
+	}, [album, currentAlbum])
+
+	useMount(() => {
+		getSongList();
+	})
 
 	return (
 			album.id ?
@@ -69,8 +80,8 @@ const Album = () => {
 						</div>
 						<div> <span className={styles.number}>{humanNumber(album.playCount)}</span> PLAYED  <span className={styles.number}>{ humanNumber(album.subscribedCount) }</span> SUBSCRIBED</div>
 						<div className={styles.operations}>
-							<div className={styles.playAll}> <i className="iconfont icon-24gl-play"></i> </div>
 							<div > <i className={`iconfont ${album.subscribed ? 'icon-yishoucang_huaban1' : 'icon-shoucang'}`}></i> </div>
+							<div className={styles.playAll}> <i className={`iconfont ${isCurrentList ? 'icon-pause' : 'icon-24gl-play'}`}></i> </div>
 							<div > <i className="iconfont icon-sousuo1"></i> </div>
 						</div>
 					</div>
