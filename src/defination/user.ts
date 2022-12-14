@@ -63,6 +63,10 @@ export interface UnionProfile extends Profile {
 	level: number;
 }
 
+export interface UserFavorites {
+
+}
+
 export interface AccountResponse {
 	account: Account;
 	profile: Profile;

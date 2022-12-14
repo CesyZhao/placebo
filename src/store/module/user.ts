@@ -5,12 +5,12 @@ import {Profile, UnionProfile} from "../../defination/user";
 
 export interface UserState {
 	userProfile: Profile,
-	test: Record<string, any>
+	userFavorites: number[]
 }
 
 const initialState: UserState = {
 	userProfile: {} as Profile,
-	test: {}
+	userFavorites: []
 };
 
 
@@ -22,20 +22,13 @@ export const userSlice = createSlice({
 		updateUser(state, action: PayloadAction<UnionProfile>) {
 			state.userProfile = action.payload;
 		},
-		testReducer(state, action: PayloadAction<any>) {
-			const { payload } = action
-			console.log(payload, '-------')
-			state.test = payload
-		},
-		testReducer2(state, action: PayloadAction<any>) {
-			const { payload } = action
-			state.test.abc = payload
-			console.log(state.test.abc)
+		updateUserFavorites(state, action: PayloadAction<number[]>) {
+			state.userFavorites = action.payload
 		}
 	},
 });
 
-export const { updateUser, testReducer, testReducer2 } = userSlice.actions;
+export const { updateUser, updateUserFavorites } = userSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of

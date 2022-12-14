@@ -27,7 +27,6 @@ const User = () => {
 
   const getUserPlayList = useCallback(async () => {
     const res: any = await getUserPlaylist(profile.userId)
-    console.log(res, '+++++++')
     const { playlist } = res
     const createdList: any[] = []
     const collectedList: any[]= []

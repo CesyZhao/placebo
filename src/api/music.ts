@@ -26,3 +26,4 @@ export const getRankingList = (): Promise<TopListResponse> => http.get('/toplist
 export const getUserPlaylist = (uid: number) => {
   return http.get(`/user/playlist?uid=${uid}&limit=9999`,  { rawData: true } as RequestConfig)
 };
+

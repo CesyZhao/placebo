@@ -88,11 +88,17 @@
 		.name{
 			font-size: 32px;
 			margin-bottom: 48px;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+			word-break: break-all;
+			-webkit-line-clamp: 3;
 		}
 		.info {
 			margin-bottom: 48px;
 			color: #aaa;
-			top: 45%;
+			top: 55%;
 			&>span{
 				margin-right: 12px;
 			}
