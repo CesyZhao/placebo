@@ -37,4 +37,6 @@ export const userProfile = (state: RootState) => state.user.userProfile;
 
 export const userAvatar  = (state: RootState) => state.user.userProfile?.avatarUrl;
 
+export const userFavorites  = (state: RootState) => state.user.userFavorites;
+
 export default userSlice.reducer;

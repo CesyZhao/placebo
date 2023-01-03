@@ -1,21 +1,23 @@
 import React, {useCallback, useEffect, useMemo, useState} from "react";
 import styles from "./styles.module.scss";
 import {useAppDispatch, useAppSelector} from "../../store/hooks";
-import {mode, playingMusic, switchMusic, updateMode} from "../../store/module/controller";
+import { mode, playingMusic, switchMusic, updateMode, updatePlayingStatus, playingStatus } from '../../store/module/controller'
 import {formatDuration} from "../../util/number";
 import { getSongUrl} from "../../api/music";
 import Player from "./Player";
 import {ModeList, SwitchDirection} from "../../defination/music";
 import {togglePanel} from "../../store/module/app";
+import { userFavorites } from '../../store/module/user';
 
 
 const Controller = () => {
 
 	const [type, setType] = useState(0);
-	const [playing, setPlaying] = useState(false);
 	const dispatch = useAppDispatch();
 
 	const music = useAppSelector(playingMusic) || {};
+	const playing = useAppSelector(playingStatus);
+	const favorites = useAppSelector(userFavorites) || [];
 	const currentMode = useAppSelector(mode);
 
 	const playSongWithUrl = useCallback(async (id: number) => {
@@ -48,7 +50,7 @@ const Controller = () => {
 	}, [currentMode])
 
 	useEffect(() => {
-		setPlaying(false);
+		dispatch(updatePlayingStatus(false));
 		setType(0);
 		playSongWithUrl(music.id);
 	}, [music]);
@@ -59,8 +61,13 @@ const Controller = () => {
 
 	const onPuase = useCallback(() => {
 		playing ? Player.pause() : Player.play();
-		setPlaying(!playing);
+		dispatch(updatePlayingStatus(!playing))
 	}, [playing]);
+
+	const liked = useMemo(() => {
+		const result = favorites.includes(music.id)
+		return result
+	}, [favorites, music])
 
 	return (
 		<div className={styles.controller}>
@@ -92,7 +99,7 @@ const Controller = () => {
 					<i className="iconfont icon-ios-fastforward" onClick={() => dispatch(switchMusic(SwitchDirection.Next))}></i>
 				</div>
 				<div className={styles.controls}>
-					<i className={`iconfont ${true ? 'icon-heart1' : 'icon-heart'}`} ></i>
+					<i className={`iconfont ${liked ? 'icon-heart1' : 'icon-heart'}`} ></i>
 					<i className={`iconfont ${currentModeIcon}`} onClick={switchMode}></i>
 					<span onClick={() => dispatch(togglePanel(true))}>LRC</span>
 				</div>

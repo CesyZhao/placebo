@@ -7,14 +7,16 @@ export interface ControllerState {
 	playingMusic: AvailableMusic,
 	playingList: AvailableMusic[],
 	playingAlbum: AvailableAlbum,
-	mode: Mode
+	mode: Mode,
+	playingStatus: Boolean
 }
 
 const initialState: ControllerState = {
 	playingMusic: {} as AvailableMusic,
 	playingList: [] as AvailableMusic[],
 	playingAlbum: {} as AvailableAlbum,
-	mode: Mode.List
+	mode: Mode.List,
+	playingStatus: false
 };
 
 
@@ -23,18 +25,22 @@ export const userSlice = createSlice({
 	initialState,
 	// The `reducers` field lets us define reducers and generate associated actions
 	reducers: {
+		updatePlayingStatus(state, action: PayloadAction<Boolean>) {
+			state.playingStatus = action.payload;
+		},
 		updatePlayingMusic(state, action: PayloadAction<AvailableMusic>) {
 			state.playingMusic = action.payload;
 		},
 		switchMusic(state, action: PayloadAction<SwitchDirection>) {
-			const { playingList, playingMusic, mode } = state;
+			const { playingAlbum , playingMusic, mode } = state;
+			const { playlist: tracks } = playingAlbum;
 			const { payload } = action;
 			let nextIndex, nextSong
-			let tracks = playingList;
 			let index = tracks.findIndex(e => +e.id === +playingMusic.id);
 			nextIndex = payload === SwitchDirection.Prev
 				? --index >= 0 ? index : tracks.length - 1
 				: ++index < tracks.length ? index : 0;
+			console.log(nextIndex, 'index---------')
 			nextSong = tracks[nextIndex];
 			state.playingMusic = nextSong;
 		},
@@ -53,7 +59,7 @@ export const userSlice = createSlice({
 	},
 });
 
-export const { updatePlayingMusic, updatePlayingList, updateMode, switchMusic, updatePlayingAlbum } = userSlice.actions;
+export const { updatePlayingMusic, updatePlayingList, updateMode, switchMusic, updatePlayingAlbum, updatePlayingStatus } = userSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
@@ -62,5 +68,7 @@ export const playingMusic = (state: RootState) => state.controller.playingMusic;
 export const playingList = (state: RootState) => state.controller.playingList;
 export const playingAlbum = (state: RootState) => state.controller.playingAlbum;
 export const mode = (state: RootState) => state.controller.mode;
+
+export const playingStatus = (state: RootState) => state.controller.playingStatus;
 
 export default userSlice.reducer;

@@ -33,7 +33,6 @@ const Menu = () => {
 			const { songs } = await getList(list.id);
 			const favorites = songs.map((s: any) => s.id);
 			dispatch(updateUserFavorites(favorites))
-
 		} catch (e) {
 		}
 	}, [])
