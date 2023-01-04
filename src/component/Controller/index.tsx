@@ -59,7 +59,7 @@ const Controller = () => {
 		dispatch(updateMode())
 	}
 
-	const onPuase = useCallback(() => {
+	const onPause = useCallback(() => {
 		playing ? Player.pause() : Player.play();
 		dispatch(updatePlayingStatus(!playing))
 	}, [playing]);
@@ -95,7 +95,7 @@ const Controller = () => {
 				</div>
 				<div className={styles.ops}>
 					<i className="iconfont icon-ios-rewind" onClick={() => dispatch(switchMusic(SwitchDirection.Prev))}></i>
-					<i className={`iconfont ${playing ? 'icon-ios-pause' : 'icon-iosplay'}`} onClick={onPuase}></i>
+					<i className={`iconfont ${playing ? 'icon-ios-pause' : 'icon-iosplay'}`} onClick={onPause}></i>
 					<i className="iconfont icon-ios-fastforward" onClick={() => dispatch(switchMusic(SwitchDirection.Next))}></i>
 				</div>
 				<div className={styles.controls}>
