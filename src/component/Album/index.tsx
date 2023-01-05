@@ -13,13 +13,15 @@ import {
 	updatePlayingList,
 	updatePlayingMusic,
 	playingList,
-	updatePlayingAlbum, playingAlbum
-} from "../../store/module/controller";
+	updatePlayingAlbum, playingAlbum, playingStatus
+} from '../../store/module/controller'
 import {useAppDispatch, useAppSelector} from "../../store/hooks";
+import event from '../../util/event'
 
 const Album = () => {
 	const { id = 0 } = useParams();
 	const music = useAppSelector(playingMusic) || {};
+	const playing = useAppSelector(playingStatus);
 	const currentAlbum = useAppSelector(playingAlbum) || {};
 
 	const [album, setAlbum] = useState({} as PlayList);
@@ -44,13 +46,20 @@ const Album = () => {
 	}, [list])
 
 	const handleAlbumPlay = useCallback(() => {
-		dispatch(updatePlayingMusic(list[0]));
-		dispatch(updatePlayingAlbum({ playlist: list, id: album.id, name: album.name}));
-	}, [list])
+		if (!isCurrentList) {
+			dispatch(updatePlayingMusic(list[0]));
+			dispatch(updatePlayingAlbum({ playlist: list, id: album.id, name: album.name}));
+		}
+		event.emit('placebo.updatePlayingStatus');
+	}, [list, playing])
 
 	const isCurrentList = useMemo(() => {
 		return album.id === currentAlbum.id
-	}, [album, currentAlbum])
+	}, [album, currentAlbum,])
+
+	const isCurrentListPlaying = useMemo(() => {
+		return isCurrentList && playing;
+	}, [isCurrentList, playing])
 
 	useMount(() => {
 		getSongList();
@@ -86,7 +95,7 @@ const Album = () => {
 						<div> <span className={styles.number}>{humanNumber(album.playCount)}</span> PLAYED  <span className={styles.number}>{ humanNumber(album.subscribedCount) }</span> SUBSCRIBED</div>
 						<div className={styles.operations}>
 							<div > <i className={`iconfont ${album.subscribed ? 'icon-yishoucang_huaban1' : 'icon-shoucang'}`}></i> </div>
-							<div className={styles.playAll} onClick={handleAlbumPlay}> <i className={`iconfont ${isCurrentList ? 'icon-pause' : 'icon-24gl-play'}`}></i> </div>
+							<div className={styles.playAll} onClick={handleAlbumPlay}> <i className={`iconfont ${isCurrentListPlaying ? 'icon-pause' : 'icon-24gl-play'}`}></i> </div>
 							<div > <i className="iconfont icon-sousuo1"></i> </div>
 						</div>
 					</div>

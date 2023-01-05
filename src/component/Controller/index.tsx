@@ -8,6 +8,8 @@ import Player from "./Player";
 import {ModeList, SwitchDirection} from "../../defination/music";
 import {togglePanel} from "../../store/module/app";
 import { userFavorites } from '../../store/module/user';
+import useEvents from '../../hook/useEvents'
+import event from '../../util/event'
 
 
 const Controller = () => {
@@ -35,7 +37,7 @@ const Controller = () => {
 		}
 		Player.playSong(url, {
 			onPlay() {
-				setPlaying(true);
+				dispatch(updatePlayingStatus(true))
 				setType(1);
 			},
 			onEnd() {
@@ -60,6 +62,7 @@ const Controller = () => {
 	}
 
 	const onPause = useCallback(() => {
+		console.log(playing, '----------')
 		playing ? Player.pause() : Player.play();
 		dispatch(updatePlayingStatus(!playing))
 	}, [playing]);
@@ -68,6 +71,16 @@ const Controller = () => {
 		const result = favorites.includes(music.id)
 		return result
 	}, [favorites, music])
+
+
+	useEffect(() => {
+		let eventName = 'placebo.updatePlayingStatus'
+		event.on('placebo.updatePlayingStatus', () => onPause())
+		return () => {
+			event.off(eventName)
+		}
+	}, [onPause])
+
 
 	return (
 		<div className={styles.controller}>
