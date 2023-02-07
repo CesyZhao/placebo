@@ -126,6 +126,14 @@
 				color: #7BA3FF;
 			}
 		}
+		.disabled {
+			color: #bbb;
+			cursor: not-allowed;
+			pointer-events: none;
+			&:hover{
+				color: #bbb;
+			}
+		}
 	}
 }
 .listWrapper {

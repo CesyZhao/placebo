@@ -1,4 +1,4 @@
-import React, {useCallback, useMemo, useState} from "react";
+import React, { useCallback, useMemo, useRef, useState } from 'react'
 import styles from "./style.module.scss";
 import { useParams } from "react-router-dom";
 import { useMount } from "ahooks";
@@ -10,22 +10,32 @@ import List from "../List";
 import { formatList } from "../../util/audio";
 import {
 	playingMusic,
-	updatePlayingList,
 	updatePlayingMusic,
-	playingList,
 	updatePlayingAlbum, playingAlbum, playingStatus
 } from '../../store/module/controller'
 import {useAppDispatch, useAppSelector} from "../../store/hooks";
 import event from '../../util/event'
+import { userProfile } from '../../store/module/user'
 
 const Album = () => {
 	const { id = 0 } = useParams();
 	const music = useAppSelector(playingMusic) || {};
 	const playing = useAppSelector(playingStatus);
 	const currentAlbum = useAppSelector(playingAlbum) || {};
+	const listRef = useRef<any>(null);
+
+	const profile = useAppSelector(userProfile) || {};
 
 	const [album, setAlbum] = useState({} as PlayList);
 	const [list, setList] = useState([] as AvailableMusic[]);
+
+	const isOwner = useMemo(() => {
+		return profile?.userId === album?.creator?.userId;
+	}, [album, profile])
+
+	const handleSearch = useCallback(() => {
+		listRef.current.search(true)
+	}, [])
 
 	const getSongList = useCallback( async () => {
 		try {
@@ -92,16 +102,16 @@ const Album = () => {
 								<div> {album.tags.join(' ')} </div>
 							}
 						</div>
-						<div> <span className={styles.number}>{humanNumber(album.playCount)}</span> PLAYED  <span className={styles.number}>{ humanNumber(album.subscribedCount) }</span> SUBSCRIBED</div>
+						<div> <span className={styles.number}>{humanNumber(album.playCount)}</span> PLAYED  <span className={styles.number}>{ humanNumber(album.subscribedCount) || 0 }</span> SUBSCRIBED</div>
 						<div className={styles.operations}>
-							<div > <i className={`iconfont ${album.subscribed ? 'icon-yishoucang_huaban1' : 'icon-shoucang'}`}></i> </div>
+							<div className={`${isOwner ? styles.disabled : ''}`}> <i className={`iconfont ${album.subscribed ? 'icon-yishoucang_huaban1' : 'icon-shoucang'}`}></i> </div>
 							<div className={styles.playAll} onClick={handleAlbumPlay}> <i className={`iconfont ${isCurrentListPlaying ? 'icon-pause' : 'icon-24gl-play'}`}></i> </div>
-							<div > <i className="iconfont icon-sousuo1"></i> </div>
+							<div onClick={handleSearch}> <i className="iconfont icon-sousuo1"></i> </div>
 						</div>
 					</div>
 				</div>
 				<div className={styles.listWrapper}>
-					<List currentSongId={music.id} list={list} handleSongPlay={handleSongPlay}></List>
+					<List ref={listRef} currentSongId={music.id} list={list} handleSongPlay={handleSongPlay}></List>
 				</div>
 			</div>
 		: <div></div>

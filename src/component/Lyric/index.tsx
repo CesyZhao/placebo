@@ -61,27 +61,28 @@ const Lyric = (props: Props) => {
     <div className={styles.wrapper}>
       <div className={styles.songInfo}>
         <h2> {music.name} </h2>
-        <span>歌手: {music.artists.map(artist => artist.name).join('/')} </span>
+        <span>Artist: {music.artists.map(artist => artist.name).join('/')} </span>
       </div>
       {
-        lyrics
-        && <div className={styles.lyric}>
-			  <ul className={styles.scroller}>
-                {
-                  Object.entries(lyrics).map(([key, lyric], index) => {
-                    return (
-                      <li key={key} data-lyric-line={index} className={`${styles.scrollItem} ${nextIndex - 1 === times.indexOf(key) && styles.active}`}>
-                        <div className={styles.lyricRow}>{ lyric  as string}</div>
-                        {
-                          tLyrisc &&
-                          <div className={styles.tlyricRow}>{tLyrisc[key] as string}</div>
-                        }
-                      </li>
-                    )
-                  })
-                }
-			  </ul>
-		  </div>
+        lyrics && Object.entries(lyrics).length
+        ? <div className={styles.lyric}>
+            <ul className={styles.scroller}>
+                    {
+                      Object.entries(lyrics).map(([key, lyric], index) => {
+                        return (
+                          <li key={key} data-lyric-line={index} className={`${styles.scrollItem} ${nextIndex - 1 === times.indexOf(key) && styles.active}`}>
+                            <div className={styles.lyricRow}>{ lyric  as string}</div>
+                            {
+                              tLyrisc &&
+                              <div className={styles.tlyricRow}>{tLyrisc[key] as string}</div>
+                            }
+                          </li>
+                        )
+                      })
+                    }
+            </ul>
+          </div>
+        : <div className={styles.empty}>No Lyric</div>
       }
     </div>
 

@@ -1,4 +1,12 @@
-import React, {FormEvent, useCallback, useMemo, useState} from "react";
+import React, {
+  ComponentProps,
+  FormEvent,
+  forwardRef,
+  useCallback,
+  useImperativeHandle,
+  useMemo,
+  useState
+} from 'react'
 import {AvailableMusic} from "../../defination/music";
 import styles from './style.module.scss';
 import {formatDuration} from "../../util/number";
@@ -6,18 +14,25 @@ import { debounce } from "lodash";
 import {useMount} from "ahooks";
 
 
-interface Props {
+interface Props extends ComponentProps<any> {
   list: AvailableMusic[];
   currentSongId: number;
   handleSongPlay: (song: AvailableMusic) => void;
 }
 
-const List = (props: Props) => {
+const List = forwardRef((props: Props, ref) => {
 
   const [searching, setSearching] = useState(false);
   const [filterList, setList] = useState([] as AvailableMusic[]);
 
+  useImperativeHandle(ref, () => {
+    return {
+      search
+    }
+  })
+
   const search = useCallback((status: boolean) => {
+    console.log('++++++++++++++')
     setSearching(status);
     if (!status) setList(props.list);
   }, []);
@@ -69,6 +84,6 @@ const List = (props: Props) => {
       }
     </div>
   )
-}
+})
 
 export default List;
