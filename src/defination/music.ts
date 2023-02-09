@@ -60,7 +60,9 @@ export interface AlbumDetail {
 export interface AvailableAlbum {
 	id: number;
 	name: string;
-	playlist: AvailableMusic[]
+	playlist: AvailableMusic[];
+
+	shuffledPlayList?: AvailableMusic[];
 }
 
 export enum Mode {

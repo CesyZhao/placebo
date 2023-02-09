@@ -1,6 +1,7 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../store';
 import {AvailableAlbum, AvailableMusic, Mode, ModeList, SwitchDirection} from "../../defination/music";
+import { shuffle } from 'lodash'
 
 
 export interface ControllerState {
@@ -33,28 +34,36 @@ export const userSlice = createSlice({
 		},
 		switchMusic(state, action: PayloadAction<SwitchDirection>) {
 			const { playingAlbum , playingMusic, mode } = state;
-			const { playlist: tracks } = playingAlbum;
+			const { playlist: tracks, shuffledPlayList = [] } = playingAlbum;
+			const targetList = mode === Mode.Shuffle ? shuffledPlayList : tracks;
 			const { payload } = action;
 			let nextIndex, nextSong
-			let index = tracks.findIndex(e => +e.id === +playingMusic.id);
-			nextIndex = payload === SwitchDirection.Prev
-				? --index >= 0 ? index : tracks.length - 1
-				: ++index < tracks.length ? index : 0;
-			console.log(nextIndex, 'index---------')
-			nextSong = tracks[nextIndex];
-			state.playingMusic = nextSong;
+			let index = targetList.findIndex(e => +e.id === +playingMusic.id);
+			if (mode === Mode.Single) {
+				nextIndex = index
+			} else {
+				nextIndex = payload === SwitchDirection.Prev
+					? --index >= 0 ? index : targetList.length - 1
+					: ++index < targetList.length ? index : 0;
+			}
+			nextSong = targetList[nextIndex];
+			state.playingMusic = {...nextSong};
 		},
 		updatePlayingList(state, action: PayloadAction<AvailableMusic[]>) {
 			state.playingList = action.payload;
 		},
 		updatePlayingAlbum(state, action: PayloadAction<AvailableAlbum>) {
-			state.playingAlbum = action.payload;
+			const { playlist } = action.payload;
+			state.playingAlbum = Object.assign(action.payload, { shuffledPlayList: shuffle(playlist) });
 		},
 		updateMode(state) {
-			const currentMode = state.mode;
+			const { mode: currentMode, playingAlbum } = state;
 			const array = Array.from(ModeList.keys());
 			const index = array.findIndex(s => s === currentMode);
 			state.mode = array[index === array.length - 1 ? 0 : index + 1];
+			if (state.mode === 'shuffle' && !playingAlbum.shuffledPlayList) {
+				playingAlbum.shuffledPlayList = shuffle(playingAlbum.playlist)
+			}
 		}
 	},
 });
