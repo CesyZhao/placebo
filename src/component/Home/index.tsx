@@ -73,7 +73,7 @@ const Home = () => {
 					<span> <span className={styles.number}>{humanNumber(currentAlbum.trackCount)}</span>  TRACKS</span>
 				</div>
 				<div className={styles.buttons}>
-					<span className={styles.button}>PLAY NOW</span>
+					<span className={styles.button}><span>PLAY NOW</span></span>
 					<Link to={{ pathname: `/album/${currentAlbum.id}` }}>
             <span className={`${styles.button} ${styles.link}`}>
               ALBUM

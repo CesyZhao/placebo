@@ -6,9 +6,9 @@ enum Menu {
 }
 
 const MenuMap = new Map([
-	[Menu.Albums, 'Album'],
-	[Menu.FM, 'Personal FM'],
-	[Menu.Top, 'Top'],
+	[Menu.Albums, 'ALBUM'],
+	[Menu.FM, 'PERSONAL FM'],
+	[Menu.Top, 'TOP'],
 ]);
 
 const MenuPathMap = new Map([

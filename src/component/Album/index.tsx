@@ -83,19 +83,27 @@ const Album = () => {
 						<div className={styles.cover}>
 							<LazyImage url={album.coverImgUrl}></LazyImage>
 						</div>
-						<div className={styles.right}>
-							<div className={styles.creator}>
-              <span className={styles.creatorAvatar}>
-	              <LazyImage url={album.creator.avatarUrl}></LazyImage>
-                {/*<img src={album.creator.avatarUrl}></img>*/}
-              </span>
-								<span className={styles.creatorNickname}>{album.creator.nickname}</span>
-							</div>
-							<div className={styles.description}> {album.description} </div>
-						</div>
+						<div className={styles.name}> {album.name} </div>
+						{/*<LazyImage url={album.creator.avatarUrl}></LazyImage>*/}
+						{/*<div className={styles.right}>*/}
+						{/*	<div className={styles.creator}>*/}
+            {/*  <span className={styles.creatorAvatar}>*/}
+	          {/*    <LazyImage url={album.creator.avatarUrl}></LazyImage>*/}
+            {/*    /!*<img src={album.creator.avatarUrl}></img>*!/*/}
+            {/*  </span>*/}
+						{/*		<span className={styles.creatorNickname}>{album.creator.nickname}</span>*/}
+						{/*	</div>*/}
+						{/*	<div className={styles.description}> {album.description} </div>*/}
+						{/*</div>*/}
 					</div>
 					<div className={styles.detail}>
-						<div className={styles.name}> {album.name} </div>
+						<div className={styles.creator}>
+						  <span className={styles.creatorAvatar}>
+						    <LazyImage url={album.creator.avatarUrl}></LazyImage>
+						    {/*<img src={album.creator.avatarUrl}></img>*/}
+						  </span>
+								<span className={styles.creatorNickname}>{album.creator.nickname}</span>
+						</div>
 						<div className={styles.tags}>
 							{
 								album.tags.length > 0 &&

@@ -71,25 +71,23 @@ const User = () => {
         <div className={styles.userProfile}>
           <div className={styles.userAvatar}>
             <LazyImage url={profile.avatarUrl}></LazyImage>
-            <div className={styles.userInfo}>
+            <span className={styles.userNickname}>
               <span>
+                {profile.nickname}
                 <LazyImage url={vipLevelUrl}></LazyImage>
-                <span className={styles.userLevel}>Lv.{profile.level} </span>
-              </span>
-              <span>
-                <span className={styles.age}>{age}</span>
-                <span className={`${styles.gender} ${ profile.gender === 1 ? styles.male : styles.female }`}>
-                  <i className={`iconfont ${ profile.gender === 1 ? 'icon-nan male' : 'icon-nv female' }`}></i>
-                </span>
               </span>
               <span className={styles.joinTime}>Join at <span>{joinTime.toLocaleDateString()}</span></span>
-            </div>
-          </div>
 
-          <span className={styles.userNickname}>
-              {profile.nickname}
-          </span>
-          <span className={styles.userSignature}> {profile.signature} </span>
+            </span>
+          </div>
+          <span className={styles.userSignature}> {profile.signature || 'No Signature'} </span>
+          <div className={styles.userInfo}>
+            <span className={styles.userLevel}>Lv.{profile.level} </span>
+            <span className={styles.age}>{age}</span>
+            <span className={`${styles.gender} ${ profile.gender === 1 ? styles.male : styles.female }`}>
+              <i className={`iconfont ${ profile.gender === 1 ? 'icon-nan male' : 'icon-nv female' }`}></i>
+            </span>
+          </div>
         </div>
         <div className={styles.userPlaylists}>
           <div className={styles.userListHeader}>
@@ -104,7 +102,7 @@ const User = () => {
                     <Link to={`/album/${item.id}`} >
                       <img src={item.coverImgUrl} alt="歌单封面"></img>
                       <div className={styles.userListItemName}> {item.name} </div>
-                      <div> {item.trackCount} Songs </div>
+                      <div> {item.trackCount} TRACKS </div>
                     </Link>
                   </div>
                 )
