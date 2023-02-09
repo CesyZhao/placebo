@@ -62,13 +62,12 @@ const Controller = () => {
 	}
 
 	const onPause = useCallback(() => {
-		console.log(playing, '----------')
 		playing ? Player.pause() : Player.play();
 		dispatch(updatePlayingStatus(!playing))
 	}, [playing]);
 
 	const liked = useMemo(() => {
-		const result = favorites.includes(music.id)
+		const result = favorites.includes(+music.id)
 		return result
 	}, [favorites, music])
 
