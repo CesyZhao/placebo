@@ -15,12 +15,14 @@ import event from '../../util/event'
 const Controller = () => {
 
 	const [type, setType] = useState(0);
+	const [currentTime, setCurrentTime] = useState(0);
 	const dispatch = useAppDispatch();
 
 	const music = useAppSelector(playingMusic) || {};
 	const playing = useAppSelector(playingStatus);
 	const favorites = useAppSelector(userFavorites) || [];
 	const currentMode = useAppSelector(mode);
+
 
 	const playSongWithUrl = useCallback(async (id: number) => {
 		let url;
@@ -54,6 +56,7 @@ const Controller = () => {
 	useEffect(() => {
 		dispatch(updatePlayingStatus(false));
 		setType(0);
+		setCurrentTime(0);
 		playSongWithUrl(music.id);
 	}, [music]);
 
@@ -80,6 +83,15 @@ const Controller = () => {
 		}
 	}, [onPause])
 
+	useEffect(() => {
+		const timer = setInterval(() => {
+			setCurrentTime(Player.getCurrentTime())
+		}, 1000)
+		return () => {
+			clearInterval(timer)
+		}
+	})
+
 
 	return (
 		<div className={styles.controller}>
@@ -100,7 +112,7 @@ const Controller = () => {
 						</div>
 						<div>
 							<span className="pc-controller-time">
-                {` ${formatDuration(0 * 1000)} / ${formatDuration(music.duration)} `}
+                {` ${formatDuration(currentTime * 1000)} / ${formatDuration(music.duration)} `}
               </span>
 						</div>
 					</div>

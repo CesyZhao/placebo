@@ -6,6 +6,7 @@ import styles from './style.module.scss';
 import { take } from "lodash";
 import {Link} from "react-router-dom";
 import {humanNumber} from "../../util/number";
+import Loading from '../Loading'
 
 const Home = () => {
 
@@ -51,7 +52,9 @@ const Home = () => {
 	const currentAlbum = albums[currentIndex] || {};
 
 	return (
-		<div className={styles.contentWrapper}>
+		loading
+		? <Loading></Loading>
+		: <div className={styles.contentWrapper}>
 			<div className={`${styles.switchButton} ${styles.prevButton}`} onClick={() => handleIndexChange(-1)}>
 				<i className="iconfont icon-fanhui"></i>
 			</div>

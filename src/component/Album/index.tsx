@@ -16,6 +16,7 @@ import {
 import {useAppDispatch, useAppSelector} from "../../store/hooks";
 import event from '../../util/event'
 import { userProfile } from '../../store/module/user'
+import Loading from '../Loading'
 
 const Album = () => {
 	const { id = 0 } = useParams();
@@ -28,6 +29,7 @@ const Album = () => {
 
 	const [album, setAlbum] = useState({} as PlayList);
 	const [list, setList] = useState([] as AvailableMusic[]);
+	const [loading, setLoading] = useState(false);
 
 	const isOwner = useMemo(() => {
 		return profile?.userId === album?.creator?.userId;
@@ -38,6 +40,7 @@ const Album = () => {
 	}, [])
 
 	const getSongList = useCallback( async () => {
+		setLoading(true);
 		try {
 			const { playlist: album } = await getAlbum(+id);
 			setAlbum(album);
@@ -46,7 +49,9 @@ const Album = () => {
 			setList(formattedList);
 		} catch (e) {
 			// Todo
+			setList([]);
 		}
+		setLoading(false);
 	}, [])
 
 	const dispatch = useAppDispatch();
@@ -76,7 +81,7 @@ const Album = () => {
 	})
 
 	return (
-			album.id ?
+			album.id && !loading ?
 			<div className={styles.album}>
 				<div className={styles.info}>
 					<div className={styles.top}>
@@ -84,23 +89,11 @@ const Album = () => {
 							<LazyImage url={album.coverImgUrl}></LazyImage>
 						</div>
 						<div className={styles.name}> {album.name} </div>
-						{/*<LazyImage url={album.creator.avatarUrl}></LazyImage>*/}
-						{/*<div className={styles.right}>*/}
-						{/*	<div className={styles.creator}>*/}
-            {/*  <span className={styles.creatorAvatar}>*/}
-	          {/*    <LazyImage url={album.creator.avatarUrl}></LazyImage>*/}
-            {/*    /!*<img src={album.creator.avatarUrl}></img>*!/*/}
-            {/*  </span>*/}
-						{/*		<span className={styles.creatorNickname}>{album.creator.nickname}</span>*/}
-						{/*	</div>*/}
-						{/*	<div className={styles.description}> {album.description} </div>*/}
-						{/*</div>*/}
 					</div>
 					<div className={styles.detail}>
 						<div className={styles.creator}>
 						  <span className={styles.creatorAvatar}>
 						    <LazyImage url={album.creator.avatarUrl}></LazyImage>
-						    {/*<img src={album.creator.avatarUrl}></img>*/}
 						  </span>
 								<span className={styles.creatorNickname}>{album.creator.nickname}</span>
 						</div>
@@ -122,7 +115,7 @@ const Album = () => {
 					<List ref={listRef} currentSongId={music.id} list={list} handleSongPlay={handleSongPlay}></List>
 				</div>
 			</div>
-		: <div></div>
+		: <Loading></Loading>
 	)
 }
 

@@ -9,6 +9,7 @@ import LazyImage from "../LazyImage";
 import {getAge} from "../../util/number";
 import {getUserPlaylist} from "../../api/music";
 import {Link} from "react-router-dom";
+import Loading from '../Loading'
 
 const User = () => {
   const profile = useAppSelector(userProfile);
@@ -16,6 +17,7 @@ const User = () => {
   const [active, setActive] = useState(0)
   const [createdList, setCreatedList] = useState<any>([])
   const [collectedList, setCollectedList] = useState<any>([])
+  const [loading, setLoading] = useState(false)
 
   const handleLogout = useCallback(() => {
 
@@ -26,6 +28,7 @@ const User = () => {
   }, [active, createdList, collectedList])
 
   const getUserPlayList = useCallback(async () => {
+    setLoading(true)
     const res: any = await getUserPlaylist(profile.userId)
     const { playlist } = res
     const createdList: any[] = []
@@ -39,12 +42,12 @@ const User = () => {
     })
     setCreatedList(createdList)
     setCollectedList(collectedList)
+    setLoading(false)
   }, [profile.userId])
 
   const getVip = useCallback(async () => {
     try {
       const { redVipDynamicIconUrl } = await getVipInfo()
-      console.log('redVipDynamicIconUrl:', redVipDynamicIconUrl)
       setVipLevelUrl(redVipDynamicIconUrl)
     } catch (e) {
       console.log(e)
@@ -65,7 +68,7 @@ const User = () => {
   })
 
   return (
-    !isEmpty(profile)
+    !isEmpty(profile) && !loading
       ?
       <div className={styles.user}>
         <div className={styles.userProfile}>
@@ -129,7 +132,7 @@ const User = () => {
         </div>
       </div>
       :
-      <div></div>
+      <Loading></Loading>
   );
 };
 
