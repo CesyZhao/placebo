@@ -7,10 +7,7 @@ import Login from "./component/Login";
 export default function App() {
   return (
     <div className="app">
-      <Routes>
-        <Route path="*" element={<RouteContainer />}></Route>
-        <Route path="/login" element={<Login />}></Route>
-      </Routes>
+      { RouteContainer }
     </div>
   );
 }

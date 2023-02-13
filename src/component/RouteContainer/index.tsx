@@ -1,5 +1,5 @@
-import React from "react";
-import { Routes, Route, useLocation } from 'react-router-dom'
+import React, { createRef } from 'react'
+import { Routes, Route, useLocation, useOutlet, createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Home from '../Home';
 import styles from './style.module.scss';
 import Menu from "../Menu";
@@ -9,10 +9,28 @@ import PlayingPanel from "../PlayingPanel";
 import Top from "../Top";
 import User from "../User";
 import { TransitionGroup, CSSTransition, SwitchTransition } from 'react-transition-group'
+import Login from '../Login'
+
+
+
+const routes = [
+	{ path: '/', name: 'Home', element: <Home />, nodeRef: createRef() },
+	{ path: '/album/:id', name: 'Album', element: <Album />, nodeRef: createRef() },
+	{ path: '/topList', name: 'TopList', element: <Top />, nodeRef: createRef() },
+	{ path: '/user', name: 'User', element: <User />, nodeRef: createRef() }
+]
+
 
 const RouteContainer = () => {
 
 	const location = useLocation()
+
+	console.log(location.pathname)
+
+	const currentOutlet = useOutlet()
+	const { nodeRef } = routes.find((route) => route.path === location.pathname) ?? {} as any
+
+	console.log(currentOutlet)
 
 	return (
 		<div className={styles.routeContainer}>
@@ -21,16 +39,16 @@ const RouteContainer = () => {
 				<SwitchTransition>
 					<CSSTransition
 						key={location.pathname}
-						timeout={500}
+						nodeRef={nodeRef}
+						timeout={300}
 						classNames="fade"
 						unmountOnExit
 					>
-						<Routes>
-							<Route path="/" element={<Home />}></Route>
-							<Route path="/album/:id" element={<Album />}></Route>
-							<Route path="/topList" element={<Top />}></Route>
-							<Route path="/user" element={<User />}></Route>
-						</Routes>
+						{(state) => (
+							<div ref={nodeRef} className={styles.page}>
+								{currentOutlet}
+							</div>
+						)}
 					</CSSTransition>
 				</SwitchTransition>
 			</div>
@@ -40,4 +58,20 @@ const RouteContainer = () => {
 	)
 }
 
-export default RouteContainer;
+const router = createBrowserRouter([
+	{
+		path: '/',
+		element: <RouteContainer />,
+		children: routes.map((route) => ({
+			index: route.path === '/',
+			path: route.path === '/' ? undefined : route.path,
+			element: route.element,
+		})),
+	},
+	{
+		path: '/login',
+		element: <Login />,
+	}
+])
+
+export default <RouterProvider router={router} />;
