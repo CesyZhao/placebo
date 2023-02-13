@@ -56,11 +56,11 @@ const Menu = () => {
 					})
 				}
 			</div>
-			<div className={styles.avatarWrapper} onClick={handleAvatarClick}>
+			<div className={styles.avatarWrapper} >
 				{
 					signed
-						? <img className={styles.userAvatar} src={avatar} alt=""/>
-						: <span className={styles.userAvatar} ><i className="iconfont icon-user11"></i></span>
+						? <Link to='/user'><img className={styles.userAvatar} src={avatar} alt=""/></Link>
+						: <Link to='/login'><span className={styles.userAvatar} ><i className="iconfont icon-user11"></i></span></Link>
 				}
 			</div>
 		</div>
