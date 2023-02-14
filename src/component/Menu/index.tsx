@@ -1,5 +1,5 @@
 import React, {useCallback} from "react";
-import { menus } from "../../defination/menu";
+import { menus, Menu as MenuEnum, MenuPathMap } from '../../defination/menu'
 import styles from './style.module.scss';
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import {
@@ -10,6 +10,9 @@ import {Link, useNavigate} from "react-router-dom";
 import { isEmpty } from 'lodash';
 import { getList, getUserPlaylist } from '../../api/music'
 import { useMount } from 'ahooks'
+import event from '../../util/event'
+import { PlaceboEvent } from '../../defination/event'
+import placebo from '../../model/Placebo'
 
 const Menu = () => {
 	const navigate = useNavigate();
@@ -20,9 +23,12 @@ const Menu = () => {
 	const signed = !isEmpty(avatar);
 
 
-	const handleAvatarClick = useCallback(() => {
-		navigate(signed ? '/user' : '/login');
-	}, [signed]);
+	const handleMenuClick = useCallback((e: any, menu: any) => {
+		if (menu.path === MenuPathMap.get(MenuEnum.FM)) {
+			e.preventDefault()
+			placebo.screen.showPlayingPanel()
+		}
+	}, [])
 
 
 	const getFavoriteList = useCallback(async (id: number) => {
@@ -47,7 +53,7 @@ const Menu = () => {
 				{
 					menus.map(menu => {
 						return (
-							<Link to={menu.path} key={menu.key}>
+							<Link to={menu.path} key={menu.key} onClick={(e) => handleMenuClick(e, menu)}>
 								<div className={styles.menuItem}>
 									{ menu.title }
 								</div>

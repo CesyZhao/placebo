@@ -6,10 +6,10 @@ import {formatDuration} from "../../util/number";
 import { getSongUrl} from "../../api/music";
 import Player from "./Player";
 import {ModeList, SwitchDirection} from "../../defination/music";
-import {togglePanel} from "../../store/module/app";
 import { userFavorites } from '../../store/module/user';
-import useEvents from '../../hook/useEvents'
 import event from '../../util/event'
+import { PlaceboEvent } from '../../defination/event'
+import placebo from '../../model/Placebo'
 
 
 const Controller = () => {
@@ -24,40 +24,13 @@ const Controller = () => {
 	const currentMode = useAppSelector(mode);
 
 
-	const playSongWithUrl = useCallback(async (id: number) => {
-		let url;
-		try {
-			const data = await getSongUrl(id);
-			if (data instanceof Array) {
-				const [obj] = data;
-				url = obj.url || `http://music.163.com/song/media/outer/url?id=${music.id}.mp3`;
-			} else {
-				url = `http://music.163.com/song/media/outer/url?id=${music.id}.mp3`;
-			}
-		} catch (e) {
-			url = `http://music.163.com/song/media/outer/url?id=${music.id}.mp3`;
-		}
-		Player.playSong(url, {
-			onPlay() {
-				dispatch(updatePlayingStatus(true))
-				setType(1);
-			},
-			onEnd() {
-				dispatch(switchMusic(SwitchDirection.Next));
-			}
-		});
-	}, [])
-
-
 	const currentModeIcon = useMemo(() => {
 		return ModeList.get(currentMode);
 	}, [currentMode])
 
 	useEffect(() => {
-		dispatch(updatePlayingStatus(false));
-		setType(0);
 		setCurrentTime(0);
-		playSongWithUrl(music.id);
+		placebo.music.playMusicById(music.id);
 	}, [music]);
 
 	const switchMode = () => {
@@ -76,21 +49,19 @@ const Controller = () => {
 
 
 	useEffect(() => {
-		let eventName = 'placebo.updatePlayingStatus'
-		event.on('placebo.updatePlayingStatus', () => onPause())
+		event.on(PlaceboEvent.UpdatePlayingStatus, () => onPause())
+
+		const timer = setInterval(() => {
+			setCurrentTime(placebo.music.seekTime())
+		}, 1000)
+
 		return () => {
-			event.off(eventName)
+			event.off(PlaceboEvent.UpdatePlayingStatus)
+
+			clearInterval(timer)
+
 		}
 	}, [onPause])
-
-	useEffect(() => {
-		const timer = setInterval(() => {
-			setCurrentTime(Player.getCurrentTime())
-		}, 1000)
-		return () => {
-			clearInterval(timer)
-		}
-	})
 
 
 	return (
@@ -125,7 +96,7 @@ const Controller = () => {
 				<div className={styles.controls}>
 					<i className={`iconfont ${liked ? 'icon-heart1' : 'icon-heart'}`} ></i>
 					<i className={`iconfont ${currentModeIcon}`} onClick={switchMode}></i>
-					<span onClick={() => dispatch(togglePanel(true))}>LRC</span>
+					<span onClick={() => placebo.screen.showPlayingPanel()}>LRC</span>
 				</div>
 			</div>
 		</div>

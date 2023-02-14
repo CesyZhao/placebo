@@ -1,4 +1,4 @@
-enum Menu {
+export enum Menu {
 	Albums,
 	FM,
 	Top,
@@ -11,7 +11,7 @@ const MenuMap = new Map([
 	[Menu.Top, 'TOP'],
 ]);
 
-const MenuPathMap = new Map([
+export const MenuPathMap = new Map([
   [Menu.Albums, '/'],
   [Menu.FM, '/personal'],
   [Menu.Top, '/topList'],

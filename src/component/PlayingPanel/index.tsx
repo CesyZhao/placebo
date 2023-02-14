@@ -10,6 +10,7 @@ import {showPanel, togglePanel} from "../../store/module/app";
 import {Wave} from "../../util/canvas";
 import {useMount} from "ahooks";
 import Lyric from "../Lyric";
+import placebo from '../../model/Placebo'
 
 
 const CANVAS_WIDTH = 500;
@@ -19,10 +20,9 @@ const PlayingPanel = () => {
   const music = useAppSelector(playingMusic) || {};
 	const playing = Player.getPlayingStatus();
 	const showPlayingPanel = useAppSelector(showPanel);
-	const dispatch = useAppDispatch();
 
 	const dismiss = useCallback(() => {
-		dispatch(togglePanel(false));
+		placebo.screen.hidePlayingPanel();
 	}, []);
 
 	const handleSwitch = useCallback((mode: SwitchDirection) => {
