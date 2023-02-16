@@ -17,12 +17,11 @@ const CANVAS_HEIGHT = 548;
 const PlayingPanel = () => {
 
   const music = useAppSelector(playingMusic) || {};
-	const playing = placebo.music.playing;
-	const showPlayingPanel = useAppSelector(placebo.screen.showPanel);
-	console.log(showPlayingPanel, '+++++++++++')
+	const playing = useAppSelector(placebo.music.playing);
+	const showPlayingPanel: boolean = useAppSelector(placebo.screen.showPanel);
 
 	const dismiss = useCallback(() => {
-		placebo.screen.hidePlayingPanel();
+		placebo.screen.togglePanel(false);
 	}, []);
 
 	const handleSwitch = useCallback((mode: SwitchDirection) => {

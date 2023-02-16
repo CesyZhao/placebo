@@ -18,15 +18,12 @@ const Controller = () => {
 	const [currentTime, setCurrentTime] = useState(0);
 	const dispatch = useAppDispatch();
 
-	const music = useAppSelector(playingMusic) || {};
-	// const playing = placebo.state.getState('controller.playingStatus');
+	const music = useAppSelector(placebo.music.currentMusic) || {};
+	const playing: Boolean = useAppSelector(placebo.music.playing) || false;
 	const favorites = useAppSelector(userFavorites) || [];
 	const currentMode = useAppSelector(mode);
 
-	const playing = useMemo(() => {
-		console.timeStamp();
-		return placebo.music.playing;
-	}, [placebo.music.playing])
+	console.log(playing, 'playing++++++++++++')
 
 
 	const currentModeIcon = useMemo(() => {
@@ -100,7 +97,7 @@ const Controller = () => {
 				<div className={styles.controls}>
 					<i className={`iconfont ${liked ? 'icon-heart1' : 'icon-heart'}`} ></i>
 					<i className={`iconfont ${currentModeIcon}`} onClick={switchMode}></i>
-					<span onClick={() => placebo.screen.showPlayingPanel()}>LRC</span>
+					<span onClick={() => placebo.screen.togglePanel(true)}>LRC</span>
 				</div>
 			</div>
 		</div>

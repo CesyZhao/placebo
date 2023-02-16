@@ -26,7 +26,7 @@ const Menu = () => {
 	const handleMenuClick = useCallback((e: any, menu: any) => {
 		if (menu.path === MenuPathMap.get(MenuEnum.FM)) {
 			e.preventDefault()
-			placebo.screen.showPlayingPanel()
+			placebo.screen.togglePanel(true)
 		}
 	}, [])
 

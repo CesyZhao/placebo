@@ -11,15 +11,12 @@ class ScreenController {
   }
 
   get showPanel() {
-    return this.placebo.state.showPanel
+    return this.placebo.state.showPanel;
   }
 
-  showPlayingPanel() {
-    this.placebo.state.togglePlayingPanel(true)
-  }
+  togglePanel(visible: boolean) {
+    this.placebo.state.showPanel = visible
 
-  hidePlayingPanel() {
-    this.placebo.state.togglePlayingPanel(false)
   }
 }
 
