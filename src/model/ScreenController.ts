@@ -10,6 +10,10 @@ class ScreenController {
     this.placebo = placebo
   }
 
+  get showPanel() {
+    return this.placebo.state.showPanel
+  }
+
   showPlayingPanel() {
     this.placebo.state.togglePlayingPanel(true)
   }

@@ -19,9 +19,14 @@ const Controller = () => {
 	const dispatch = useAppDispatch();
 
 	const music = useAppSelector(playingMusic) || {};
-	const playing = useAppSelector(playingStatus);
+	// const playing = placebo.state.getState('controller.playingStatus');
 	const favorites = useAppSelector(userFavorites) || [];
 	const currentMode = useAppSelector(mode);
+
+	const playing = useMemo(() => {
+		console.timeStamp();
+		return placebo.music.playing;
+	}, [placebo.music.playing])
 
 
 	const currentModeIcon = useMemo(() => {
@@ -38,9 +43,8 @@ const Controller = () => {
 	}
 
 	const onPause = useCallback(() => {
-		playing ? Player.pause() : Player.play();
-		dispatch(updatePlayingStatus(!playing))
-	}, [playing]);
+		placebo.music.switchPlayingStatus();
+	}, []);
 
 	const liked = useMemo(() => {
 		const result = favorites.includes(+music.id)

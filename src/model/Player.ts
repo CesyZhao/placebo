@@ -19,15 +19,19 @@ class Player {
       html5: true,
       preload: true,
       format: ['mp3'],
-      onload: this.play,
-      onend: this.onEnd,
-      onplay: this.onPlay
+      onload: this.play.bind(this),
+      onend: this.onEnd.bind(this),
+      onplay: this.onPlay.bind(this)
     })
   }
 
   play() {
     this.player?.play();
     this.createAnalyser();
+  }
+
+  pause() {
+    this.player.pause();
   }
 
   getCurrentTime() {

@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef} from "react";
+import React, { useCallback, useEffect, useMemo, useRef } from 'react'
 import {isEmpty} from "lodash";
 import {useAppDispatch, useAppSelector} from "../../store/hooks";
 import {playingMusic} from "../../store/module/controller";
@@ -6,7 +6,6 @@ import {CSSTransition} from "react-transition-group";
 import Player from "../Controller/Player";
 import styles from "./style.module.scss";
 import {SwitchDirection} from "../../defination/music";
-import {showPanel, togglePanel} from "../../store/module/app";
 import {Wave} from "../../util/canvas";
 import {useMount} from "ahooks";
 import Lyric from "../Lyric";
@@ -18,8 +17,9 @@ const CANVAS_HEIGHT = 548;
 const PlayingPanel = () => {
 
   const music = useAppSelector(playingMusic) || {};
-	const playing = Player.getPlayingStatus();
-	const showPlayingPanel = useAppSelector(showPanel);
+	const playing = placebo.music.playing;
+	const showPlayingPanel = useAppSelector(placebo.screen.showPanel);
+	console.log(showPlayingPanel, '+++++++++++')
 
 	const dismiss = useCallback(() => {
 		placebo.screen.hidePlayingPanel();
@@ -41,7 +41,7 @@ const PlayingPanel = () => {
 	useEffect(() => {
 		if (showPlayingPanel) {
 			const context = ref.current?.getContext('2d');
-			const wave = new Wave(Player, context as any);
+			const wave = new Wave(placebo.music.player, context as any);
 			const commonOptions = {
 				lineColor: "transparent",
 				lineWidth: 0,

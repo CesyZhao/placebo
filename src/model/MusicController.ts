@@ -13,11 +13,16 @@ class MusicController {
   constructor(placebo: Placebo) {
     this.player = new Player();
     this.placebo = placebo;
+
+  }
+
+  get playing() {
+    return this.player.getPlayingStatus();
   }
 
   async playMusicById(id: number) {
     const { updatePlayingStatus, switchPlayingMusic } = this.placebo.state
-    updatePlayingStatus(false);
+    updatePlayingStatus();
     let url = `http://music.163.com/song/media/outer/url?id=${id}.mp3`;;
     try {
       const data = await getSongUrl(id);
@@ -29,7 +34,7 @@ class MusicController {
       // TODO handle error
     }
 
-    this.player.onPlay = () => updatePlayingStatus(true);
+    this.player.onPlay = () => updatePlayingStatus();
     this.player.onEnd = () => switchPlayingMusic(SwitchDirection.Next);
 
     this.player.initMusic(url);
@@ -37,6 +42,12 @@ class MusicController {
 
   seekTime() {
     return this.player.getCurrentTime();
+  }
+
+  switchPlayingStatus() {
+    const nowPlaying = this.player.getPlayingStatus();
+    nowPlaying ? this.player.pause() : this.player.play();
+    console.timeStamp()
   }
 }
 
