@@ -1,30 +1,29 @@
 import React, {useCallback, useEffect, useMemo, useState} from "react";
 import styles from "./styles.module.scss";
 import {useAppDispatch, useAppSelector} from "../../store/hooks";
-import { mode, playingMusic, switchMusic, updateMode, updatePlayingStatus, playingStatus } from '../../store/module/controller'
+import { switchMusic } from '../../store/module/controller'
 import {formatDuration} from "../../util/number";
-import { getSongUrl} from "../../api/music";
-import Player from "./Player";
 import {ModeList, SwitchDirection} from "../../defination/music";
-import { userFavorites } from '../../store/module/user';
-import event from '../../util/event'
-import { PlaceboEvent } from '../../defination/event'
 import placebo from '../../model/Placebo'
 
 
 const Controller = () => {
 
-	const [type, setType] = useState(0);
+  const {
+    currentMusic: currentMusicSelector,
+    playing: playingSelector,
+    favorites: favoritesSelector,
+    playMode
+  } = placebo.music;
+
 	const [currentTime, setCurrentTime] = useState(0);
+  const [type, setType] = useState(1);
 	const dispatch = useAppDispatch();
 
-	const music = useAppSelector(placebo.music.currentMusic) || {};
-	const playing: Boolean = useAppSelector(placebo.music.playing) || false;
-	const favorites = useAppSelector(userFavorites) || [];
-	const currentMode = useAppSelector(mode);
-
-	console.log(playing, 'playing++++++++++++')
-
+  const music = useAppSelector(currentMusicSelector) || {};
+  const playing = useAppSelector(playingSelector) || false;
+  const favorites = useAppSelector(favoritesSelector) || [];
+  const currentMode = useAppSelector(playMode);
 
 	const currentModeIcon = useMemo(() => {
 		return ModeList.get(currentMode);
@@ -32,12 +31,16 @@ const Controller = () => {
 
 	useEffect(() => {
 		setCurrentTime(0);
-		placebo.music.playMusicById(music.id);
+    setType(0);
+		placebo.music.playMusicById(music.id)
+      .then(() => {
+        setType(1);
+      });
 	}, [music]);
 
 	const switchMode = () => {
-		dispatch(updateMode())
-	}
+    placebo.music.switchPlayMode();
+  }
 
 	const onPause = useCallback(() => {
 		placebo.music.switchPlayingStatus();
@@ -50,25 +53,24 @@ const Controller = () => {
 
 
 	useEffect(() => {
-		event.on(PlaceboEvent.UpdatePlayingStatus, () => onPause())
-
 		const timer = setInterval(() => {
-			setCurrentTime(placebo.music.seekTime())
-		}, 1000)
+			setCurrentTime(placebo.music.seekTime());
+		}, 1000);
 
-		return () => {
-			event.off(PlaceboEvent.UpdatePlayingStatus)
+    return () => {
+      clearInterval(timer);
+    }
+	}, [])
 
-			clearInterval(timer)
-
-		}
-	}, [onPause])
+  useEffect(() => {
+    setType(0);
+  }, [music])
 
 
 	return (
 		<div className={styles.controller}>
 			<div className={styles.progressBar}>
-				<div className={`${styles.progress} ${playing ? styles.playing : styles.paused}`} style={{ animationDuration: `${music.duration}ms`, animationName: `${type ? styles.play : styles.replay}` }}></div>
+        <div className={`${styles.progress} ${playing ? styles.playing : styles.paused}`} style={{ animationDuration: `${music.duration}ms`, animationName: `${type ? styles.play : styles.replay}` }}></div>
 			</div>
 			<div className={styles.cover}>
 				<img alt="playing-cover" src={music?.album?.picUrl.replace('100y100', '965y965')}></img>

@@ -1,9 +1,7 @@
-import Player from './Player'
-import { getSongUrl } from '../api/music'
-import { updatePlayingStatus } from '../store/module/controller'
-import { store } from '../store/store'
-import { SwitchDirection } from '../defination/music'
-import { Placebo } from './Placebo'
+import Player from './Player';
+import { getSongUrl } from '../api/music';
+import { SwitchDirection } from '../defination/music';
+import { Placebo } from './Placebo';
 
 class MusicController {
 
@@ -28,10 +26,18 @@ class MusicController {
     return this.placebo.state.playMode;
   }
 
+  get favorites() {
+    return this.placebo.state.favorites;
+  }
+
+  get currentAlbum() {
+    return this.placebo.state.currentAlbum;
+  }
+
   async playMusicById(id: number) {
-    const { updatePlayingStatus, switchPlayingMusic } = this.placebo.state
-    updatePlayingStatus(false);
-    let url = `http://music.163.com/song/media/outer/url?id=${id}.mp3`;;
+    const { switchPlayingMusic } = this.placebo.state;
+    this.placebo.state.playingStatus = false;
+    let url = `http://music.163.com/song/media/outer/url?id=${id}.mp3`;
     try {
       const data = await getSongUrl(id);
       if (data instanceof Array) {
@@ -42,10 +48,26 @@ class MusicController {
       // TODO handle error
     }
 
-    this.player.onPlay = () => updatePlayingStatus(true);
+    this.player.onPlay = () => this.placebo.state.playingStatus = true;
     this.player.onEnd = () => switchPlayingMusic(SwitchDirection.Next);
 
     this.player.initMusic(url);
+  }
+
+  async getAlbumDetail(id: string | number) {
+    let album, list
+    try {
+      const { playlist } = await getAlbum(+id);
+      album = playlist;
+      const { songs } = await getList(album.id);
+      list = formatList(songs);
+
+    } catch (e) {
+      album = {};
+      list = [];
+    }
+
+    return { album, list }
   }
 
   seekTime() {
@@ -56,7 +78,11 @@ class MusicController {
     const nowPlaying = this.player.getPlayingStatus();
     nowPlaying ? this.player.pause() : this.player.play();
     const newestStatus = this.player.getPlayingStatus();
-    this.placebo.state.updatePlayingStatus(newestStatus);
+    this.placebo.state.playingStatus = newestStatus;
+  }
+
+  switchPlayMode() {
+    this.placebo.state.switchPlayMode();
   }
 }
 

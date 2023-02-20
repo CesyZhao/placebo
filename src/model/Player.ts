@@ -27,7 +27,9 @@ class Player {
 
   play() {
     this.player?.play();
-    this.createAnalyser();
+    if (!this.analyser) {
+      this.createAnalyser();
+    }
   }
 
   pause() {

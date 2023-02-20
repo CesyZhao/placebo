@@ -16,7 +16,6 @@ class ScreenController {
 
   togglePanel(visible: boolean) {
     this.placebo.state.showPanel = visible
-
   }
 }
 

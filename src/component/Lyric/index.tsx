@@ -4,6 +4,7 @@ import {formatLyric} from "../../util/audio";
 import Player from "../Controller/Player";
 import {AvailableMusic} from "../../defination/music";
 import styles from "./style.module.scss";
+import placebo from '../../model/Placebo'
 
 interface Props {
   music: AvailableMusic;
@@ -45,7 +46,7 @@ const Lyric = (props: Props) => {
   useEffect(() => {
     const { id } = music;
     timer = setInterval(() => {
-      const time = Math.round(Player.getCurrentTime() * 1000);
+      const time = Math.round(placebo.music.seekTime() * 1000);
       const nextIndex = times.findIndex(item => +item > time);
       setIndex(nextIndex);
       const lineEl = document.querySelector(`[data-lyric-line='${nextIndex - 1}']`) ??  document.querySelector(`[data-lyric-line='${nextIndex - 1}']`);

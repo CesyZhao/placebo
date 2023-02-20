@@ -17,15 +17,21 @@ import {useAppDispatch, useAppSelector} from "../../store/hooks";
 import event from '../../util/event'
 import { userProfile } from '../../store/module/user'
 import Loading from '../Loading'
+import placebo from "../../model/Placebo";
+import { Profile } from '../../defination/user';
 
 const Album = () => {
-	const { id = 0 } = useParams();
-	const music = useAppSelector(playingMusic) || {};
-	const playing = useAppSelector(playingStatus);
-	const currentAlbum = useAppSelector(playingAlbum) || {};
-	const listRef = useRef<any>(null);
+  const { currentMusic, playing: playingSelector, currentAlbum: currentAlbumSelector } = placebo.music;
+  const { userProfile } = placebo.user;
 
-	const profile = useAppSelector(userProfile) || {};
+	const { id = 0 } = useParams();
+
+  const music = useAppSelector(currentMusic) || {};
+  const playing = useAppSelector(playingSelector);
+  const currentAlbum = useAppSelector(currentAlbumSelector) || {};
+  const profile: Profile = useAppSelector(userProfile) || {};
+
+	const listRef = useRef<any>(null);
 
 	const [album, setAlbum] = useState({} as PlayList);
 	const [list, setList] = useState([] as AvailableMusic[]);
