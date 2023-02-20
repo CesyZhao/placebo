@@ -1,6 +1,12 @@
 import { RootState, store } from '../store/store'
 import { togglePanel } from '../store/module/app'
-import {playingAlbum, switchMusic, updateMode, updatePlayingStatus} from '../store/module/controller'
+import {
+  playingAlbum,
+  switchMusic,
+  updateMode, updatePlayingAlbum,
+  updatePlayingMusic,
+  updatePlayingStatus
+} from '../store/module/controller'
 import { SwitchDirection } from '../defination/music'
 
 class StateController {
@@ -17,6 +23,10 @@ class StateController {
     return (state: RootState) => state.controller.playingMusic;
   }
 
+  set currentMusic(music: any) {
+    store.dispatch(updatePlayingMusic(music));
+  }
+
   get playMode() {
     return (state: RootState) => state.controller.mode;
   }
@@ -27,6 +37,10 @@ class StateController {
 
   get currentAlbum() {
     return (state: RootState) => state.controller.playingAlbum;
+  }
+
+  set currentAlbum(album: any) {
+    store.dispatch(updatePlayingAlbum(album));
   }
 
   get showPanel() {
@@ -40,7 +54,7 @@ class StateController {
   get userProfile() {
     return (state: RootState) => state.user.userProfile;
   }
-  
+
   set userProfile(profile: any) {
 //    store.dispatch()
   }

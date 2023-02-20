@@ -85,8 +85,10 @@ class MusicController {
     this.placebo.state.switchPlayMode();
   }
 
-  updatePlayingAlbum(album, index) {
-
+  updatePlayingAlbum(album: Record<string, any>, index: number) {
+    const { playlist } = album;
+    const nextSong = playlist[index];
+    this.placebo.state.currentMusic = nextSong;
   }
 }
 
