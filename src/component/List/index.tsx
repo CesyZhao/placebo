@@ -17,7 +17,7 @@ import {useMount} from "ahooks";
 interface Props extends ComponentProps<any> {
   list: AvailableMusic[];
   currentSongId: number;
-  handleSongPlay: (song: AvailableMusic) => void;
+  handleSongPlay: (index: number, song: AvailableMusic) => void;
 }
 
 const List = forwardRef((props: Props, ref) => {
@@ -32,7 +32,6 @@ const List = forwardRef((props: Props, ref) => {
   })
 
   const search = useCallback((status: boolean) => {
-    console.log('++++++++++++++')
     setSearching(status);
     if (!status) setList(props.list);
   }, []);
@@ -68,7 +67,7 @@ const List = forwardRef((props: Props, ref) => {
          ? <div className={styles.songs}>
             {
               list.map((song, index) => {
-                return <div className={styles.song} key={song.id} onDoubleClick={() => props.handleSongPlay(song)}>
+                return <div className={styles.song} key={song.id} onDoubleClick={() => props.handleSongPlay(index, song)}>
                   {
                     song.id === props.currentSongId
                       ? <div className={styles.indicator}> <div> <i className="iconfont icon-ios-pause"></i> </div> </div>

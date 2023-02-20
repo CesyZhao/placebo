@@ -1,7 +1,8 @@
 import Player from './Player';
-import { getSongUrl } from '../api/music';
+import { getAlbum, getList, getSongUrl } from '../api/music'
 import { SwitchDirection } from '../defination/music';
 import { Placebo } from './Placebo';
+import { formatList } from '../util/audio'
 
 class MusicController {
 
@@ -61,9 +62,8 @@ class MusicController {
       album = playlist;
       const { songs } = await getList(album.id);
       list = formatList(songs);
-
     } catch (e) {
-      album = {};
+      album = {} as any;
       list = [];
     }
 
@@ -83,6 +83,10 @@ class MusicController {
 
   switchPlayMode() {
     this.placebo.state.switchPlayMode();
+  }
+
+  updatePlayingAlbum(album, index) {
+
   }
 }
 

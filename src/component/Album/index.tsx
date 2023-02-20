@@ -48,23 +48,27 @@ const Album = () => {
 	const getSongList = useCallback( async () => {
 		setLoading(true);
 		try {
-			const { playlist: album } = await getAlbum(+id);
+			const { album, list } = await placebo.music.getAlbumDetail(+id);
 			setAlbum(album);
-			const { songs } = await getList(album.id);
-			const formattedList = formatList(songs);
+			const formattedList = formatList(list);
 			setList(formattedList);
 		} catch (e) {
-			// Todo
 			setList([]);
 		}
 		setLoading(false);
 	}, [])
 
 	const dispatch = useAppDispatch();
-	const handleSongPlay = useCallback((song: AvailableMusic) => {
-		dispatch(updatePlayingMusic(song));
-		dispatch(updatePlayingAlbum({ playlist: list, id: album.id, name: album.name}));
-	}, [list])
+
+	const handleSongPlay = useCallback((index: number) => {
+		const nextAlbum = { playlist: list, id: album.id, name: album.name }
+		placebo.music.updatePlayingAlbum(nextAlbum, index)
+	}, [ list ])
+
+	// const handleSongPlay = useCallback((song: AvailableMusic) => {
+	// 	dispatch(updatePlayingMusic(song));
+	// 	dispatch(updatePlayingAlbum({ playlist: list, id: album.id, name: album.name}));
+	// }, [list])
 
 	const handleAlbumPlay = useCallback(() => {
 		if (!isCurrentList) {
