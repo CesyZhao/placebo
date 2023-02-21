@@ -63,7 +63,7 @@ const List = forwardRef((props: Props, ref) => {
             </div>
       }
       {
-        list.length
+        list?.length
          ? <div className={styles.songs}>
             {
               list.map((song, index) => {

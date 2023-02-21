@@ -3,7 +3,7 @@ import styles from "./styles.module.scss";
 import {useAppDispatch, useAppSelector} from "../../store/hooks";
 import { switchMusic } from '../../store/module/controller'
 import {formatDuration} from "../../util/number";
-import {ModeList, SwitchDirection} from "../../defination/music";
+import { AvailableMusic, ModeList, SwitchDirection } from '../../defination/music'
 import placebo from '../../model/Placebo'
 
 
@@ -20,7 +20,7 @@ const Controller = () => {
   const [type, setType] = useState(1);
 	const dispatch = useAppDispatch();
 
-  const music = useAppSelector(currentMusicSelector) || {};
+  const music = useAppSelector<AvailableMusic>(currentMusicSelector) || {};
   const playing = useAppSelector(playingSelector) || false;
   const favorites = useAppSelector(favoritesSelector) || [];
   const currentMode = useAppSelector(playMode);
@@ -29,28 +29,32 @@ const Controller = () => {
 		return ModeList.get(currentMode);
 	}, [currentMode])
 
-	useEffect(() => {
-		setCurrentTime(0);
-    setType(0);
-		placebo.music.playMusicById(music.id)
-      .then(() => {
-        setType(1);
-      });
-	}, [music]);
-
-	const switchMode = () => {
-    placebo.music.switchPlayMode();
-  }
-
-	const onPause = useCallback(() => {
-		placebo.music.switchPlayingStatus();
-	}, []);
-
 	const liked = useMemo(() => {
 		const result = favorites.includes(+music.id)
 		return result
 	}, [favorites, music])
 
+	const switchMode = useCallback(() => {
+		placebo.music.switchPlayMode();
+	}, [])
+
+	const onPause = useCallback(() => {
+		placebo.music.switchPlayingStatus();
+	}, []);
+
+	const handleImageLoad = useCallback((e: any) => {
+		console.log(e.target, '----------')
+	}, [])
+
+
+	useEffect(() => {
+		setCurrentTime(0);
+		setType(0);
+		placebo.music.playMusicById(music.id)
+			.then(() => {
+				setType(1);
+			});
+	}, [music]);
 
 	useEffect(() => {
 		const timer = setInterval(() => {
@@ -62,10 +66,6 @@ const Controller = () => {
     }
 	}, [])
 
-  useEffect(() => {
-    setType(0);
-  }, [music])
-
 
 	return (
 		<div className={styles.controller}>
@@ -73,7 +73,7 @@ const Controller = () => {
         <div className={`${styles.progress} ${playing ? styles.playing : styles.paused}`} style={{ animationDuration: `${music.duration}ms`, animationName: `${type ? styles.play : styles.replay}` }}></div>
 			</div>
 			<div className={styles.cover}>
-				<img alt="playing-cover" src={music?.album?.picUrl.replace('100y100', '965y965')}></img>
+				<img alt="playing-cover" src={music?.album?.picUrl.replace('100y100', '965y965')} onLoad={handleImageLoad}></img>
 			</div>
 			<div className={styles.contents}>
 				<div className={styles.coverWrapper}>

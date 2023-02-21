@@ -7,19 +7,26 @@ import { take } from "lodash";
 import {Link} from "react-router-dom";
 import {humanNumber} from "../../util/number";
 import Loading from '../Loading'
+import placebo from '../../model/Placebo'
 
 const Home = () => {
 
 	const [albums, setAlbums] = useState<Album[]>([]);
-	const { loading, run } = useRequest<PersonalizedResponse, any>(getPersonalized, {
-		manual: true,
-		onSuccess(result) {
-			setAlbums(take(result.result, 10));
+	const [loading, setLoading] = useState(false);
+
+	const getPersonalizedAlbums = useCallback(async () => {
+		setLoading(true)
+		try {
+			const albums = await placebo.music.getPersonalized();
+			setAlbums(albums)
+		} catch (e) {
+			setAlbums([])
 		}
-	});
+		setLoading(false)
+	}, [])
 
 	useMount(() => {
-		run();
+		getPersonalizedAlbums();
 	});
 
 	const [currentIndex, setCurrentIndex] = useState(0);

@@ -1,6 +1,6 @@
 import Player from './Player';
-import { getAlbum, getList, getSongUrl } from '../api/music'
-import { SwitchDirection } from '../defination/music';
+import { getAlbum, getList, getPersonalized, getSongUrl } from '../api/music'
+import { Album, SwitchDirection } from '../defination/music'
 import { Placebo } from './Placebo';
 import { formatList } from '../util/audio'
 
@@ -35,6 +35,29 @@ class MusicController {
     return this.placebo.state.currentAlbum;
   }
 
+
+  seekTime() {
+    return this.player.getCurrentTime();
+  }
+
+  switchPlayingStatus() {
+    const nowPlaying = this.player.getPlayingStatus();
+    nowPlaying ? this.player.pause() : this.player.play();
+    const newestStatus = this.player.getPlayingStatus();
+    this.placebo.state.playingStatus = newestStatus;
+  }
+
+  switchPlayMode() {
+    this.placebo.state.switchPlayMode();
+  }
+
+  updatePlayingAlbum(album: Record<string, any>, index: number) {
+    const { playlist } = album;
+    const nextSong = playlist[index];
+    this.placebo.state.currentMusic = nextSong;
+    this.placebo.state.currentAlbum = album;
+  }
+
   async playMusicById(id: number) {
     const { switchPlayingMusic } = this.placebo.state;
     this.placebo.state.playingStatus = false;
@@ -43,7 +66,7 @@ class MusicController {
       const data = await getSongUrl(id);
       if (data instanceof Array) {
         const [obj] = data;
-        url = obj.url || `http://music.163.com/song/media/outer/url?id=${id}.mp3`;
+        url = obj.url || url;
       }
     } catch (e) {
       // TODO handle error
@@ -70,25 +93,15 @@ class MusicController {
     return { album, list }
   }
 
-  seekTime() {
-    return this.player.getCurrentTime();
-  }
-
-  switchPlayingStatus() {
-    const nowPlaying = this.player.getPlayingStatus();
-    nowPlaying ? this.player.pause() : this.player.play();
-    const newestStatus = this.player.getPlayingStatus();
-    this.placebo.state.playingStatus = newestStatus;
-  }
-
-  switchPlayMode() {
-    this.placebo.state.switchPlayMode();
-  }
-
-  updatePlayingAlbum(album: Record<string, any>, index: number) {
-    const { playlist } = album;
-    const nextSong = playlist[index];
-    this.placebo.state.currentMusic = nextSong;
+  async getPersonalized() {
+    let personalizedList: Album[]
+    try {
+      const { result } = await getPersonalized();
+      personalizedList = result;
+    } catch (e) {
+      personalizedList = [];
+    }
+    return personalizedList;
   }
 }
 

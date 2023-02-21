@@ -3,7 +3,7 @@ import styles from "./style.module.scss";
 import { useParams } from "react-router-dom";
 import { useMount } from "ahooks";
 import {getAlbum, getList} from "../../api/music";
-import {AvailableMusic, PlayList} from "../../defination/music";
+import { AvailableAlbum, AvailableMusic, PlayList } from '../../defination/music'
 import { humanNumber } from "../../util/number";
 import LazyImage from "../LazyImage";
 import List from "../List";
@@ -26,10 +26,10 @@ const Album = () => {
 
 	const { id = 0 } = useParams();
 
-  const music = useAppSelector(currentMusic) || {};
-  const playing = useAppSelector(playingSelector);
-  const currentAlbum = useAppSelector(currentAlbumSelector) || {};
-  const profile: Profile = useAppSelector(userProfile) || {};
+  const music = useAppSelector<AvailableMusic>(currentMusic) || {};
+  const playing = useAppSelector<boolean>(playingSelector);
+  const currentAlbum = useAppSelector<AvailableAlbum>(currentAlbumSelector) || {};
+  const profile = useAppSelector<Profile>(userProfile) || {};
 
 	const listRef = useRef<any>(null);
 
@@ -65,17 +65,11 @@ const Album = () => {
 		placebo.music.updatePlayingAlbum(nextAlbum, index)
 	}, [ list ])
 
-	// const handleSongPlay = useCallback((song: AvailableMusic) => {
-	// 	dispatch(updatePlayingMusic(song));
-	// 	dispatch(updatePlayingAlbum({ playlist: list, id: album.id, name: album.name}));
-	// }, [list])
-
 	const handleAlbumPlay = useCallback(() => {
 		if (!isCurrentList) {
-			dispatch(updatePlayingMusic(list[0]));
-			dispatch(updatePlayingAlbum({ playlist: list, id: album.id, name: album.name}));
+			handleSongPlay(0);
 		}
-		event.emit('placebo.updatePlayingStatus');
+		placebo.music.switchPlayingStatus();
 	}, [list, playing])
 
 	const isCurrentList = useMemo(() => {

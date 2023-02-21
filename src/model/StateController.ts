@@ -35,7 +35,7 @@ class StateController {
     return (state: RootState) => state.user.userFavorites;
   }
 
-  get currentAlbum() {
+  get currentAlbum(): any {
     return (state: RootState) => state.controller.playingAlbum;
   }
 
