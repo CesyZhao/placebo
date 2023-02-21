@@ -13,12 +13,16 @@ const LazyImage = (props: Props) => {
   const ref: any = useRef();
 
   useEffect(() => {
-    setUrl(props.url + '?param=100y100')
+    let url = props.url
+    if (!props.url.endsWith('?param=100y100')) {
+      url = url + '?param=100y100'
+    }
+    setUrl(url)
   }, [props])
 
   const onImageLoad = useCallback(() => {
     const { width } = ref.current;
-    setUrl(props.url + `?param=${width}y${width}`)
+    setUrl(props.url.replace('100y100', `${width}y${width}`))
   }, [ref, props])
 
   return (

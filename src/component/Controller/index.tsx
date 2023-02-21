@@ -5,6 +5,7 @@ import { switchMusic } from '../../store/module/controller'
 import {formatDuration} from "../../util/number";
 import { AvailableMusic, ModeList, SwitchDirection } from '../../defination/music'
 import placebo from '../../model/Placebo'
+import LazyImage from '../LazyImage'
 
 
 const Controller = () => {
@@ -66,6 +67,7 @@ const Controller = () => {
     }
 	}, [])
 
+	console.log(music?.album?.picUrl)
 
 	return (
 		<div className={styles.controller}>
@@ -73,7 +75,8 @@ const Controller = () => {
         <div className={`${styles.progress} ${playing ? styles.playing : styles.paused}`} style={{ animationDuration: `${music.duration}ms`, animationName: `${type ? styles.play : styles.replay}` }}></div>
 			</div>
 			<div className={styles.cover}>
-				<img alt="playing-cover" src={music?.album?.picUrl.replace('100y100', '965y965')} onLoad={handleImageLoad}></img>
+				{/*<img alt="playing-cover" src={music?.album?.picUrl.replace('100y100', '965y965')} onLoad={handleImageLoad}></img>*/}
+				<LazyImage url={music?.album?.picUrl}></LazyImage>
 			</div>
 			<div className={styles.contents}>
 				<div className={styles.coverWrapper}>
