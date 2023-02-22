@@ -4,6 +4,7 @@ import styles from "./style.module.scss";
 import { humanNumber } from "../../util/number";
 import {getRankingList} from "../../api/music";
 import { PlayList } from "../../defination/music";
+import placebo from '../../model/Placebo'
 
 
 
@@ -13,7 +14,7 @@ const Top = () => {
 
   const getTopList = useCallback(async () => {
     try {
-      const { list } = await getRankingList();
+      const list  = await placebo.music.getRankingList();
       setTopList(list);
     } catch (e) {
       // TODO

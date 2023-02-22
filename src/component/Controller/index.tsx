@@ -43,10 +43,6 @@ const Controller = () => {
 		placebo.music.switchPlayingStatus();
 	}, []);
 
-	const handleImageLoad = useCallback((e: any) => {
-		console.log(e.target, '----------')
-	}, [])
-
 
 	useEffect(() => {
 		setCurrentTime(0);
@@ -66,8 +62,6 @@ const Controller = () => {
       clearInterval(timer);
     }
 	}, [])
-
-	console.log(music?.album?.picUrl)
 
 	return (
 		<div className={styles.controller}>

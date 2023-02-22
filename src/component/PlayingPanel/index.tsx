@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {isEmpty} from "lodash";
 import {useAppDispatch, useAppSelector} from "../../store/hooks";
 import {playingMusic} from "../../store/module/controller";
@@ -10,6 +10,7 @@ import {Wave} from "../../util/canvas";
 import {useMount} from "ahooks";
 import Lyric from "../Lyric";
 import placebo from '../../model/Placebo'
+import LazyImage from '../LazyImage'
 
 
 const CANVAS_WIDTH = 500;
@@ -19,6 +20,8 @@ const PlayingPanel = () => {
   const music = useAppSelector(playingMusic) || {};
 	const playing = useAppSelector(placebo.music.playing);
 	const showPlayingPanel: boolean = useAppSelector(placebo.screen.showPanel);
+	const [lyric, setLyric] = useState('');
+	const [translatedLyric, setTranslatedLyric] = useState('');
 
 	const dismiss = useCallback(() => {
 		placebo.screen.togglePanel(false);
@@ -31,6 +34,22 @@ const PlayingPanel = () => {
 	const togglePlaying = useCallback(() => {
 
 	}, []);
+
+	const getLyricById = useCallback(async (id: number) => {
+		let lyric, translatedLyric;
+
+		try {
+			const { lyric: l = '', translatedLyric: t = '' } = await placebo.music.getLyric(id);
+			console.log(l);
+			lyric = l;
+			translatedLyric = t;
+		} catch (e) {
+			lyric = '';
+			translatedLyric = '';
+		}
+		setLyric(lyric);
+		setTranslatedLyric(translatedLyric);
+	}, [])
 
 	useMount(() => {
 		dismiss();
@@ -67,6 +86,10 @@ const PlayingPanel = () => {
 		}
 	}, [showPlayingPanel])
 
+	useEffect(() => {
+		getLyricById(music.id)
+	}, [music])
+
   return (
     !isEmpty(music)
     ? <CSSTransition in={showPlayingPanel} timeout={300} unmountOnExit classNames="playing-panel">
@@ -95,11 +118,15 @@ const PlayingPanel = () => {
 					    </div>
 				    </div>
 				    <div className={styles.lyricWrapper}>
-					    <Lyric music={music}></Lyric>
+							<div className={styles.songInfo}>
+								<h2> {music.name} </h2>
+								<span>Artist: {music.artists.map(artist => artist.name).join('/')} </span>
+							</div>
+					    <Lyric lyric={lyric} translatedLyric={translatedLyric}></Lyric>
 				    </div>
 			    </div>
 			    <div className={styles.blurCover}>
-				    <img src={music.album.picUrl.replace('100y100', '964y608')} alt="ablum"></img>
+						<LazyImage url={music.album.picUrl}></LazyImage>
 			    </div>
 		    </div>
 	    </CSSTransition>

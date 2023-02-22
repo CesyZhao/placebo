@@ -1,5 +1,5 @@
 import Player from './Player';
-import { getAlbum, getList, getPersonalized, getSongUrl } from '../api/music'
+import { getAlbum, getList, getLyric, getPersonalized, getRankingList, getSongUrl } from '../api/music'
 import { Album, SwitchDirection } from '../defination/music'
 import { Placebo } from './Placebo';
 import { formatList } from '../util/audio'
@@ -102,6 +102,26 @@ class MusicController {
       personalizedList = [];
     }
     return personalizedList;
+  }
+
+  async getLyric(id: number) {
+    try {
+      const { lrc, tlyric, nolyric, uncollected } = await getLyric(id);
+      return (nolyric || uncollected) ? {} : { lyric: lrc.lyric, translatedLyric: tlyric.lyric };
+
+    } catch (e) {
+      return {};
+    }
+  }
+
+  async getRankingList() {
+    try {
+      const { list } = await getRankingList();
+      return list;
+
+    } catch (e) {
+      return [];
+    }
   }
 }
 

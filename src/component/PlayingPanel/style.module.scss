@@ -60,6 +60,8 @@ canvas{
 		height: 90%;
 		padding-top: 24px;
 		padding-right: 12px;
+		display: flex;
+		flex-direction: column;
 	}
 	.toolbar{
 		position: absolute;
