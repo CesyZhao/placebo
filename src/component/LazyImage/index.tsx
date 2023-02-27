@@ -14,7 +14,7 @@ const LazyImage = (props: Props) => {
 
   useEffect(() => {
     let url = props.url
-    if (!props.url.endsWith('?param=100y100')) {
+    if (!props.url?.endsWith('?param=100y100')) {
       url = url + '?param=100y100'
     }
     setUrl(url)

@@ -1,7 +1,7 @@
-import Player from './Player';
+import Player from './Player'
 import { getAlbum, getList, getLyric, getPersonalized, getRankingList, getSongUrl } from '../api/music'
 import { Album, SwitchDirection } from '../defination/music'
-import { Placebo } from './Placebo';
+import { Placebo } from './Placebo'
 import { formatList } from '../util/audio'
 
 class MusicController {
@@ -38,6 +38,14 @@ class MusicController {
 
   seekTime() {
     return this.player.getCurrentTime();
+  }
+
+  next() {
+    this.placebo.state.switchPlayingMusic(SwitchDirection.Next)
+  }
+
+  prev() {
+    this.placebo.state.switchPlayingMusic(SwitchDirection.Prev)
   }
 
   switchPlayingStatus() {

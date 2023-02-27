@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 1181468 */
-  src: url('iconfont.woff2?t=1667919844864') format('woff2'),
-       url('iconfont.woff?t=1667919844864') format('woff'),
-       url('iconfont.ttf?t=1667919844864') format('truetype');
+  src: url('iconfont.woff2?t=1677114170960') format('woff2'),
+       url('iconfont.woff?t=1677114170960') format('woff'),
+       url('iconfont.ttf?t=1677114170960') format('truetype');
 }
 
 .iconfont {
@@ -123,6 +123,10 @@
 
 .icon-you:before {
   content: "\e63b";
+}
+
+.icon-you-copy:before {
+  content: "\ea6e";
 }
 
 .icon-menu:before {

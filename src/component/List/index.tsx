@@ -56,7 +56,7 @@ const List = forwardRef((props: Props, ref) => {
               <i className="iconfont icon-close" onClick={() => search(false)}></i>
             </div>
           : <div className={styles.header}>
-              <div className={styles.td} onClick={() => search(true)}>TRACK / SEARCH</div>
+              <div className={styles.td}>TRACK</div>
               {/*<div className={styles.td} onClick={() => search(true)}>NAME</div>*/}
               {/*<div className={styles.td}>ARTIST</div>*/}
               <div className={styles.td}>TIME</div>

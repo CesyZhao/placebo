@@ -39,3 +39,20 @@
 		height: 100%;
 	}
 }
+
+.navigator {
+	display: flex;
+	align-items: center;
+	margin-right: 12px;
+	color: #777;
+	i {
+		font-size: 12px;
+		margin-right: 4px;
+		cursor: pointer;
+	}
+	.disabled {
+		color: #aaa;
+		cursor: not-allowed !important;
+		pointer-events: none;
+	}
+}

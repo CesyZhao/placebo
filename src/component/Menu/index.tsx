@@ -1,4 +1,4 @@
-import React, {useCallback} from "react";
+import React, { useCallback, useMemo } from 'react'
 import { menus, Menu as MenuEnum, MenuPathMap } from '../../defination/menu'
 import styles from './style.module.scss';
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
@@ -6,7 +6,7 @@ import {
 	updateUserFavorites,
 	userAvatar, userProfile
 } from '../../store/module/user'
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useNavigate, useLocation} from "react-router-dom";
 import { isEmpty } from 'lodash';
 import { getList, getUserPlaylist } from '../../api/music'
 import { useMount } from 'ahooks'
@@ -16,10 +16,11 @@ import placebo from '../../model/Placebo'
 
 const Menu = () => {
 	const navigate = useNavigate();
+	const location = useLocation();
 	// const avatar = useAppSelector(userAvatar);
 	const profile = useAppSelector(userProfile);
 	const dispatch = useAppDispatch()
-	const avatar = profile?.avatarUrl
+	const avatar = profile?.avatarUrl;
 	const signed = !isEmpty(avatar);
 
 
@@ -43,6 +44,27 @@ const Menu = () => {
 		}
 	}, [])
 
+	const move = useCallback((direction: number) => {
+		navigate(direction)
+	}, [])
+
+	const back = useCallback(() => {
+		move(-1)
+	}, [])
+
+	const forward = useCallback(() => {
+		move(1)
+	}, [])
+
+	const canGoBack = useMemo(() => {
+		return location.pathname !== '/'
+	}, [location])
+
+	const canGoForward = useMemo(() => {
+		const { length, state } = window.history
+		return state < length - 1;
+	}, [window.history])
+
 	useMount(() => {
 		getFavoriteList(profile.userId)
 	})
@@ -61,6 +83,10 @@ const Menu = () => {
 						)
 					})
 				}
+			</div>
+			<div className={styles.navigator}>
+				<i className={`iconfont icon-you-copy ${canGoBack ? '' : styles.disabled}`} onClick={back}></i>
+				<i className="iconfont icon-you" onClick={forward}></i>
 			</div>
 			<div className={styles.avatarWrapper} >
 				{

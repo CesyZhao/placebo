@@ -27,20 +27,11 @@ const PlayingPanel = () => {
 		placebo.screen.togglePanel(false);
 	}, []);
 
-	const handleSwitch = useCallback((mode: SwitchDirection) => {
-
-	}, []);
-
-	const togglePlaying = useCallback(() => {
-
-	}, []);
-
 	const getLyricById = useCallback(async (id: number) => {
 		let lyric, translatedLyric;
 
 		try {
 			const { lyric: l = '', translatedLyric: t = '' } = await placebo.music.getLyric(id);
-			console.log(l);
 			lyric = l;
 			translatedLyric = t;
 		} catch (e) {
@@ -73,7 +64,8 @@ const PlayingPanel = () => {
 				fillColor: { gradient: ["#9B30FF", "#7BA3FF", "#57E1E7"], rotate: 70 },
 				glow: { strength: 35, color: "#7BA3FF" },
 				diameter: 220,
-				...commonOptions
+				...commonOptions,
+				count: 35
 			}));
 			// @ts-ignore
 			wave.addAnimation(new wave.animations.Glob({
@@ -87,8 +79,8 @@ const PlayingPanel = () => {
 	}, [showPlayingPanel])
 
 	useEffect(() => {
-		getLyricById(music.id)
-	}, [music])
+		showPlayingPanel && getLyricById(music.id)
+	}, [music, showPlayingPanel])
 
   return (
     !isEmpty(music)
@@ -108,9 +100,9 @@ const PlayingPanel = () => {
 	                      {/*  // this.state.mode === '歌词模式' &&*/}
 	                      {/*}*/}
 						    {/*<i className={`iconfont ${favorites.get(song.id) ? 'icon-iosheart' : 'icon-iosheartoutline'}`} onClick={() => this.likeSong(song)}></i>*/}
-						    <i className="iconfont icon-ios-rewind" onClick={() => handleSwitch(SwitchDirection.Prev)}></i>
-						    <i className={`iconfont ${playing ? 'icon-ios-pause' : 'icon-iosplay'}`} onClick={togglePlaying}></i>
-						    <i className="iconfont icon-ios-fastforward" onClick={() => handleSwitch(SwitchDirection.Next)}></i>
+						    <i className="iconfont icon-ios-rewind" onClick={() => placebo.music.prev()}></i>
+						    <i className={`iconfont ${playing ? 'icon-ios-pause' : 'icon-iosplay'}`} onClick={() => placebo.music.switchPlayingStatus()}></i>
+						    <i className="iconfont icon-ios-fastforward" onClick={() => placebo.music.next()}></i>
 	                      {/* <Link to="/comment" onClick={this.dismiss}><i className="iconfont icon-aui-icon-comment"></i></Link> */}
 					    </div>
 					    <div className={styles.info}>

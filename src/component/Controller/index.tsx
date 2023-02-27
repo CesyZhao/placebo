@@ -64,42 +64,46 @@ const Controller = () => {
 	}, [])
 
 	return (
-		<div className={styles.controller}>
-			<div className={styles.progressBar}>
-        <div className={`${styles.progress} ${playing ? styles.playing : styles.paused}`} style={{ animationDuration: `${music.duration}ms`, animationName: `${type ? styles.play : styles.replay}` }}></div>
-			</div>
-			<div className={styles.cover}>
-				{/*<img alt="playing-cover" src={music?.album?.picUrl.replace('100y100', '965y965')} onLoad={handleImageLoad}></img>*/}
-				<LazyImage url={music?.album?.picUrl}></LazyImage>
-			</div>
-			<div className={styles.contents}>
-				<div className={styles.coverWrapper}>
-					<img src={music?.album?.picUrl} alt=""/>
-					<div className={styles.info}>
-						<div>
-							<span>{music.name}</span>
-							 -
-							<span> {music?.artists?.map(artist => artist.name).join('/')} </span>
-						</div>
-						<div>
+			music.id
+			?
+			<div className={styles.controller}>
+				<div className={styles.progressBar}>
+					<div className={`${styles.progress} ${playing ? styles.playing : styles.paused}`} style={{ animationDuration: `${music.duration}ms`, animationName: `${type ? styles.play : styles.replay}` }}></div>
+				</div>
+				<div className={styles.cover}>
+					{/*<img alt="playing-cover" src={music?.album?.picUrl.replace('100y100', '965y965')} onLoad={handleImageLoad}></img>*/}
+					<LazyImage url={music?.album?.picUrl}></LazyImage>
+				</div>
+				<div className={styles.contents}>
+					<div className={styles.coverWrapper}>
+						<img src={music?.album?.picUrl} alt=""/>
+						<div className={styles.info}>
+							<div>
+								<span>{music.name}</span>
+								-
+								<span> {music?.artists?.map(artist => artist.name).join('/')} </span>
+							</div>
+							<div>
 							<span className="pc-controller-time">
                 {` ${formatDuration(currentTime * 1000)} / ${formatDuration(music.duration)} `}
               </span>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div className={styles.ops}>
-					<i className="iconfont icon-ios-rewind" onClick={() => dispatch(switchMusic(SwitchDirection.Prev))}></i>
-					<i className={`iconfont ${playing ? 'icon-ios-pause' : 'icon-iosplay'}`} onClick={onPause}></i>
-					<i className="iconfont icon-ios-fastforward" onClick={() => dispatch(switchMusic(SwitchDirection.Next))}></i>
-				</div>
-				<div className={styles.controls}>
-					<i className={`iconfont ${liked ? 'icon-heart1' : 'icon-heart'}`} ></i>
-					<i className={`iconfont ${currentModeIcon}`} onClick={switchMode}></i>
-					<span onClick={() => placebo.screen.togglePanel(true)}>LRC</span>
+					<div className={styles.ops}>
+						<i className="iconfont icon-ios-rewind" onClick={() => placebo.music.prev()}></i>
+						<i className={`iconfont ${playing ? 'icon-ios-pause' : 'icon-iosplay'}`} onClick={onPause}></i>
+						<i className="iconfont icon-ios-fastforward" onClick={() => placebo.music.next()}></i>
+					</div>
+					<div className={styles.controls}>
+						<i className={`iconfont ${liked ? 'icon-heart1' : 'icon-heart'}`} ></i>
+						<i className={`iconfont ${currentModeIcon}`} onClick={switchMode}></i>
+						<span onClick={() => placebo.screen.togglePanel(true)}>LRC</span>
+					</div>
 				</div>
 			</div>
-		</div>
+			:
+			<div className={styles.noMusic}></div>
 	)
 }
 

@@ -31,7 +31,7 @@ canvas{
 	right: 0;
 	top: 0;
 	bottom: 0;
-	background: rgba(255, 255, 255, .7);
+	background: rgba(255, 255, 255, .3);
 	overflow: hidden;
 	z-index: 3;
 	// display: flex;
@@ -63,32 +63,7 @@ canvas{
 		display: flex;
 		flex-direction: column;
 	}
-	.toolbar{
-		position: absolute;
-		bottom: 60px;
-		left: 0;
-		width: 500px;
-		height: 60px;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		//background: rgba(4, 4, 4, .3);
-		i{
-			display: inline-block;
-			width: 40px;
-			height: 40px;
-			font-size: 20px;
-			line-height: 40px;
-			text-align: center;
-			margin-right: 16px;
-			border: 1px solid rgba(170, 170, 170, .3);
-			border-radius: 50%;
-			cursor: pointer;
-			&:nth-last-child(1){
-				margin-right: 0;
-			}
-		}
-	}
+
 	.imgWrapper{
 		position: absolute;
 		top: 0;
@@ -125,7 +100,7 @@ canvas{
 	img{
 		width: 102%;
 		height: 102%;
-		filter: blur(15px);
+		filter: blur(30px);
 	}
 }
 .iconDismiss{
@@ -147,5 +122,34 @@ canvas{
 	text-overflow: ellipsis;
 	&:hover{
 		color: #f500d8;
+	}
+}
+
+
+.toolbar{
+	position: absolute;
+	bottom: 60px;
+	left: 0;
+	width: 500px;
+	height: 60px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 22;
+	//background: rgba(4, 4, 4, .3);
+	i{
+		display: inline-block;
+		width: 40px;
+		height: 40px;
+		font-size: 20px;
+		line-height: 40px;
+		text-align: center;
+		margin-right: 16px;
+		border: 1px solid rgba(170, 170, 170, .3);
+		border-radius: 50%;
+		cursor: pointer;
+		&:nth-last-child(1){
+			margin-right: 0;
+		}
 	}
 }

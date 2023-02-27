@@ -15,7 +15,7 @@ export function formatList(list: any) {
         album: {
           id: al.id.toString(),
           name: al.name,
-          picUrl: al.picUrl.endsWith('?param=100y100') ? al.picUrl : `${al.picUrl}?param=100y100`,
+          picUrl: al.picUrl?.endsWith('?param=100y100') ? al.picUrl : `${al.picUrl}?param=100y100`,
           link: `/player/1/${al.id}`
         },
         artists: ar.map((e: any) => ({

@@ -25,12 +25,9 @@ const RouteContainer = () => {
 
 	const location = useLocation()
 
-	console.log(location.pathname)
-
 	const currentOutlet = useOutlet()
 	const { nodeRef } = routes.find((route) => route.path === location.pathname) ?? {} as any
 
-	console.log(currentOutlet)
 
 	return (
 		<div className={styles.routeContainer}>

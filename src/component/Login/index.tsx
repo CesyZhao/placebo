@@ -77,11 +77,9 @@ const Login = () => {
 
 	const getQrUrl = useCallback(async (qrKey: string) => {
 		try {
-			console.log('+++++++++')
 			const { qrimg } = await getQrCode(qrKey);
 			setQrCode(qrimg);
 			timer.current = setInterval(() => {
-				console.log('timer-----------');
 				checkQrStatus(qrKey);
 			}, 3000);
 		} catch (e) {
@@ -91,7 +89,6 @@ const Login = () => {
 
 	const getQrKeyString = useCallback(async () => {
 		try {
-			console.log('///////////////');
 			const { unikey } = await getQrKey();
 			setQrKey(unikey);
 			getQrUrl(unikey);
