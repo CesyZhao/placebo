@@ -13,7 +13,7 @@ import placebo from '../../model/Placebo'
 import LazyImage from '../LazyImage'
 
 
-const CANVAS_WIDTH = 500;
+const CANVAS_WIDTH = 400;
 const CANVAS_HEIGHT = 548;
 const PlayingPanel = () => {
 
@@ -56,21 +56,20 @@ const PlayingPanel = () => {
 				lineWidth: 0,
 				count: 20,
 				rounded: true,
-				frequencyBand: "highs",
 				mirroredX: true
 			}
 			// @ts-ignore
 			wave.addAnimation(new wave.animations.Glob({
 				fillColor: { gradient: ["#9B30FF", "#7BA3FF", "#57E1E7"], rotate: 70 },
-				glow: { strength: 35, color: "#7BA3FF" },
-				diameter: 220,
+				glow: { strength: 15, color: "#7BA3FF" },
+				diameter: 160,
 				...commonOptions,
-				count: 35
+				count: 45
 			}));
 			// @ts-ignore
 			wave.addAnimation(new wave.animations.Glob({
 				fillColor: { gradient: ["#57E1E7", "#7BA3FF", "#9B30FF"], rotate: 90 },
-				glow: { strength: 35, color: "#9B30FF" },
+				glow: { strength: 5, color: "#9B30FF" },
         diameter: 160,
 				...commonOptions,
 				count: 25

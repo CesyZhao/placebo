@@ -107,7 +107,7 @@ const Album = () => {
 								<div> {album.tags.join(' ')} </div>
 							}
 						</div>
-						<div> <span className={styles.number}>{humanNumber(album.playCount)}</span> PLAYED  <span className={styles.number}>{ humanNumber(album.subscribedCount) || 0 }</span> SUBSCRIBED</div>
+						<div className={styles.playCount}> <span className={styles.number}>{humanNumber(album.playCount)}</span> PLAYED  <span className={styles.number}>{ humanNumber(album.subscribedCount) || 0 }</span> SUBSCRIBED</div>
 						<div className={styles.operations}>
 							<div className={`${isOwner ? styles.disabled : ''}`}> <i className={`iconfont ${album.subscribed ? 'icon-yishoucang_huaban1' : 'icon-shoucang'}`}></i> </div>
 							<div className={styles.playAll} onClick={handleAlbumPlay}> <i className={`iconfont ${isCurrentListPlaying ? 'icon-pause' : 'icon-24gl-play'}`}></i> </div>

@@ -1,10 +1,10 @@
 import React, {
-  ComponentProps,
+  ComponentProps, createRef,
   FormEvent,
   forwardRef,
-  useCallback,
+  useCallback, useEffect,
   useImperativeHandle,
-  useMemo,
+  useMemo, useRef,
   useState
 } from 'react'
 import {AvailableMusic} from "../../defination/music";
@@ -24,6 +24,7 @@ const List = forwardRef((props: Props, ref) => {
 
   const [searching, setSearching] = useState(false);
   const [filterList, setList] = useState([] as AvailableMusic[]);
+  const inputRef: any = createRef();
 
   useImperativeHandle(ref, () => {
     return {
@@ -33,7 +34,6 @@ const List = forwardRef((props: Props, ref) => {
 
   const search = useCallback((status: boolean) => {
     setSearching(status);
-    if (!status) setList(props.list);
   }, []);
 
   const onSearch = useCallback(debounce((e: FormEvent) => {
@@ -45,14 +45,18 @@ const List = forwardRef((props: Props, ref) => {
 
   const list = useMemo(() => {
     return searching ? filterList : props.list;
-  }, [searching, props])
+  }, [searching, filterList, props])
+
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, [searching])
 
   return (
     <div className={styles.wrapper}>
       {
         searching
           ? <div className={styles.header}>
-              <input type="text" placeholder="Search..." onInput={onSearch}/>
+              <input type="text" placeholder="Search..." onInput={onSearch} ref={inputRef}/>
               <i className="iconfont icon-close" onClick={() => search(false)}></i>
             </div>
           : <div className={styles.header}>

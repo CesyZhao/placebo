@@ -62,8 +62,8 @@ const Menu = () => {
 
 	const canGoForward = useMemo(() => {
 		const { length, state } = window.history
-		return state < length - 1;
-	}, [window.history])
+		return state.idx < length - 1;
+	}, [window.history, location])
 
 	useMount(() => {
 		getFavoriteList(profile.userId)
@@ -86,7 +86,7 @@ const Menu = () => {
 			</div>
 			<div className={styles.navigator}>
 				<i className={`iconfont icon-you-copy ${canGoBack ? '' : styles.disabled}`} onClick={back}></i>
-				<i className="iconfont icon-you" onClick={forward}></i>
+				<i className={`iconfont icon-you ${canGoForward ? '' : styles.disabled}`} onClick={forward}></i>
 			</div>
 			<div className={styles.avatarWrapper} >
 				{

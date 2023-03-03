@@ -31,14 +31,14 @@ canvas{
 	right: 0;
 	top: 0;
 	bottom: 0;
-	background: rgba(255, 255, 255, .3);
+	background: rgba(255, 255, 255, .7);
 	overflow: hidden;
 	z-index: 3;
 	// display: flex;
 	.visualizorWrapper{
 		position: absolute;
 		top: 0;
-		width: 500px;
+		width: 400px;
 		z-index: 5;
 		transition: all .3s ease-in-out;
 		height: 100%;
@@ -69,7 +69,7 @@ canvas{
 		top: 0;
 		left: 0;
 		bottom: 0;
-		width: 500px;
+		width: 400px;
 		z-index: 6;
 		display: flex;
 		justify-content: center;
@@ -130,7 +130,7 @@ canvas{
 	position: absolute;
 	bottom: 60px;
 	left: 0;
-	width: 500px;
+	width: 400px;
 	height: 60px;
 	display: flex;
 	align-items: center;
