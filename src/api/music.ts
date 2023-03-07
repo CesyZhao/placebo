@@ -1,5 +1,5 @@
 import http, { RequestConfig } from "../util/http";
-import {AlbumDetail, LyricResponse, PersonalizedResponse, TopListResponse} from "../defination/music";
+import {AlbumDetail, FMResponse, FMSong, LyricResponse, PersonalizedResponse, TopListResponse} from "../defination/music";
 
 export const getPersonalized = (): Promise<PersonalizedResponse> => {
   return http.get('/personalized', { rawData: true } as RequestConfig);
@@ -27,3 +27,6 @@ export const getUserPlaylist = (uid: number) => {
   return http.get(`/user/playlist?uid=${uid}&limit=9999`,  { rawData: true } as RequestConfig)
 };
 
+export const getPersonalFM = (): Promise<FMResponse> => {
+  return http.get('/personal_fm',  { rawData: true } as RequestConfig)
+};

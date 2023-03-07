@@ -30,6 +30,17 @@ export interface Song {
 	ar: Artist[];
 }
 
+export interface FMSong {
+	name: string;
+	id: number;
+	album: Album;
+	artists: Artist[];
+}
+
+export interface FMResponse {
+	data: FMSong[];
+}
+
 export interface AvailableMusic {
 	id: number,
 	name: string,
@@ -100,4 +111,9 @@ export interface LyricResponse {
 
 export interface TopListResponse {
 	list: PlayList[];
+}
+
+
+export enum SpecialAlbum {
+	FM = -1
 }

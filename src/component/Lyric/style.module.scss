@@ -34,14 +34,17 @@
 		// overflow: hidden;
 		//white-space: nowrap;
 		color: $color-light-1;
+		margin: 12px 0;
 	}
 	.active{
-		color: $color-normal;
+		background: $main-theme-purple;
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
 	}
 }
 .lyricRow,.tlyricRow{
 	line-height: 24px;
-	font-size: 13px;
+	font-size: 16px;
 	white-space: normal;
 }
 .tlyricRow{

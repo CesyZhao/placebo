@@ -1,6 +1,6 @@
 import Player from './Player'
-import { getAlbum, getList, getLyric, getPersonalized, getRankingList, getSongUrl } from '../api/music'
-import { Album, SwitchDirection } from '../defination/music'
+import { getAlbum, getList, getLyric, getPersonalFM, getPersonalized, getRankingList, getSongUrl } from '../api/music'
+import { Album, AvailableAlbum, SpecialAlbum, SwitchDirection } from '../defination/music'
 import { Placebo } from './Placebo'
 import { formatList } from '../util/audio'
 
@@ -129,6 +129,21 @@ class MusicController {
 
     } catch (e) {
       return [];
+    }
+  }
+
+  async getPersonalFM() {
+    try {
+      const { data } = await getPersonalFM()
+      let album: AvailableAlbum = {
+        playlist: formatList(data),
+        id: SpecialAlbum.FM,
+        name: '私人 FM'
+      };
+      this.updatePlayingAlbum(album, 0);
+      this.placebo.screen.showPanel()
+    } catch (error) {
+
     }
   }
 }
