@@ -1,6 +1,6 @@
 import Player from './Player'
 import { getAlbum, getList, getLyric, getPersonalFM, getPersonalized, getRankingList, getSongUrl } from '../api/music'
-import { Album, AvailableAlbum, SpecialAlbum, SwitchDirection } from '../defination/music'
+import { Album, AvailableAlbum, AvailableMusic, SpecialAlbum, SwitchDirection } from '../defination/music'
 import { Placebo } from './Placebo'
 import { formatList } from '../util/audio'
 

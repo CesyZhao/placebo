@@ -28,5 +28,6 @@ export const getUserPlaylist = (uid: number) => {
 };
 
 export const getPersonalFM = (): Promise<FMResponse> => {
-  return http.get('/personal_fm',  { rawData: true } as RequestConfig)
+  const timestamp = new Date().getTime();
+  return http.get(`/personal_fm?timestamp=${timestamp}`,  { rawData: true } as RequestConfig)
 };

@@ -142,6 +142,11 @@ $controller-height: 48px;
 	}
 }
 
+.hidden {
+	opacity: 0;
+	pointer-events: none;
+}
+
 .noMusic {
 	position: fixed;
 	left: 0;

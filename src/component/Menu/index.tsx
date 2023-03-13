@@ -13,23 +13,37 @@ import { useMount } from 'ahooks'
 import event from '../../util/event'
 import { PlaceboEvent } from '../../defination/event'
 import placebo from '../../model/Placebo'
+import { AvailableAlbum, SpecialAlbum } from '../../defination/music';
 
 const Menu = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
-	// const avatar = useAppSelector(userAvatar);
 	const profile = useAppSelector(userProfile);
-	const dispatch = useAppDispatch()
+	const dispatch = useAppDispatch();
 	const avatar = profile?.avatarUrl;
 	const signed = !isEmpty(avatar);
+
+	const { playing: playingSelector, currentAlbum: currentAlbumSelector } = placebo.music;
+
+	const currentAlbum = useAppSelector<AvailableAlbum>(currentAlbumSelector);
+	const playing = useAppSelector<boolean>(playingSelector);
+
 
 
 	const handleMenuClick = useCallback((e: any, menu: any) => {
 		if (menu.path === MenuPathMap.get(MenuEnum.FM)) {
-			e.preventDefault()
-			placebo.screen.togglePanel(true)
+			e.preventDefault();
+			if (currentAlbum.id === SpecialAlbum.FM) {
+				if (!playing) {
+					placebo.music.switchPlayingStatus();
+				}
+				placebo.screen.togglePanel(true);
+			} else {
+				placebo.music.getPersonalFM();
+				placebo.screen.togglePanel(true);
+			}
 		}
-	}, [])
+	}, [currentAlbum, playing])
 
 
 	const getFavoriteList = useCallback(async (id: number) => {

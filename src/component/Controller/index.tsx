@@ -3,7 +3,7 @@ import styles from "./styles.module.scss";
 import {useAppDispatch, useAppSelector} from "../../store/hooks";
 import { switchMusic } from '../../store/module/controller'
 import {formatDuration} from "../../util/number";
-import { AvailableMusic, ModeList, SwitchDirection } from '../../defination/music'
+import { AvailableAlbum, AvailableMusic, ModeList, SpecialAlbum, SwitchDirection } from '../../defination/music'
 import placebo from '../../model/Placebo'
 import LazyImage from '../LazyImage'
 
@@ -12,6 +12,7 @@ const Controller = () => {
 
   const {
     currentMusic: currentMusicSelector,
+		currentAlbum: currentAlbumSelector,
     playing: playingSelector,
     favorites: favoritesSelector,
     playMode
@@ -22,26 +23,43 @@ const Controller = () => {
 	const dispatch = useAppDispatch();
 
   const music = useAppSelector<AvailableMusic>(currentMusicSelector) || {};
+  const currentAlbum = useAppSelector<AvailableAlbum>(currentAlbumSelector) || {};
   const playing = useAppSelector(playingSelector) || false;
   const favorites = useAppSelector(favoritesSelector) || [];
   const currentMode = useAppSelector(playMode);
 
 	const currentModeIcon = useMemo(() => {
 		return ModeList.get(currentMode);
-	}, [currentMode])
+	}, [currentMode]);
 
 	const liked = useMemo(() => {
 		const result = favorites.includes(+music.id)
 		return result
-	}, [favorites, music])
+	}, [favorites, music]);
+
+	const isPersonalFM = useMemo(() => {
+		return currentAlbum.id === SpecialAlbum.FM
+	}, []);
 
 	const switchMode = useCallback(() => {
 		placebo.music.switchPlayMode();
-	}, [])
+	}, []);
 
 	const onPause = useCallback(() => {
 		placebo.music.switchPlayingStatus();
 	}, []);
+
+	const handleNext = useCallback(() => {
+		const { playlist, id } = currentAlbum
+		if (id === SpecialAlbum.FM) {
+			const index = playlist.findIndex(s => s.id === music.id)
+			if (index === playlist.length - 1) {
+				placebo.music.getPersonalFM();
+				return
+			}
+		}
+		placebo.music.next()
+	}, [currentAlbum, music]);
 
 
 	useEffect(() => {
@@ -91,13 +109,15 @@ const Controller = () => {
 						</div>
 					</div>
 					<div className={styles.ops}>
-						<i className="iconfont icon-ios-rewind" onClick={() => placebo.music.prev()}></i>
+						<i className={`iconfont icon-ios-rewind ${ isPersonalFM ? styles.hidden : '' }`} onClick={() => placebo.music.prev()}></i>
 						<i className={`iconfont ${playing ? 'icon-ios-pause' : 'icon-iosplay'}`} onClick={onPause}></i>
-						<i className="iconfont icon-ios-fastforward" onClick={() => placebo.music.next()}></i>
+						<i className="iconfont icon-ios-fastforward" onClick={handleNext}></i>
 					</div>
 					<div className={styles.controls}>
 						<i className={`iconfont ${liked ? 'icon-heart1' : 'icon-heart'}`} ></i>
-						<i className={`iconfont ${currentModeIcon}`} onClick={switchMode}></i>
+						{
+							!isPersonalFM && <i className={`iconfont ${currentModeIcon}`} onClick={switchMode}></i>
+						}
 						<span onClick={() => placebo.screen.togglePanel(true)}>LRC</span>
 					</div>
 				</div>

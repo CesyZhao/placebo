@@ -27,7 +27,6 @@ const Home = () => {
 
 	useMount(() => {
 		getPersonalizedAlbums();
-		placebo.music.getPersonalFM();
 	});
 
 	const [currentIndex, setCurrentIndex] = useState(0);
