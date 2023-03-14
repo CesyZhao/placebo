@@ -8,6 +8,7 @@ import {
   updatePlayingStatus
 } from '../store/module/controller'
 import { SwitchDirection } from '../defination/music'
+import { updateUser } from '../store/module/user';
 
 class StateController {
 
@@ -56,7 +57,7 @@ class StateController {
   }
 
   set userProfile(profile: any) {
-//    store.dispatch()
+    store.dispatch(updateUser(profile))
   }
 
   switchPlayingMusic(direction: SwitchDirection) {

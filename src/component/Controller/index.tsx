@@ -39,7 +39,7 @@ const Controller = () => {
 
 	const isPersonalFM = useMemo(() => {
 		return currentAlbum.id === SpecialAlbum.FM
-	}, []);
+	}, [currentAlbum]);
 
 	const switchMode = useCallback(() => {
 		placebo.music.switchPlayMode();

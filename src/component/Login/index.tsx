@@ -15,18 +15,13 @@ import {
 } from "../../defination/user";
 
 import { useAppDispatch } from "../../store/hooks";
-import { updateUser } from "../../store/module/user";
+import Placebo from "../../model/Placebo";
 
 const Login = () => {
 	const navigate = useNavigate();
 	const goHome = useCallback(() => {
 		navigate('/');
 	}, []);
-
-	const [errorText, setErrorText] = useState('');
-
-	const phoneRef = useRef<HTMLInputElement>(null);
-	const passwordRef = useRef<HTMLInputElement>(null);
 
 	const dispatch = useAppDispatch();
 
@@ -37,35 +32,18 @@ const Login = () => {
 
 	let timer: any = useRef();
 
-	const handleSign = useCallback(async () => {
-		// 先清掉错误提示
-		setErrorText('');
-		const { value: phone } = phoneRef.current as HTMLInputElement;
-		const { value: password } = passwordRef.current as HTMLInputElement;
-		// const md5Password = md5.hash(password);
-		try {
-			const result = await login({ phone, password });
-		} catch (e) {
-			setErrorText('Invalid phone number or password!')
-		}
-	}, [phoneRef, passwordRef]);
-
-	const clearError = useCallback(() =>	setErrorText(''), []);
-
 	const getAccountInfo = useCallback(async () => {
 		try {
-			const { profile } = await getAccount();
-			const { level } = await getUserDetail(profile.userId);
-			dispatch(updateUser({ ...profile, level }));
+			await Placebo.user.getUserProfile()
 			goHome();
 		} catch (e) {
-			setErrorText('Something went wrong, please try again!');
+			setMessage('Something went wrong, please try again!');
 		}
 	}, []);
 
 	const checkQrStatus = useCallback(async (qrKey: string) => {
 		try {
-			const { code } = await checkQrCodeStatus(qrKey);
+			const { code } = await Placebo.user.checkQrStatus(qrKey);
 			setMessage(QRCodeStatusMap.get(code) || '');
 			if (code === QRCodeStatus.Authorized) {
 				getAccountInfo();
@@ -77,7 +55,7 @@ const Login = () => {
 
 	const getQrUrl = useCallback(async (qrKey: string) => {
 		try {
-			const { qrimg } = await getQrCode(qrKey);
+			const { qrimg } = await Placebo.user.getQrUrl(qrKey);
 			setQrCode(qrimg);
 			timer.current = setInterval(() => {
 				checkQrStatus(qrKey);
@@ -89,7 +67,7 @@ const Login = () => {
 
 	const getQrKeyString = useCallback(async () => {
 		try {
-			const { unikey } = await getQrKey();
+			const { unikey } = await Placebo.user.getQrKeyString();
 			setQrKey(unikey);
 			getQrUrl(unikey);
 		} catch (e) {
@@ -127,15 +105,6 @@ const Login = () => {
 						message && <><i className="iconfont icon-refresh"></i> { message }</>
 					}
 				</p>
-				{/*<p>Hi there, sign in and just enjoy!</p>*/}
-				{/*<section className={styles.loginForm}>*/}
-				{/*	<input type="text" placeholder="Phone number" ref={phoneRef} onInput={clearError} />*/}
-				{/*	<input type="password" placeholder="Password" ref={passwordRef} onInput={clearError} />*/}
-				{/*	<div className={styles.errorText}>{ errorText }</div>*/}
-				{/*	<button onClick={handleSign}>*/}
-				{/*		Sign in*/}
-				{/*	</button>*/}
-				{/*</section>*/}
 			</div>
 		</>
 	)
