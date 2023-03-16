@@ -6,13 +6,19 @@ import { formatList } from '../util/audio'
 
 class MusicController {
 
-  player!: Player;
+  player: Player;
 
   placebo: Placebo;
+
+  personalizedAlbums: Album[];
+
+  currentActiveAlbum: number;
+
   constructor(placebo: Placebo) {
     this.player = new Player();
     this.placebo = placebo;
-
+    this.personalizedAlbums = [];
+    this.currentActiveAlbum = 0;
   }
 
   get playing() {
@@ -33,6 +39,10 @@ class MusicController {
 
   get currentAlbum() {
     return this.placebo.state.currentAlbum;
+  }
+
+  updateCurrentActiveAlbum(index: number) {
+    this.currentActiveAlbum = index;
   }
 
 
@@ -109,6 +119,7 @@ class MusicController {
     } catch (e) {
       personalizedList = [];
     }
+    this.personalizedAlbums = personalizedList;
     return personalizedList;
   }
 

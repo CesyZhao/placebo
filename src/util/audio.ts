@@ -1,3 +1,5 @@
+import { Artist } from '../defination/music'
+
 export function formatList(list: any) {
   let playlist
   try{
@@ -45,4 +47,9 @@ export function formatLyric(lyric: string){
     result[times] = content;
   })
   return result
+}
+
+
+export function getArtistNames(artists: Artist[]) {
+  return artists.map(a => a.name).join('/');
 }

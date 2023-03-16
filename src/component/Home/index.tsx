@@ -6,12 +6,12 @@ import styles from './style.module.scss';
 import { take } from "lodash";
 import {Link} from "react-router-dom";
 import {humanNumber} from "../../util/number";
-import Loading from '../Loading'
-import placebo from '../../model/Placebo'
+import Loading from '../Loading';
+import placebo from '../../model/Placebo';
 
 const Home = () => {
 
-	const [albums, setAlbums] = useState<Album[]>([]);
+	const [albums, setAlbums] = useState<Album[]>(placebo.music.personalizedAlbums);
 	const [loading, setLoading] = useState(false);
 
 	const getPersonalizedAlbums = useCallback(async () => {
@@ -26,10 +26,14 @@ const Home = () => {
 	}, [])
 
 	useMount(() => {
-		getPersonalizedAlbums();
+		if (!albums.length) {
+			getPersonalizedAlbums();
+		}
 	});
 
-	const [currentIndex, setCurrentIndex] = useState(0);
+	console.log(placebo.music.currentActiveAlbum);
+
+	const [currentIndex, setCurrentIndex] = useState(placebo.music.currentActiveAlbum);
 	const getClassName = (index: number) => {
 		if (currentIndex === index) {
 			return styles.current;
@@ -53,10 +57,12 @@ const Home = () => {
 		} else if (nextIndex === albums.length) {
 			nextIndex = 0
 		}
+		placebo.music.updateCurrentActiveAlbum(nextIndex);
 		setCurrentIndex(nextIndex);
 	}
 
 	const currentAlbum = albums[currentIndex] || {};
+
 
 	return (
 		loading

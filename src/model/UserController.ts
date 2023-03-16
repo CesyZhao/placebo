@@ -1,4 +1,4 @@
-import { checkQrCodeStatus, getAccount, getQrCode, getQrKey, getUserDetail } from "../api/user";
+import { checkQrCodeStatus, getAccount, getLoginStatus, getQrCode, getQrKey, getUserDetail, refreshLoginStatus } from "../api/user";
 import { Placebo } from "./Placebo";
 
 class UserController {
@@ -32,8 +32,14 @@ class UserController {
     this.placebo.state.userProfile = { ...profile, level };
   }
 
-  refreshLoginStatus() {
-    
+  async refreshLoginStatus() {
+    try {
+      const { profile } = await getLoginStatus()
+      console.log(profile, '--------------')
+      profile ? refreshLoginStatus() : (this.placebo.state.userProfile = {})
+    } catch (error) {
+      this.placebo.state.userProfile = {}
+    }
   }
 
 }

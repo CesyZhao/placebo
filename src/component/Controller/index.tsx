@@ -1,8 +1,8 @@
-import React, {useCallback, useEffect, useMemo, useState} from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import styles from "./styles.module.scss";
-import {useAppDispatch, useAppSelector} from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { switchMusic } from '../../store/module/controller'
-import {formatDuration} from "../../util/number";
+import { formatDuration } from "../../util/number";
 import { AvailableAlbum, AvailableMusic, ModeList, SpecialAlbum, SwitchDirection } from '../../defination/music'
 import placebo from '../../model/Placebo'
 import LazyImage from '../LazyImage'
@@ -10,23 +10,23 @@ import LazyImage from '../LazyImage'
 
 const Controller = () => {
 
-  const {
-    currentMusic: currentMusicSelector,
+	const {
+		currentMusic: currentMusicSelector,
 		currentAlbum: currentAlbumSelector,
-    playing: playingSelector,
-    favorites: favoritesSelector,
-    playMode
-  } = placebo.music;
+		playing: playingSelector,
+		favorites: favoritesSelector,
+		playMode
+	} = placebo.music;
 
 	const [currentTime, setCurrentTime] = useState(0);
-  const [type, setType] = useState(1);
+	const [type, setType] = useState(1);
 	const dispatch = useAppDispatch();
 
-  const music = useAppSelector<AvailableMusic>(currentMusicSelector) || {};
-  const currentAlbum = useAppSelector<AvailableAlbum>(currentAlbumSelector) || {};
-  const playing = useAppSelector(playingSelector) || false;
-  const favorites = useAppSelector(favoritesSelector) || [];
-  const currentMode = useAppSelector(playMode);
+	const music = useAppSelector<AvailableMusic>(currentMusicSelector) || {};
+	const currentAlbum = useAppSelector<AvailableAlbum>(currentAlbumSelector) || {};
+	const playing = useAppSelector(playingSelector) || false;
+	const favorites = useAppSelector(favoritesSelector) || [];
+	const currentMode = useAppSelector(playMode);
 
 	const currentModeIcon = useMemo(() => {
 		return ModeList.get(currentMode);
@@ -76,13 +76,13 @@ const Controller = () => {
 			setCurrentTime(placebo.music.seekTime());
 		}, 1000);
 
-    return () => {
-      clearInterval(timer);
-    }
+		return () => {
+			clearInterval(timer);
+		}
 	}, [])
 
 	return (
-			music.id
+		music.id
 			?
 			<div className={styles.controller}>
 				<div className={styles.progressBar}>
@@ -94,7 +94,7 @@ const Controller = () => {
 				</div>
 				<div className={styles.contents}>
 					<div className={styles.coverWrapper}>
-						<img src={music?.album?.picUrl} alt=""/>
+						<img src={music?.album?.picUrl} alt="" />
 						<div className={styles.info}>
 							<div>
 								<span>{music.name}</span>
@@ -102,14 +102,14 @@ const Controller = () => {
 								<span> {music?.artists?.map(artist => artist.name).join('/')} </span>
 							</div>
 							<div>
-							<span className="pc-controller-time">
-                {` ${formatDuration(currentTime * 1000)} / ${formatDuration(music.duration)} `}
-              </span>
+								<span className="pc-controller-time">
+									{` ${formatDuration(currentTime * 1000)} / ${formatDuration(music.duration)} `}
+								</span>
 							</div>
 						</div>
 					</div>
 					<div className={styles.ops}>
-						<i className={`iconfont icon-ios-rewind ${ isPersonalFM ? styles.hidden : '' }`} onClick={() => placebo.music.prev()}></i>
+						<i className={`iconfont icon-ios-rewind ${isPersonalFM ? styles.hidden : ''}`} onClick={() => placebo.music.prev()}></i>
 						<i className={`iconfont ${playing ? 'icon-ios-pause' : 'icon-iosplay'}`} onClick={onPause}></i>
 						<i className="iconfont icon-ios-fastforward" onClick={handleNext}></i>
 					</div>

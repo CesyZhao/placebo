@@ -35,3 +35,7 @@ export const getUserDetail = (id: number): Promise<UserDetailResponse> => {
 export const getVipInfo = (): Promise<UserVipInfoResponse> => {
 	return http.get(`/vip/info`);
 }
+
+export const getLoginStatus = (): Promise<AccountResponse> =>  http.get('/login/status');
+
+export const refreshLoginStatus = () => http.get('/login/refresh');

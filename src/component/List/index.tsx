@@ -12,6 +12,7 @@ import styles from './style.module.scss';
 import {formatDuration} from "../../util/number";
 import { debounce } from "lodash";
 import {useMount} from "ahooks";
+import { getArtistNames } from '../../util/audio'
 
 
 interface Props extends ComponentProps<any> {
@@ -78,6 +79,7 @@ const List = forwardRef((props: Props, ref) => {
                       : <span> { index + 1 } </span>
                   }
                   <span>{ song.name }</span>
+                  <span>{ getArtistNames(song.artists) }</span>
                   <span>{ formatDuration(song.duration) }</span>
                 </div>
               })

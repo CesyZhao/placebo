@@ -37,14 +37,20 @@
 	justify-content: space-between;
 	span {
 		text-align: left;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
 		&:nth-child(1) {
-			width: 120px;
+			width: 40px;
 		}
 		&:nth-child(2) {
-			flex: 1;
+			width: 200px;
 		}
 		&:nth-child(3) {
-			width: 36px;
+			width: 160px;
+		}
+		&:nth-child(4) {
+			width: 38px;
 			text-align: left;
 		}
 	}
@@ -59,7 +65,7 @@
 	overflow-y: scroll;
 }
 .indicator {
-	width: 120px;
+	width: 40px;
 	div{
 		width: 24px;
 		height: 16px;
