@@ -63,6 +63,10 @@ class Player {
     this.analyser.getByteFrequencyData(this.dataArray);
     return this.dataArray;
   }
+
+  unload() {
+    return this.player?.unload();
+  }
 }
 
 export default Player;

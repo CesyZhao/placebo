@@ -45,6 +45,9 @@ class MusicController {
     this.currentActiveAlbum = index;
   }
 
+  unload() {
+    return this.player?.unload();
+  }
 
   seekTime() {
     return this.player.getCurrentTime();

@@ -6,6 +6,7 @@ import { formatDuration } from "../../util/number";
 import { AvailableAlbum, AvailableMusic, ModeList, SpecialAlbum, SwitchDirection } from '../../defination/music'
 import placebo from '../../model/Placebo'
 import LazyImage from '../LazyImage'
+import { useUnmount } from 'ahooks'
 
 
 const Controller = () => {
@@ -80,6 +81,10 @@ const Controller = () => {
 			clearInterval(timer);
 		}
 	}, [])
+
+	useUnmount(() => {
+		placebo.music.unload();
+	})
 
 	return (
 		music.id

@@ -1,5 +1,5 @@
 import { RootState, store } from '../store/store'
-import { togglePanel } from '../store/module/app'
+import { togglePanel, toggleSearch } from '../store/module/app'
 import {
   playingAlbum,
   switchMusic,
@@ -50,6 +50,14 @@ class StateController {
 
   set showPanel(visible: any) {
     store.dispatch(togglePanel(visible))
+  }
+
+  get showSearch() {
+    return (state: RootState) => state.app.showSearch;
+  }
+
+  set showSearch(visible: any) {
+    store.dispatch(toggleSearch(visible));
   }
 
   get userProfile() {

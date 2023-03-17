@@ -10,6 +10,7 @@ import Top from "../Top";
 import User from "../User";
 import { TransitionGroup, CSSTransition, SwitchTransition } from 'react-transition-group'
 import Login from '../Login'
+import Search from '../Search'
 
 
 
@@ -51,6 +52,7 @@ const RouteContainer = () => {
 			</div>
 			<Controller></Controller>
 			<PlayingPanel></PlayingPanel>
+			<Search></Search>
 		</div>
 	)
 }
