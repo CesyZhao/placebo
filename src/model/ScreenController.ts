@@ -1,6 +1,8 @@
 import { store } from '../store/store';
 import { togglePanel } from '../store/module/app';
 import { Placebo } from './Placebo';
+import { SearchType } from '../defination/search'
+import { search } from '../api/app';
 
 class ScreenController {
 
@@ -24,6 +26,16 @@ class ScreenController {
 
   toggleSearch(visible: boolean) {
     this.placebo.state.showSearch = visible;
+  }
+
+  async search(keyword: string, type: SearchType, page: number) {
+    let result;
+    try {
+      result = await search(keyword, type, page);
+      console.log(result, '-------')
+    } catch (e) {
+      result = [];
+    }
   }
 }
 

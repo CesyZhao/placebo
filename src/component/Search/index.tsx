@@ -11,7 +11,8 @@ const Search: FC = () => {
 
   const showSearch = useAppSelector(placebo.screen.showSearch);
   const [currentType, setCurrentType] = useState(SearchTypeList[0].type);
-
+  const [result, setResult] = useState([]);
+  const [page, setPage] = useState(0);
   useMount(() => {
     placebo.screen.toggleSearch(true);
   });
