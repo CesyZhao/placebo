@@ -31,11 +31,13 @@ class ScreenController {
   async search(keyword: string, type: SearchType, page: number) {
     let result;
     try {
-      result = await search(keyword, type, page);
-      console.log(result, '-------')
+      const { result: searchResult } = await search(keyword, type, page);
+      result = searchResult;
     } catch (e) {
-      result = [];
+      result = {};
     }
+
+    return result;
   }
 }
 

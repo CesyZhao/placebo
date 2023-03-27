@@ -3,5 +3,8 @@ export interface IInfiniteListProps {
   isNextPageLoading: boolean;
   list: any[];
   loadNextPage: Function;
-  rowRenderer: Function;
+  itemRenderer: any;
+  width: number;
+  height: number;
+  itemSize?: number;
 }
