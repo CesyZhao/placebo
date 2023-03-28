@@ -13,6 +13,13 @@ export const SearchTypeMap = new Map([
   [SearchType.User, 'User'],
 ]);
 
+export const SearchResultMap = new Map([
+  [SearchType.Music, 'song'],
+  [SearchType.Artist, 'artist'],
+  [SearchType.PlayList, 'playlist'],
+  [SearchType.User, 'user'],
+]);
+
 
 export const SearchTypeList = [
   SearchType.Music,
