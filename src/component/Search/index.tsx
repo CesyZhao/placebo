@@ -6,8 +6,21 @@ import { useMount } from 'ahooks/es'
 import { SearchResultMap, SearchType, SearchTypeList } from '../../defination/search'
 import { debounce } from 'lodash'
 import InfiniteList from '../InfiniteList'
+import Music from './music'
+import Artist from './artist'
+import Playlist from './playlist'
+import User from './user'
 
 
+// @ts-ignore
+const itemMap = new Map(
+  [
+    [SearchType.Music, Music],
+    [SearchType.Artist, Artist],
+    [SearchType.Playlist, Playlist],
+    [SearchType.User, User]
+  ]
+);
 
 const Search: FC = () => {
 
@@ -23,25 +36,21 @@ const Search: FC = () => {
     const { target: { value } } = e;
     console.log(value, '-------------');
     const searchResult = await placebo.screen.search(value, currentType, page);
-    const result = searchResult[SearchResultMap.get(currentType) + 's'];
-    const finalResult = lastType === currentType && page > 0 ? [...result, ...searchResult] : [...searchResult];
+    const newResult = searchResult[SearchResultMap.get(currentType) + 's'];
+    const finalResult = lastType === currentType && page > 0 ? [...result, ...newResult] : [...newResult];
     setResult(finalResult);
-    setTotalCount(result[SearchResultMap.get(currentType) + 'Count']);
+    setTotalCount(searchResult[SearchResultMap.get(currentType) + 'Count']);
     setLastType(currentType);
     setPage(page + 1);
-  }, 500), [currentType, page, lastType])
+  }, 500), [result, currentType, page, lastType])
 
   useMount(() => {
     placebo.screen.toggleSearch(true);
   });
 
-
-  const item = (props: any) => {
-    const { index, data } = props;
-    return (
-      <div style={{ height: '30px' }}>{index}</div>
-    )
-  }
+  const item = useMemo(() => {
+    const itemMap = new Map();
+  }, [currentType])
 
   const hasNextPage = useMemo(() => {
     return totalCount > result.length;
