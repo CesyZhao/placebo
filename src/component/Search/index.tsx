@@ -34,7 +34,6 @@ const Search: FC = () => {
 
   const handleSearch = useCallback(debounce(async (e) => {
     const { target: { value } } = e;
-    console.log(value, '-------------');
     const searchResult = await placebo.screen.search(value, currentType, page);
     const newResult = searchResult[SearchResultMap.get(currentType) + 's'];
     const finalResult = lastType === currentType && page > 0 ? [...result, ...newResult] : [...newResult];
@@ -49,7 +48,7 @@ const Search: FC = () => {
   });
 
   const item = useMemo(() => {
-    const itemMap = new Map();
+    return itemMap.get(currentType)
   }, [currentType])
 
   const hasNextPage = useMemo(() => {
