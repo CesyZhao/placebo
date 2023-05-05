@@ -7,13 +7,15 @@ const Music = (props: any) => {
   const { index, data } = props;
   const list = formatList(data);
   const music = list[index];
-  console.log(music, '-------------')
+
   return (
-    <div className={styles.result}>
-      <div className={styles.musicName}>{music.album.name}</div>
-      <div className={styles.musicArtist}>{getArtistNames(music.artists)}</div>
-      <div>{formatDuration(music.duration)}</div>
-    </div>
+    music
+    ? <div className={styles.result}>
+        <div className={styles.musicName}>{music.album.name}</div>
+        <div className={styles.musicArtist}>{getArtistNames(music.artists)}</div>
+        <div>{formatDuration(music.duration)}</div>
+      </div>
+    : <></>
   )
 };
 

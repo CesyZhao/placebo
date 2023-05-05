@@ -102,6 +102,9 @@ const Controller = () => {
 						<img src={music?.album?.picUrl} alt="" />
 						<div className={styles.info}>
 							<div>
+								{/*<marquee behavior="alternate">*/}
+								{/*	*/}
+								{/*</marquee>*/}
 								<span>{music.name}</span>
 								-
 								<span> {music?.artists?.map(artist => artist.name).join('/')} </span>

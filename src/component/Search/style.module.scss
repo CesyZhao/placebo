@@ -45,8 +45,9 @@
       text-align: center;
       line-height: 32px;
       cursor: pointer;
+      color: $color-light-2;
       &.active {
-        color: #333333;
+        color: $color-normal;
       }
     }
   }

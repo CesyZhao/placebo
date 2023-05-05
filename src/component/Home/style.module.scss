@@ -48,6 +48,7 @@
 		cursor: pointer;
 		transition: all ease-in-out .2s;
 		display: none;
+		box-shadow: 0 10px 20px -10px #ccc;
 		&.current, &.prev, &.prev2, &.next{
 			display: flex;
 		}
