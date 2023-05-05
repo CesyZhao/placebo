@@ -1,0 +1,49 @@
+.container {
+  display: inline-block;
+  button {
+    padding: 13px 24px;
+    cursor: pointer;
+    position: relative;
+    background: transparent;
+    border: 1px solid #ddd;
+    color: #777;
+    //&:hover {
+    //  border-color: transparent;
+    //}
+    &::before {
+      top: 0;
+      left: 0;
+    }
+
+    &::after {
+      bottom: 0;
+      right: 0;
+    }
+
+    &::before,
+    &::after {
+      box-sizing: border-box;
+      position: absolute;
+      content: "";
+      border: 1px solid transparent;
+      width: 0;
+      height: 0;
+    }
+
+    &:hover::before {
+      width: 100%;
+      height: 100%;
+      border-top-color: #57E1E7;
+      border-right-color: #57E1E7;
+      transition: width 0.3s ease-out, height 0.3s ease-out 0.3s;
+    }
+
+    &:hover::after {
+      width: 100%;
+      height: 100%;
+      border-bottom-color: #7BA3FF;
+      border-left-color: #7BA3FF;
+      transition: width 0.3s ease-out, height 0.3s ease-out 0.3s;
+    }
+  }
+}

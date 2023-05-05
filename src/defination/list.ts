@@ -7,4 +7,5 @@ export interface IInfiniteListProps {
   width: number;
   height: number;
   itemSize?: number;
+  data: any[];
 }

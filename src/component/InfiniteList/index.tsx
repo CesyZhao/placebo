@@ -6,7 +6,7 @@ import { IInfiniteListProps } from '../../defination/list'
 
 const InfiniteList: FC<IInfiniteListProps> = (props) => {
 
-  const { hasNextPage, list, isNextPageLoading, loadNextPage, itemRenderer, itemSize = 30, ...otherProps } = props;
+  const { hasNextPage, list, isNextPageLoading, loadNextPage, itemRenderer, itemSize = 30, data, ...otherProps } = props;
 
 
   const itemCount = hasNextPage ? list.length + 1 : list.length;
@@ -28,6 +28,7 @@ const InfiniteList: FC<IInfiniteListProps> = (props) => {
           itemSize={itemSize}
           itemCount={itemCount}
           ref={ref}
+          itemData={data}
           {...otherProps}
         >
           { itemRenderer }

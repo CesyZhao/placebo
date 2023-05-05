@@ -1,3 +1,4 @@
+@import "../../theme/vars";
 .search{
   position: fixed;
   width: 60%;
@@ -29,6 +30,16 @@
   }
   .categories {
     display: flex;
+    position: relative;
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: $main-theme;;
+    }
     .category {
       flex: 1;
       text-align: center;
@@ -39,4 +50,28 @@
       }
     }
   }
+}
+
+.results {
+}
+
+.result {
+  padding: 0 24px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.musicName {
+  width: 45%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.musicArtist {
+  width: 35%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }

@@ -44,7 +44,7 @@ const Search: FC = () => {
   }, 500), [result, currentType, page, lastType])
 
   useMount(() => {
-    placebo.screen.toggleSearch(true);
+    placebo.screen.toggleSearch(false);
   });
 
   const item = useMemo(() => {
@@ -74,7 +74,7 @@ const Search: FC = () => {
               }
             </div>
             <div>
-              <InfiniteList isNextPageLoading={false} loadNextPage={() => {}} list={result} hasNextPage={hasNextPage} width={520} height={240} itemRenderer={item} />
+              <InfiniteList isNextPageLoading={false} loadNextPage={() => {}} list={result} hasNextPage={hasNextPage} width={520} height={240} itemRenderer={item} data={result} />
             </div>
           </div>
         </div>

@@ -8,6 +8,8 @@ import {Link} from "react-router-dom";
 import {humanNumber} from "../../util/number";
 import Loading from '../Loading';
 import placebo from '../../model/Placebo';
+import DynamicButton from '../DynamicButton'
+import BorderButton from '../BorderButton'
 
 const Home = () => {
 
@@ -89,11 +91,13 @@ const Home = () => {
 					<span> <span className={styles.number}>{humanNumber(currentAlbum.trackCount)}</span>  TRACKS</span>
 				</div>
 				<div className={styles.buttons}>
-					<span className={styles.button}><span>PLAY NOW</span></span>
+					{/*<span className={styles.button}><span>PLAY NOW</span></span>*/}
+					<DynamicButton>PLAY NOW</DynamicButton>
 					<Link to={{ pathname: `/album/${currentAlbum.id}` }}>
-            <span className={`${styles.button} ${styles.link}`}>
-              ALBUM
-            </span>
+            {/*<span className={`${styles.button} ${styles.link}`}>*/}
+            {/*  ALBUM*/}
+            {/*</span>*/}
+						<BorderButton>ALBUM</BorderButton>
 					</Link>
 				</div>
 			</div>

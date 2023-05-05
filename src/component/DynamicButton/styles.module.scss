@@ -1,0 +1,15 @@
+.container {
+  padding: 13px 24px;
+  background-size: 400% 1000%;
+  cursor: pointer;
+  background-image: radial-gradient(
+                  closest-side,
+                  #9B30FF 6%,
+                  #57E1E7 50%,
+                  #7BA3FF 100%
+  );
+  background-position: 0% 50%;
+  color: #ffffff;
+  margin-right: 24px;
+  box-shadow: 0 10px 20px -10px #35a2fd
+}

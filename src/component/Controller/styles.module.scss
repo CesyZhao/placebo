@@ -42,7 +42,7 @@ $controller-height: 48px;
 		img{
 			height: auto !important;
 			transform: translateY(-50%);
-			filter: blur(20px);
+			filter: blur(100px);
 		}
 	}
 	.contents{
@@ -51,7 +51,9 @@ $controller-height: 48px;
 		display: flex;
 		justify-content: space-between;
 		height: 100%;
-		background-color: rgba(255, 255, 255, .4);
+		backdrop-filter: blur(6px);
+		background: linear-gradient(to top right,rgba(200,200,200,.3),rgba(220,220,200,.5));
+		//background-image: linear-gradient(to top right,rgba(90,149,207,.3),rgba(58,76,99,.9));
 		.coverWrapper{
 			display: flex;
 			align-items: center;
