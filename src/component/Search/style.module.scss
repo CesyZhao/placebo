@@ -77,6 +77,13 @@
 }
 
 .scrollWrapper {
-  height: 240px;
+  max-height: 240px;
   overflow: auto;
+}
+
+.empty {
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

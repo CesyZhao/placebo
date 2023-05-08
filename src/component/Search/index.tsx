@@ -11,6 +11,7 @@ import Artist from './artist'
 import Playlist from './playlist'
 import User from './user'
 import InfiniteScroll from 'react-infinite-scroll-component'
+import Loading from '../Loading'
 
 
 // @ts-ignore
@@ -27,7 +28,7 @@ const Search: FC = () => {
 
   const showSearch = useAppSelector(placebo.screen.showSearch)
   const [currentType, setCurrentType] = useState(SearchTypeList[0].type)
-  const [lastType, setLastType] = useState<SearchType>()
+  const [lastType, setLastType] = useState<SearchType>(SearchTypeList[0].type)
 
   const [result, setResult] = useState<any[]>([])
   const [page, setPage] = useState(1)
@@ -38,14 +39,14 @@ const Search: FC = () => {
   const handleSearch = useCallback(debounce(async (e) => {
     const { target: { value } } = e
     setKeyword(value)
-    search(value, page, currentType)
+    setPage(1)
+    search(value, 1, currentType)
   }, 500), [result, currentType, page])
 
   const handleLoadNext = useCallback(() => {
-    console.log('---------------')
     setPage(page + 1)
     search(keyword, page + 1, currentType)
-  }, [keyword, currentType, page])
+  }, [keyword, currentType, page, result])
 
   const search = async (keyword: string, page: number, type: SearchType) => {
     console.log(page)
@@ -53,10 +54,7 @@ const Search: FC = () => {
     try {
       const searchResult = await placebo.screen.search(keyword, type, page)
       const newResult = searchResult[SearchResultMap.get(currentType) + 's']
-      console.log(lastType === currentType && page > 1)
-      console.log(newResult, '===============')
       const finalResult = lastType === currentType && page > 1 ? [...result, ...newResult] : [...newResult]
-      console.log(finalResult, '+++++++++++++')
       setResult(finalResult)
       setTotalCount(searchResult[SearchResultMap.get(currentType) + 'Count'])
     } catch (e) {
@@ -98,23 +96,25 @@ const Search: FC = () => {
               }
             </div>
             <div className={styles.scrollWrapper}>
-              <InfiniteScroll
-                dataLength={totalCount}
-                next={handleLoadNext}
-                hasMore={true}
-                height={240}
-                loader={<h4>Loading...</h4>}
-              >
-                {
-                  result.map(r => {
-                    const Component = itemMap.get(currentType)
-                    // @ts-ignore
-                    return <Component item={r} key={r.id}></Component>
-                  })
-                }
-              </InfiniteScroll>
-              {/*<InfiniteList isNextPageLoading={searching} loadNextPage={handleLoadNext} list={result}*/}
-              {/*              hasNextPage={hasNextPage} width={520} height={240} itemRenderer={item} data={result}/>*/}
+              {
+                result.length
+                  ?  <InfiniteScroll
+                    dataLength={result.length}
+                    next={handleLoadNext}
+                    hasMore={true}
+                    height={240}
+                    loader={<Loading />}
+                    >
+                      {
+                        result.map(r => {
+                          const Component = itemMap.get(currentType)
+                          // @ts-ignore
+                          return <Component item={r} key={r.id}></Component>
+                        })
+                      }
+                    </InfiniteScroll>
+                  : <div className={styles.empty}>No result</div>
+              }
             </div>
           </div>
         </div>
