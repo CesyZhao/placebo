@@ -40,6 +40,10 @@ class Player {
     return this.player?.seek();
   }
 
+  setCurrentTime(time: number) {
+    return this.player?.seek(time);
+  }
+
   getPlayingStatus() {
     return this.player?.playing();
   }

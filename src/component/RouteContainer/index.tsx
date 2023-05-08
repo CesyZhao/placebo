@@ -52,7 +52,7 @@ const RouteContainer = () => {
 			</div>
 			<Controller></Controller>
 			<PlayingPanel></PlayingPanel>
-			<Search></Search>
+			{/*<Search></Search>*/}
 		</div>
 	)
 }

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { createRef, useCallback, useEffect, useMemo, useState } from 'react'
 import styles from "./styles.module.scss";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { switchMusic } from '../../store/module/controller'
@@ -62,6 +62,19 @@ const Controller = () => {
 		placebo.music.next()
 	}, [currentAlbum, music]);
 
+	const handleProgressClick = useCallback((e: any) => {
+		let { pageX, target, currentTarget } = e;
+		if (currentTarget !== target) {
+			target = target.parentNode;
+		}
+		const { clientWidth } = target;
+		const percent = pageX / clientWidth;
+		const { duration } = music;
+		const currentTime = Math.round(duration / 1000 * percent);
+		placebo.music.seekTime(currentTime);
+
+	}, [music])
+
 
 	useEffect(() => {
 		setCurrentTime(0);
@@ -90,8 +103,8 @@ const Controller = () => {
 		music.id
 			?
 			<div className={styles.controller}>
-				<div className={styles.progressBar}>
-					<div className={`${styles.progress} ${playing ? styles.playing : styles.paused}`} style={{ animationDuration: `${music.duration}ms`, animationName: `${type ? styles.play : styles.replay}` }}></div>
+				<div className={styles.progressBar} onClick={handleProgressClick}>
+					<div className={styles.progress} style={{ width: currentTime * 1000 / music.duration * 100 + '%'  }}></div>
 				</div>
 				<div className={styles.cover}>
 					{/*<img alt="playing-cover" src={music?.album?.picUrl.replace('100y100', '965y965')} onLoad={handleImageLoad}></img>*/}

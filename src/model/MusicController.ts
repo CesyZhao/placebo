@@ -49,8 +49,8 @@ class MusicController {
     return this.player?.unload();
   }
 
-  seekTime() {
-    return this.player.getCurrentTime();
+  seekTime(time?: number) {
+    return time ? this.player.setCurrentTime(time) : this.player.getCurrentTime();
   }
 
   next() {

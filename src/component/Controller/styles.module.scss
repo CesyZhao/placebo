@@ -16,21 +16,18 @@ $controller-height: 48px;
 		height: 1.5px;
 		position: absolute;
 		top: -2px;
+		cursor: pointer;
+		&:hover {
+			height: 6px;
+			top: -6px;
+		}
 		.progress{
 			height: 100%;
-			width: 100%;
 			background: linear-gradient(to right, #7BA3FF, #57E1E7);
 			box-shadow: 0 0 8px 0 #9B30FF;
-			will-change: transform;   /* 通过will-change告知浏览器提前做好优化准备 */
-			animation-timing-function: linear;
-			animation-name: play;
+			will-change: width;
+			transition: all .3s ease-in-out;
 		}
-	}
-	.progress.playing {
-		animation-play-state: running;
-	}
-	.progress.paused {
-		animation-play-state: paused;
 	}
 	.cover{
 		position: absolute;
@@ -157,25 +154,4 @@ $controller-height: 48px;
 	z-index: 2;
 	height: $controller-height;
 	background: linear-gradient(to right, #ffffff 0%, #ffffff calc(35% - 4px), rgb(244, 243, 243) calc(35% - 4px), rgb(244, 243, 243) 100%) padding-box, repeating-linear-gradient(-45deg, #aaa 0, #ccc .25em, white 0, white .75em);
-}
-
-
-@keyframes play {     /* 通过transform来启用GPU加速，跳过重排重绘阶段 */
-	0% {
-		transform: translateX(-50%) scaleX(0);  /* 用 scaleX 来代替 width */
-	}
-
-	to {
-		transform: translateX(0) scaleX(1);
-	}
-}
-
-@keyframes replay {
-	0% {
-		transform: translateX(-50%) scaleX(0);
-	}
-
-	to {
-		transform: translateX(0) scaleX(1);
-	}
 }
