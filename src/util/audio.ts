@@ -1,32 +1,36 @@
 import { Artist } from '../defination/music'
 
+export function formatMusic(music: any) {
+  // eslint-disable-next-line
+  let {al, album, ar, artists, dt, duration, id, name} = music
+  // 处理接口返回的内容属性名称不一的情况
+  al = al || album
+  ar = ar || artists
+  dt = dt || duration
+  return {
+    id: id.toString(),
+    name: name,
+    duration: dt,
+    album: {
+      id: al.id.toString(),
+      name: al.name,
+      picUrl: al.picUrl?.endsWith('?param=100y100') ? al.picUrl : `${al.picUrl}?param=100y100`,
+      link: `/player/1/${al.id}`
+    },
+    artists: ar.map((e: any) => ({
+      id: e.id.toString(),
+      name: e.name,
+      // Broken link
+      link: e.id ? `/artist/${e.id}` : ''
+    }))
+  }
+}
+
 export function formatList(list: any) {
   let playlist
   try{
     playlist = list.map((e: any) => {
-      // eslint-disable-next-line
-      let {al, album, ar, artists, dt, duration, id, name} = e
-      // 处理接口返回的内容属性名称不一的情况
-      al = al || album
-      ar = ar || artists
-      dt = dt || duration
-      return {
-        id: id.toString(),
-        name: name,
-        duration: dt,
-        album: {
-          id: al.id.toString(),
-          name: al.name,
-          picUrl: al.picUrl?.endsWith('?param=100y100') ? al.picUrl : `${al.picUrl}?param=100y100`,
-          link: `/player/1/${al.id}`
-        },
-        artists: ar.map((e: any) => ({
-          id: e.id.toString(),
-          name: e.name,
-          // Broken link
-          link: e.id ? `/artist/${e.id}` : ''
-        }))
-      }
+      return formatMusic(e)
     })
   } catch (e) {
     console.error('list not suit for the formation')

@@ -29,6 +29,7 @@ const InfiniteList: FC<IInfiniteListProps> = (props) => {
           itemCount={itemCount}
           ref={ref}
           itemData={data}
+          onItemsRendered={onItemsRendered}
           {...otherProps}
         >
           { itemRenderer }

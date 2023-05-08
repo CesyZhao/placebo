@@ -10,6 +10,7 @@ import Music from './music'
 import Artist from './artist'
 import Playlist from './playlist'
 import User from './user'
+import InfiniteScroll from 'react-infinite-scroll-component'
 
 
 // @ts-ignore
@@ -41,18 +42,23 @@ const Search: FC = () => {
   }, 500), [result, currentType, page])
 
   const handleLoadNext = useCallback(() => {
-    search(keyword, page, currentType)
+    console.log('---------------')
+    setPage(page + 1)
+    search(keyword, page + 1, currentType)
   }, [keyword, currentType, page])
 
   const search = async (keyword: string, page: number, type: SearchType) => {
+    console.log(page)
     setSearching(true)
     try {
       const searchResult = await placebo.screen.search(keyword, type, page)
       const newResult = searchResult[SearchResultMap.get(currentType) + 's']
-      const finalResult = lastType === currentType && page > 0 ? [...result, ...newResult] : [...newResult]
+      console.log(lastType === currentType && page > 1)
+      console.log(newResult, '===============')
+      const finalResult = lastType === currentType && page > 1 ? [...result, ...newResult] : [...newResult]
+      console.log(finalResult, '+++++++++++++')
       setResult(finalResult)
       setTotalCount(searchResult[SearchResultMap.get(currentType) + 'Count'])
-      setPage(page + 1)
     } catch (e) {
       setResult([])
       setTotalCount(0)
@@ -91,9 +97,24 @@ const Search: FC = () => {
                 })
               }
             </div>
-            <div>
-              <InfiniteList isNextPageLoading={searching} loadNextPage={handleLoadNext} list={result}
-                            hasNextPage={hasNextPage} width={520} height={240} itemRenderer={item} data={result}/>
+            <div className={styles.scrollWrapper}>
+              <InfiniteScroll
+                dataLength={totalCount}
+                next={handleLoadNext}
+                hasMore={true}
+                height={240}
+                loader={<h4>Loading...</h4>}
+              >
+                {
+                  result.map(r => {
+                    const Component = itemMap.get(currentType)
+                    // @ts-ignore
+                    return <Component item={r} key={r.id}></Component>
+                  })
+                }
+              </InfiniteScroll>
+              {/*<InfiniteList isNextPageLoading={searching} loadNextPage={handleLoadNext} list={result}*/}
+              {/*              hasNextPage={hasNextPage} width={520} height={240} itemRenderer={item} data={result}/>*/}
             </div>
           </div>
         </div>
