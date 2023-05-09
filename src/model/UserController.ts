@@ -38,6 +38,7 @@ class UserController {
       console.log(profile, '--------------')
       profile ? refreshLoginStatus() : (this.placebo.state.userProfile = {})
     } catch (error) {
+      console.log(error)
       this.placebo.state.userProfile = {}
     }
   }
