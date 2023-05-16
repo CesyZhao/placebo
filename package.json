@@ -2,7 +2,7 @@
   "name": "placebo",
   "version": "0.1.0",
   "private": true,
-  "main": "main.ts",
+  "main": "src/main.ts",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.2",
     "@testing-library/jest-dom": "^5.16.4",

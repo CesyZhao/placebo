@@ -1,7 +1,7 @@
 const { default: installExtension, REDUX_DEVTOOLS } = require('electron-devtools-installer');
 
 // Modules to control application life and create native browser window
-const {app, BrowserWindow, globalShortcut} = require('electron');
+const { app, BrowserWindow, globalShortcut, systemPreferences } = require('electron');
 
 const os = require('os');
 const path = require('path');
@@ -12,16 +12,20 @@ const url = require('url');
 let mainWindow
 
 function registerShortcut(win) {
-  const shortcutMap = {
-    'MediaNextTrack': 'next',
-    'MediaPreviousTrack': 'prev',
-    'MediaPlayPause': 'togglePlaying'
-  };
-  for (const key in shortcutMap) {
-    globalShortcut.register(key, () => {
-      win.webContents.send(shortcutMap[key])
-    })
+  const trusted = systemPreferences.isTrustedAccessibilityClient(true)
+  if (trusted) {
+    const shortcutMap = {
+      'MediaNextTrack': 'next',
+      'MediaPreviousTrack': 'prev',
+      'MediaPlayPause': 'switchPlayingStatus'
+    };
+    for (const key in shortcutMap) {
+      const result = globalShortcut.register(key, () => {
+        win.webContents.send(shortcutMap[key])
+      })
+    }
   }
+
 }
 
 function createWindow() {
@@ -33,7 +37,12 @@ function createWindow() {
   const windowConfig = {
     show: false,
     frame: false,
-    webPreferences: {webSecurity: false}, // 为了解决 audio 获取不到远程的文件作为音频解析，不推荐，待改善
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+      // preload: path.join(__dirname, "bridge.ts"),
+      webSecurity: false
+    }, // 为了解决 audio 获取不到远程的文件作为音频解析，不推荐，待改善
     titleBarStyle: 'hidden',
     backgroundColor: isWin ? '#F0444444' : 'none',
     resizable: false,
