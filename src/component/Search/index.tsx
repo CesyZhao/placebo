@@ -5,13 +5,13 @@ import styles from './style.module.scss'
 import { useMount } from 'ahooks/es'
 import { SearchResultMap, SearchType, SearchTypeList } from '../../defination/search'
 import { debounce } from 'lodash'
-import InfiniteList from '../InfiniteList'
 import Music from './music'
 import Artist from './artist'
 import Playlist from './playlist'
 import User from './user'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import Loading from '../Loading'
+import { CSSTransition } from "react-transition-group"
 
 
 // @ts-ignore
@@ -26,7 +26,7 @@ const itemMap = new Map(
 
 const Search: FC = () => {
 
-  const showSearch = useAppSelector(placebo.screen.showSearch)
+  const showSearch: boolean = useAppSelector(placebo.screen.showSearch)
   const [currentType, setCurrentType] = useState(SearchTypeList[0].type)
   const [lastType, setLastType] = useState<SearchType>(SearchTypeList[0].type)
 
@@ -66,7 +66,6 @@ const Search: FC = () => {
   }
 
   useMount(() => {
-    placebo.screen.toggleSearch(true)
   })
 
   const item = useMemo(() => {
@@ -79,7 +78,7 @@ const Search: FC = () => {
 
   return (
     showSearch
-      ? <>
+      ? <CSSTransition in={showSearch} timeout={300} unmountOnExit classNames="search">
         <div className={styles.search}>
           <input type="text" placeholder="Search..." autoFocus onInput={handleSearch}/>
           <div className={styles.results}>
@@ -118,7 +117,7 @@ const Search: FC = () => {
             </div>
           </div>
         </div>
-      </>
+      </CSSTransition>
       : <></>
   )
 }

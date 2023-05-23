@@ -23,6 +23,7 @@ export const userSlice = createSlice({
    },
 
     toggleSearch(state, action: PayloadAction<boolean>) {
+     console.log(action.payload)
       state.showSearch = action.payload;
     }
   },

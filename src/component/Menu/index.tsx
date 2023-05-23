@@ -25,6 +25,9 @@ const Menu = () => {
 
 	const { playing: playingSelector, currentAlbum: currentAlbumSelector } = placebo.music;
 
+	const showSearch = useAppSelector(placebo.screen.showSearch)
+
+
 	const currentAlbum = useAppSelector<AvailableAlbum>(currentAlbumSelector);
 	const playing = useAppSelector<boolean>(playingSelector);
 
@@ -79,6 +82,10 @@ const Menu = () => {
 		return state.idx < length - 1;
 	}, [window.history, location])
 
+	const search = () => {
+		placebo.screen.toggleSearch(!showSearch)
+	}
+
 	useMount(() => {
 		getFavoriteList(profile.userId)
 	})
@@ -99,6 +106,7 @@ const Menu = () => {
 				}
 			</div>
 			<div className={styles.navigator}>
+				<i className="iconfont icon-sousuo1" onClick={search}></i>
 				<i className={`iconfont icon-you-copy ${canGoBack ? '' : styles.disabled}`} onClick={back}></i>
 				<i className={`iconfont icon-you ${canGoForward ? '' : styles.disabled}`} onClick={forward}></i>
 			</div>

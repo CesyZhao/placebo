@@ -87,3 +87,18 @@
   justify-content: center;
   align-items: center;
 }
+
+:global {
+  .search-enter {
+    top: 608px;
+  }
+  .search-enter-active {
+    top: 0;
+  }
+  .search-exit {
+    top: 0;
+  }
+  .search-exit-active {
+    top: 608px;
+  }
+}

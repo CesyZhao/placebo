@@ -49,6 +49,9 @@
 		font-size: 12px;
 		margin-right: 4px;
 		cursor: pointer;
+		&:nth-child(1) {
+			margin-right: 24px;
+		}
 	}
 	.disabled {
 		color: #aaa;
