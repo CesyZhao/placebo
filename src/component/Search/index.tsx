@@ -77,9 +77,8 @@ const Search: FC = () => {
   }, [result, totalCount])
 
   return (
-    showSearch
-      ? <CSSTransition in={showSearch} timeout={300} unmountOnExit classNames="search">
-        <div className={styles.search}>
+     <CSSTransition in={showSearch} timeout={300} unmountOnExit classNames="search-panel">
+        <div className={styles.searchPanel}>
           <input type="text" placeholder="Search..." autoFocus onInput={handleSearch}/>
           <div className={styles.results}>
             <div className={styles.categories}>
@@ -118,7 +117,6 @@ const Search: FC = () => {
           </div>
         </div>
       </CSSTransition>
-      : <></>
   )
 }
 
