@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useMemo, useState } from 'react'
+import React, { FC, useCallback, useMemo, useRef, useState } from 'react'
 import { useAppSelector } from '../../store/hooks'
 import placebo from '../../model/Placebo'
 import styles from './style.module.scss'
@@ -76,9 +76,11 @@ const Search: FC = () => {
     return totalCount > result.length
   }, [result, totalCount])
 
+  const nodeRef = useRef(null)
+
   return (
-     <CSSTransition in={showSearch} timeout={300} unmountOnExit classNames="search-panel">
-        <div className={styles.searchPanel}>
+     <CSSTransition nodeRef={nodeRef} in={showSearch} timeout={300} unmountOnExit classNames="search-panel">
+        <div ref={nodeRef} className={styles.searchPanel}>
           <input type="text" placeholder="Search..." autoFocus onInput={handleSearch}/>
           <div className={styles.results}>
             <div className={styles.categories}>
