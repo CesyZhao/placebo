@@ -34,6 +34,7 @@ const Controller = () => {
 	}, [currentMode]);
 
 	const liked = useMemo(() => {
+		// @ts-ignore
 		const result = favorites.includes(+music.id)
 		return result
 	}, [favorites, music]);

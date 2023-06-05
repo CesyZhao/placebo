@@ -5,7 +5,6 @@ import { Placebo } from './Placebo'
 import { formatList } from '../util/audio'
 import { isFunction } from 'lodash'
 
-const { ipcRenderer } = window.require('electron')
 
 class MusicController {
 
@@ -22,15 +21,6 @@ class MusicController {
     this.placebo = placebo;
     this.personalizedAlbums = [];
     this.currentActiveAlbum = 0;
-    const events = ['next', 'prev', 'switchPlayingStatus']
-    for (const event of events) {
-      // @ts-ignore
-      ipcRenderer.on(event, () => {
-        console.log(event)
-        // @ts-ignore
-        isFunction(this[event]) && this[event]()
-      })
-    }
   }
 
   get playing() {
@@ -171,6 +161,10 @@ class MusicController {
     } catch (error) {
 
     }
+  }
+
+  likeSong() {
+
   }
 }
 

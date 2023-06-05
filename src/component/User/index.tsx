@@ -10,6 +10,7 @@ import {getAge} from "../../util/number";
 import {getUserPlaylist} from "../../api/music";
 import {Link} from "react-router-dom";
 import Loading from '../Loading'
+import placebo from '../../model/Placebo'
 
 const User = () => {
   const profile = useAppSelector(userProfile);
@@ -63,6 +64,7 @@ const User = () => {
   }, [profile.createTime])
 
   useMount(() => {
+    placebo.user.getUserProfile()
     getVip()
     getUserPlayList()
   })
