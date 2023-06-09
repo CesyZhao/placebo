@@ -89,3 +89,7 @@ export const QRCodeStatusMap = new Map(
 export interface UserVipInfoResponse {
 	redVipDynamicIconUrl: string;
 }
+
+export interface UserLikeListResponse {
+	ids: number[];
+}

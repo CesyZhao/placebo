@@ -35,6 +35,12 @@
 	padding: 8px 0;
 	cursor: pointer;
 	justify-content: space-between;
+	&.active {
+		position: sticky;
+		top: 0;
+		bottom: 0;
+		background: rgb(244, 243, 243);
+	}
 	span {
 		text-align: left;
 		white-space: nowrap;

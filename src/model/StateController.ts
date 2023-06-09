@@ -8,7 +8,7 @@ import {
   updatePlayingStatus
 } from '../store/module/controller'
 import { SwitchDirection } from '../defination/music'
-import { updateUser } from '../store/module/user';
+import { updateUser, updateUserFavorites } from '../store/module/user'
 
 class StateController {
 
@@ -34,6 +34,10 @@ class StateController {
 
   get favorites() {
     return (state: RootState) => state.user.userFavorites;
+  }
+
+  set favorites(favorites: any) {
+    store.dispatch(updateUserFavorites(favorites))
   }
 
   get currentAlbum(): any {

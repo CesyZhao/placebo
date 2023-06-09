@@ -72,7 +72,7 @@ const List = forwardRef((props: Props, ref) => {
          ? <div className={styles.songs}>
             {
               list.map((song, index) => {
-                return <div className={styles.song} key={song.id} onDoubleClick={() => props.handleSongPlay(index, song)}>
+                return <div className={`${styles.song} ${ song.id === props.currentSongId ? styles.active : null}`} key={song.id} onDoubleClick={() => props.handleSongPlay(index, song)}>
                   {
                     song.id === props.currentSongId
                       ? <div className={styles.indicator}> <div> <i className="iconfont icon-ios-pause"></i> </div> </div>

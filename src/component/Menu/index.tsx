@@ -14,6 +14,7 @@ import event from '../../util/event'
 import { PlaceboEvent } from '../../defination/event'
 import placebo from '../../model/Placebo'
 import { AvailableAlbum, SpecialAlbum } from '../../defination/music';
+import { getUserLikeList } from '../../api/user'
 
 const Menu = () => {
 	const navigate = useNavigate();
@@ -52,11 +53,8 @@ const Menu = () => {
 	const getFavoriteList = useCallback(async (id: number) => {
 		try {
 			// @ts-ignore
-			const { playlist } = await getUserPlaylist(id);
-			const list = playlist[0]
-			const { songs } = await getList(list.id);
-			const favorites = songs.map((s: any) => s.id);
-			dispatch(updateUserFavorites(favorites))
+			const { ids } = await getUserLikeList(id);
+			dispatch(updateUserFavorites(ids));
 		} catch (e) {
 		}
 	}, [])

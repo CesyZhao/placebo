@@ -4,8 +4,8 @@ import {
 	QRCodeResponse,
 	UserSignInEntity,
 	QRCodeStatusResponse,
-	AccountResponse, UserDetailResponse, UserVipInfoResponse
-} from "../defination/user";
+	AccountResponse, UserDetailResponse, UserVipInfoResponse, UserLikeListResponse
+} from '../defination/user'
 
 export const login = (form: UserSignInEntity) => {
 	const { phone, password } = form;
@@ -39,3 +39,5 @@ export const getVipInfo = (): Promise<UserVipInfoResponse> => {
 export const getLoginStatus = (): Promise<AccountResponse> =>  http.get('/login/status');
 
 export const refreshLoginStatus = () => http.get('/login/refresh');
+
+export const getUserLikeList = (id: number): Promise<UserLikeListResponse> => http.get(`/likelist?uid=${id}`, { rawData: true } as RequestConfig);
