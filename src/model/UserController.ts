@@ -1,5 +1,15 @@
-import { checkQrCodeStatus, getAccount, getLoginStatus, getQrCode, getQrKey, getUserDetail, refreshLoginStatus } from "../api/user";
-import { Placebo } from "./Placebo";
+import {
+  checkQrCodeStatus,
+  getAccount,
+  getLoginStatus,
+  getQrCode,
+  getQrKey,
+  getUserDetail,
+  getUserLikeList,
+  refreshLoginStatus
+} from '../api/user'
+import placebo, { Placebo } from "./Placebo";
+import { updateUserFavorites } from '../store/module/user'
 
 class UserController {
 
@@ -30,17 +40,36 @@ class UserController {
     const { profile } = await getAccount();
     const { level } = await getUserDetail(profile.userId);
     this.placebo.state.userProfile = { ...profile, level };
+    this.getLikedSongIds();
   }
 
   async refreshLoginStatus() {
     try {
       const { profile } = await getLoginStatus()
-      console.log(profile, '--------------')
       profile ? refreshLoginStatus() : (this.placebo.state.userProfile = {})
     } catch (error) {
       console.log(error)
       this.placebo.state.userProfile = {}
     }
+  }
+
+  getLikedSongIds() {
+    const { userId } = this.placebo.state.userProfile;
+    if (!userId) return
+    let list: number[] = [];
+    try {
+      // @ts-ignore
+      const { ids } = await getUserLikeList(userId);
+      list = ids;
+    } catch (e) {
+      list = []
+    }
+    this.placebo.state.favorites = list
+  }
+
+
+  likeSong() {
+
   }
 
 }

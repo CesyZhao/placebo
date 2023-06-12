@@ -162,10 +162,6 @@ class MusicController {
 
     }
   }
-
-  likeSong() {
-
-  }
 }
 
 export default MusicController;

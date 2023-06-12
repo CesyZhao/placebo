@@ -92,7 +92,7 @@
 :global {
   .search-panel-enter {
     top: 24px;
-    left: calc(100% - 88px);
+    //left: calc(100% - 88px);
     transform: translate(-50%, -50%) scale(0);
   }
   .search-panel-enter-active {

@@ -50,15 +50,6 @@ const Menu = () => {
 	}, [currentAlbum, playing])
 
 
-	const getFavoriteList = useCallback(async (id: number) => {
-		try {
-			// @ts-ignore
-			const { ids } = await getUserLikeList(id);
-			dispatch(updateUserFavorites(ids));
-		} catch (e) {
-		}
-	}, [])
-
 	const move = useCallback((direction: number) => {
 		navigate(direction)
 	}, [])
@@ -83,10 +74,6 @@ const Menu = () => {
 	const search = () => {
 		placebo.screen.toggleSearch(!showSearch)
 	}
-
-	useMount(() => {
-		getFavoriteList(profile.userId)
-	})
 
 	return (
 		<div className={styles.menusWrapper}>
