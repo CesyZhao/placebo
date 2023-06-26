@@ -79,6 +79,10 @@ class StateController {
   switchPlayMode() {
     store.dispatch(updateMode());
   }
+
+  getOriginalState() {
+    return store.getState();
+  }
 }
 
 export default StateController

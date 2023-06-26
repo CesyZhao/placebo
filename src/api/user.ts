@@ -41,3 +41,6 @@ export const getLoginStatus = (): Promise<AccountResponse> =>  http.get('/login/
 export const refreshLoginStatus = () => http.get('/login/refresh');
 
 export const getUserLikeList = (id: number): Promise<UserLikeListResponse> => http.get(`/likelist?uid=${id}`, { rawData: true } as RequestConfig);
+
+
+export const likeMusic = (id: number): Promise<UserLikeListResponse> => http.get(`/like?id=${id}`, { rawData: true } as RequestConfig);

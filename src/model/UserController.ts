@@ -5,11 +5,12 @@ import {
   getQrCode,
   getQrKey,
   getUserDetail,
-  getUserLikeList,
+  getUserLikeList, likeMusic,
   refreshLoginStatus
 } from '../api/user'
 import placebo, { Placebo } from "./Placebo";
 import { updateUserFavorites } from '../store/module/user'
+import music from '../component/Search/music'
 
 class UserController {
 
@@ -53,23 +54,28 @@ class UserController {
     }
   }
 
-  getLikedSongIds() {
+  async getLikedSongIds() {
     const { userId } = this.placebo.state.userProfile;
-    if (!userId) return
     let list: number[] = [];
-    try {
-      // @ts-ignore
-      const { ids } = await getUserLikeList(userId);
-      list = ids;
-    } catch (e) {
-      list = []
+    if (userId) {
+      try {
+        // @ts-ignore
+        const { ids } = await getUserLikeList(userId);
+        list = ids;
+      } catch (e) {
+        list = []
+      }
     }
     this.placebo.state.favorites = list
   }
 
 
-  likeSong() {
+  async likeMusic(musicId: number) {
+    try {
+      await likeMusic(musicId)
+    } catch (e) {
 
+    }
   }
 
 }

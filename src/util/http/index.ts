@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
+import placebo from '../../model/Placebo'
 
 const BASE_URL = 'http://localhost:3000';
 
@@ -9,8 +10,21 @@ const instance = axios.create({
 });
 
 export interface RequestConfig extends AxiosRequestConfig {
-	rawData: boolean;
+	rawData?: boolean;
+	needAuth?: boolean;
 }
+
+instance.interceptors.request.use((config: RequestConfig) => {
+	if (config.needAuth) {
+		const state = placebo.state.getOriginalState();
+		const { userProfile } = state.user;
+		const { userId } = userProfile;
+		if (!userId) {
+			window.location.href = '/login'
+		}
+	}
+	return config;
+}, (error) => Promise.reject(error))
 
 instance.interceptors.response.use((resp) => {
 	const { data, config } = resp;
