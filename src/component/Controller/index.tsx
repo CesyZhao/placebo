@@ -76,6 +76,10 @@ const Controller = () => {
 
 	}, [music])
 
+	const handleLikeMusic = useCallback(() => {
+		placebo.user.likeMusic(music.id)
+	}, [music])
+
 
 	useEffect(() => {
 		setCurrentTime(0);
@@ -136,7 +140,7 @@ const Controller = () => {
 						<i className="iconfont icon-ios-fastforward" onClick={handleNext}></i>
 					</div>
 					<div className={styles.controls}>
-						<i className={`iconfont ${liked ? 'icon-heart1' : 'icon-heart'}`} ></i>
+						<i className={`iconfont ${liked ? 'icon-heart1' : 'icon-heart'}`} onClick={handleLikeMusic}></i>
 						{
 							!isPersonalFM && <i className={`iconfont ${currentModeIcon}`} onClick={switchMode}></i>
 						}

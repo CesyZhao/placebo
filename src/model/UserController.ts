@@ -46,8 +46,8 @@ class UserController {
 
   async refreshLoginStatus() {
     try {
-      const { profile } = await getLoginStatus()
-      profile ? refreshLoginStatus() : (this.placebo.state.userProfile = {})
+      await getLoginStatus()
+      refreshLoginStatus()
     } catch (error) {
       console.log(error)
       this.placebo.state.userProfile = {}
@@ -73,6 +73,7 @@ class UserController {
   async likeMusic(musicId: number) {
     try {
       await likeMusic(musicId)
+      this.getLikedSongIds()
     } catch (e) {
 
     }
