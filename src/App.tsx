@@ -10,7 +10,6 @@ export default function App() {
 
   useMount(() => {
 		placebo.user.refreshLoginStatus();
-    placebo.user.getLikedSongIds();
   })
 
   return (

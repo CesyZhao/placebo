@@ -91,6 +91,8 @@ const Controller = () => {
 	}, [music]);
 
 	useEffect(() => {
+		placebo.user.getLikedSongIds();
+
 		const timer = setInterval(() => {
 			setCurrentTime(placebo.music.seekTime());
 		}, 1000);

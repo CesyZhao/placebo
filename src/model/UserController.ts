@@ -46,8 +46,8 @@ class UserController {
 
   async refreshLoginStatus() {
     try {
-      await getLoginStatus()
-      refreshLoginStatus()
+      const { profile } = await getLoginStatus()
+      profile ? refreshLoginStatus() : (this.placebo.state.userProfile = {})
     } catch (error) {
       console.log(error)
       this.placebo.state.userProfile = {}
@@ -55,7 +55,10 @@ class UserController {
   }
 
   async getLikedSongIds() {
-    const { userId } = this.placebo.state.userProfile;
+    const { user } = this.placebo.state.getOriginalState();
+    const { userProfile } = user;
+    const { userId } = userProfile;
+
     let list: number[] = [];
     if (userId) {
       try {
