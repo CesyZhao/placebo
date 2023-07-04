@@ -13,7 +13,7 @@ node_modules
 .npmrc
 package.json
 postcss.config.js
-prettier.config.js
+.prettierrc.js
 commitlint.config.js
 lint-staged.config.js
 README.md

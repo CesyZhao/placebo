@@ -5,7 +5,9 @@ module.exports = {
 	},
 	"extends": [
 		"standard-with-typescript",
-		"plugin:react/recommended"
+		"plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier"
 	],
 	"overrides": [
 		{
@@ -24,6 +26,7 @@ module.exports = {
 	"parserOptions": {
 		"ecmaVersion": "latest",
 		"sourceType": "module",
+    "tsconfigRootDir": __dirname,
 		"project": ['./tsconfig.json']
 	},
 	"plugins": [
@@ -31,5 +34,16 @@ module.exports = {
 		"@typescript-eslint"
 	],
 	"rules": {
-	}
+    "@typescript-eslint/no-unused-vars": 1,
+    "@typescript-eslint/no-explicit-any": 0,
+    "@typescript-eslint/no-empty-interface": 0,
+    "@typescript-eslint/explicit-function-return-type": 0,
+    "@typescript-eslint/camelcase": 0,
+    "@typescript-eslint/strict-boolean-expressions": 0,
+    "@typescript-eslint/ban-ts-comment": 0,
+    "@typescript-eslint/ban-types": 1,
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off",
+    "semi": [2, "always"]
+  }
 }

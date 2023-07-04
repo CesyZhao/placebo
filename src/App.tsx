@@ -9,7 +9,7 @@ import placebo from './model/Placebo';
 export default function App() {
 
   useMount(() => {
-		placebo.user.refreshLoginStatus();
+		void placebo.user.refreshLoginStatus();
   })
 
   return (
