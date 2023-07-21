@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, PropsWithChildren, FC } from 'react'
+import React, { useRef, useEffect, type PropsWithChildren, type FC } from 'react';
 import ReactDOM from "react-dom";
 import styles from "./styles.module.scss";
 

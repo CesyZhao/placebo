@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useRef, useState} from "react";
 import styles from './style.module.scss';
 import { useNavigate } from 'react-router-dom';
-// @ts-ignore
+// @ts-expect-error
 import md5 from "spark-md5";
 import {checkQrCodeStatus, getAccount, getQrCode, getQrKey, getUserDetail, login} from "../../api/user";
 import {useMount, useRequest} from "ahooks";
@@ -30,11 +30,11 @@ const Login = () => {
 	const [qrCode, setQrCode] = useState('');
 	const [qrKey, setQrKey] = useState('');
 
-	let timer: any = useRef();
+	const timer: any = useRef();
 
 	const getAccountInfo = useCallback(async () => {
 		try {
-			await Placebo.user.getUserProfile()
+			await Placebo.user.getUserProfile();
 			goHome();
 		} catch (e) {
 			setMessage('Something went wrong, please try again!');
@@ -85,8 +85,8 @@ const Login = () => {
 
 		return () => {
 			clearInterval(timer.current);
-		}
-	}, [])
+		};
+	}, []);
 
  	return (
 		<>
@@ -107,7 +107,7 @@ const Login = () => {
 				</p>
 			</div>
 		</>
-	)
-}
+	);
+};
 
 export default Login;

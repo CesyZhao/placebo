@@ -1,7 +1,7 @@
-import React, { FC } from 'react';
+import React, { type FC } from 'react';
 import { FixedSizeList as List } from 'react-window';
 import InfiniteLoader  from 'react-window-infinite-loader';
-import { IInfiniteListProps } from '../../defination/list'
+import { type IInfiniteListProps } from '../../defination/list';
 
 
 const InfiniteList: FC<IInfiniteListProps> = (props) => {

@@ -1,7 +1,7 @@
-import React from 'react'
-import { formatList, formatMusic, getArtistNames } from '../../util/audio'
-import styles from './style.module.scss'
-import { formatDuration } from '../../util/number'
+import React from 'react';
+import { formatList, formatMusic, getArtistNames } from '../../util/audio';
+import styles from './style.module.scss';
+import { formatDuration } from '../../util/number';
 
 const Music = (props: any) => {
   const { item } = props;
@@ -15,7 +15,7 @@ const Music = (props: any) => {
         <div>{formatDuration(music.duration)}</div>
       </div>
     : <div></div>
-  )
+  );
 };
 
 export default Music;

@@ -1,14 +1,14 @@
-import { RootState, store } from '../store/store'
-import { togglePanel, toggleSearch } from '../store/module/app'
+import { type RootState, store } from '../store/store';
+import { togglePanel, toggleSearch } from '../store/module/app';
 import {
   playingAlbum,
   switchMusic,
   updateMode, updatePlayingAlbum,
   updatePlayingMusic,
   updatePlayingStatus
-} from '../store/module/controller'
-import { SwitchDirection } from '../defination/music'
-import { updateUser, updateUserFavorites } from '../store/module/user'
+} from '../store/module/controller';
+import { type SwitchDirection } from '../defination/music';
+import { updateUser, updateUserFavorites } from '../store/module/user';
 
 class StateController {
 
@@ -37,7 +37,7 @@ class StateController {
   }
 
   set favorites(favorites: any) {
-    store.dispatch(updateUserFavorites(favorites))
+    store.dispatch(updateUserFavorites(favorites));
   }
 
   get currentAlbum(): any {
@@ -53,7 +53,7 @@ class StateController {
   }
 
   set showPanel(visible: any) {
-    store.dispatch(togglePanel(visible))
+    store.dispatch(togglePanel(visible));
   }
 
   get showSearch() {
@@ -69,7 +69,7 @@ class StateController {
   }
 
   set userProfile(profile: any) {
-    store.dispatch(updateUser(profile))
+    store.dispatch(updateUser(profile));
   }
 
   switchPlayingMusic(direction: SwitchDirection) {
@@ -85,4 +85,4 @@ class StateController {
   }
 }
 
-export default StateController
+export default StateController;

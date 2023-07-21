@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {isEmpty} from "lodash";
 import {useAppDispatch, useAppSelector} from "../../store/hooks";
 import {playingMusic} from "../../store/module/controller";
@@ -9,8 +9,8 @@ import {SwitchDirection} from "../../defination/music";
 import {Wave} from "../../util/canvas";
 import {useMount} from "ahooks";
 import Lyric from "../Lyric";
-import placebo from '../../model/Placebo'
-import LazyImage from '../LazyImage'
+import placebo from '../../model/Placebo';
+import LazyImage from '../LazyImage';
 
 
 const CANVAS_WIDTH = 400;
@@ -40,11 +40,11 @@ const PlayingPanel = () => {
 		}
 		setLyric(lyric);
 		setTranslatedLyric(translatedLyric);
-	}, [])
+	}, []);
 
 	useMount(() => {
 		dismiss();
-	})
+	});
 
 	const ref = useRef<HTMLCanvasElement | null>(null);
 	useEffect(() => {
@@ -57,8 +57,8 @@ const PlayingPanel = () => {
 				count: 20,
 				rounded: true,
 				mirroredX: true
-			}
-			// @ts-ignore
+			};
+			// @ts-expect-error
 			wave.addAnimation(new wave.animations.Glob({
 				fillColor: { gradient: ["#9B30FF", "#7BA3FF", "#57E1E7"], rotate: 70 },
 				glow: { strength: 15, color: "#7BA3FF" },
@@ -66,7 +66,7 @@ const PlayingPanel = () => {
 				...commonOptions,
 				count: 45
 			}));
-			// @ts-ignore
+			// @ts-expect-error
 			wave.addAnimation(new wave.animations.Glob({
 				fillColor: { gradient: ["#57E1E7", "#7BA3FF", "#9B30FF"], rotate: 90 },
 				glow: { strength: 5, color: "#9B30FF" },
@@ -75,11 +75,11 @@ const PlayingPanel = () => {
 				count: 25
 			}));
 		}
-	}, [showPlayingPanel])
+	}, [showPlayingPanel]);
 
 	useEffect(() => {
-		showPlayingPanel && getLyricById(music.id)
-	}, [music, showPlayingPanel])
+		showPlayingPanel && getLyricById(music.id);
+	}, [music, showPlayingPanel]);
 
   return (
     !isEmpty(music)
@@ -95,17 +95,17 @@ const PlayingPanel = () => {
                 </div>
               </div>
 					    <div className={styles.toolbar}>
-	                      {/*{*/}
-	                      {/*  // this.state.mode === '歌词模式' &&*/}
-	                      {/*}*/}
-						    {/*<i className={`iconfont ${favorites.get(song.id) ? 'icon-iosheart' : 'icon-iosheartoutline'}`} onClick={() => this.likeSong(song)}></i>*/}
-						    <i className="iconfont icon-ios-rewind" onClick={() => placebo.music.prev()}></i>
-						    <i className={`iconfont ${playing ? 'icon-ios-pause' : 'icon-iosplay'}`} onClick={() => placebo.music.switchPlayingStatus()}></i>
-						    <i className="iconfont icon-ios-fastforward" onClick={() => placebo.music.next()}></i>
+	                      {/* { */}
+	                      {/*  // this.state.mode === '歌词模式' && */}
+	                      {/* } */}
+						    {/* <i className={`iconfont ${favorites.get(song.id) ? 'icon-iosheart' : 'icon-iosheartoutline'}`} onClick={() => this.likeSong(song)}></i> */}
+						    <i className="iconfont icon-ios-rewind" onClick={() => { placebo.music.prev(); }}></i>
+						    <i className={`iconfont ${playing ? 'icon-ios-pause' : 'icon-iosplay'}`} onClick={() => { placebo.music.switchPlayingStatus(); }}></i>
+						    <i className="iconfont icon-ios-fastforward" onClick={() => { placebo.music.next(); }}></i>
 	                      {/* <Link to="/comment" onClick={this.dismiss}><i className="iconfont icon-aui-icon-comment"></i></Link> */}
 					    </div>
 					    <div className={styles.info}>
-						    {/*<Link to={this.getFromUrl(song)} onClick={this.dismiss}> 来源: {song.from} </Link>*/}
+						    {/* <Link to={this.getFromUrl(song)} onClick={this.dismiss}> 来源: {song.from} </Link> */}
 					    </div>
 				    </div>
 				    <div className={styles.lyricWrapper}>

@@ -1,5 +1,5 @@
-import React from 'react'
-import styles from './style.module.scss'
+import React from 'react';
+import styles from './style.module.scss';
 
 
 const Loading = () => {
@@ -12,7 +12,7 @@ const Loading = () => {
         <div></div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Loading
+export default Loading;

@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../store';
-import {Profile, UnionProfile} from "../../defination/user";
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
+import { type RootState } from '../store';
+import {type Profile, type UnionProfile} from "../../defination/user";
 
 
 export interface UserState {
@@ -23,7 +23,7 @@ export const userSlice = createSlice({
 			state.userProfile = action.payload;
 		},
 		updateUserFavorites(state, action: PayloadAction<number[]>) {
-			state.userFavorites = action.payload
+			state.userFavorites = action.payload;
 		}
 	},
 });

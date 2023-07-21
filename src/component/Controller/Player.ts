@@ -8,9 +8,9 @@ interface Option {
 }
 
 export default class Player {
-  static instance: any = null
-  static analyser: any = null
-  static dataArray: any = null
+  static instance: any = null;
+  static analyser: any = null;
+  static dataArray: any = null;
 
   static playSong(url: string, opt: Option) {
     Player.instance?.unload();
@@ -61,7 +61,7 @@ export default class Player {
   static createAnalyser() {
     const ctx = Howler.ctx;
     const audioSourceNode = ctx.createMediaElementSource(Player.instance._sounds[0]._node);
-    let analyser = ctx.createAnalyser();
+    const analyser = ctx.createAnalyser();
     audioSourceNode.connect(analyser);
     analyser.connect(Howler.ctx.destination);
     analyser.fftSize = BYTE_ARRAY_LENGTH;

@@ -1,15 +1,15 @@
 import { store } from '../store/store';
 import { togglePanel } from '../store/module/app';
-import { Placebo } from './Placebo';
-import { SearchType } from '../defination/search'
+import { type Placebo } from './Placebo';
+import { type SearchType } from '../defination/search';
 import { search } from '../api/app';
 
 class ScreenController {
 
-  placebo: Placebo
+  placebo: Placebo;
 
   constructor(placebo: Placebo) {
-    this.placebo = placebo
+    this.placebo = placebo;
   }
 
   get showPanel() {

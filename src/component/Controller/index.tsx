@@ -1,12 +1,12 @@
-import React, { createRef, useCallback, useEffect, useMemo, useState } from 'react'
+import React, { createRef, useCallback, useEffect, useMemo, useState } from 'react';
 import styles from "./styles.module.scss";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { switchMusic } from '../../store/module/controller'
+import { switchMusic } from '../../store/module/controller';
 import { formatDuration } from "../../util/number";
-import { AvailableAlbum, AvailableMusic, ModeList, SpecialAlbum, SwitchDirection } from '../../defination/music'
-import placebo from '../../model/Placebo'
-import LazyImage from '../LazyImage'
-import { useUnmount } from 'ahooks'
+import { type AvailableAlbum, type AvailableMusic, ModeList, SpecialAlbum, SwitchDirection } from '../../defination/music';
+import placebo from '../../model/Placebo';
+import LazyImage from '../LazyImage';
+import { useUnmount } from 'ahooks';
 
 
 const Controller = () => {
@@ -34,13 +34,13 @@ const Controller = () => {
 	}, [currentMode]);
 
 	const liked = useMemo(() => {
-		// @ts-ignore
-		const result = favorites.includes(+music.id)
-		return result
+		// @ts-expect-error
+		const result = favorites.includes(+music.id);
+		return result;
 	}, [favorites, music]);
 
 	const isPersonalFM = useMemo(() => {
-		return currentAlbum.id === SpecialAlbum.FM
+		return currentAlbum.id === SpecialAlbum.FM;
 	}, [currentAlbum]);
 
 	const switchMode = useCallback(() => {
@@ -52,15 +52,15 @@ const Controller = () => {
 	}, []);
 
 	const handleNext = useCallback(() => {
-		const { playlist, id } = currentAlbum
+		const { playlist, id } = currentAlbum;
 		if (id === SpecialAlbum.FM) {
-			const index = playlist.findIndex(s => s.id === music.id)
+			const index = playlist.findIndex(s => s.id === music.id);
 			if (index === playlist.length - 1) {
 				placebo.music.getPersonalFM();
-				return
+				return;
 			}
 		}
-		placebo.music.next()
+		placebo.music.next();
 	}, [currentAlbum, music]);
 
 	const handleProgressClick = useCallback((e: any) => {
@@ -74,11 +74,11 @@ const Controller = () => {
 		const currentTime = Math.round(duration / 1000 * percent);
 		placebo.music.seekTime(currentTime);
 
-	}, [music])
+	}, [music]);
 
 	const handleLikeMusic = useCallback(() => {
-		placebo.user.likeMusic(music.id)
-	}, [music])
+		placebo.user.likeMusic(music.id);
+	}, [music]);
 
 
 	useEffect(() => {
@@ -99,12 +99,12 @@ const Controller = () => {
 
 		return () => {
 			clearInterval(timer);
-		}
-	}, [])
+		};
+	}, []);
 
 	useUnmount(() => {
 		placebo.music.unload();
-	})
+	});
 
 	return (
 		music.id
@@ -114,7 +114,7 @@ const Controller = () => {
 					<div className={styles.progress} style={{ width: currentTime * 1000 / music.duration * 100 + '%'  }}></div>
 				</div>
 				<div className={styles.cover}>
-					{/*<img alt="playing-cover" src={music?.album?.picUrl.replace('100y100', '965y965')} onLoad={handleImageLoad}></img>*/}
+					{/* <img alt="playing-cover" src={music?.album?.picUrl.replace('100y100', '965y965')} onLoad={handleImageLoad}></img> */}
 					<LazyImage url={music?.album?.picUrl}></LazyImage>
 				</div>
 				<div className={styles.contents}>
@@ -122,9 +122,9 @@ const Controller = () => {
 						<img src={music?.album?.picUrl} alt="" />
 						<div className={styles.info}>
 							<div>
-								{/*<marquee behavior="alternate">*/}
+								{/* <marquee behavior="alternate"> */}
 								{/*	*/}
-								{/*</marquee>*/}
+								{/* </marquee> */}
 								<span>{music.name}</span>
 								-
 								<span> {music?.artists?.map(artist => artist.name).join('/')} </span>
@@ -137,7 +137,7 @@ const Controller = () => {
 						</div>
 					</div>
 					<div className={styles.ops}>
-						<i className={`iconfont icon-ios-rewind ${isPersonalFM ? styles.hidden : ''}`} onClick={() => placebo.music.prev()}></i>
+						<i className={`iconfont icon-ios-rewind ${isPersonalFM ? styles.hidden : ''}`} onClick={() => { placebo.music.prev(); }}></i>
 						<i className={`iconfont ${playing ? 'icon-ios-pause' : 'icon-iosplay'}`} onClick={onPause}></i>
 						<i className="iconfont icon-ios-fastforward" onClick={handleNext}></i>
 					</div>
@@ -146,13 +146,13 @@ const Controller = () => {
 						{
 							!isPersonalFM && <i className={`iconfont ${currentModeIcon}`} onClick={switchMode}></i>
 						}
-						<span onClick={() => placebo.screen.togglePanel(true)}>LRC</span>
+						<span onClick={() => { placebo.screen.togglePanel(true); }}>LRC</span>
 					</div>
 				</div>
 			</div>
 			:
 			<div className={styles.noMusic}></div>
-	)
-}
+	);
+};
 
 export default Controller;

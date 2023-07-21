@@ -9,65 +9,65 @@ import LazyImage from "../LazyImage";
 import {getAge} from "../../util/number";
 import {getUserPlaylist} from "../../api/music";
 import {Link} from "react-router-dom";
-import Loading from '../Loading'
-import placebo from '../../model/Placebo'
+import Loading from '../Loading';
+import placebo from '../../model/Placebo';
 
 const User = () => {
   const profile = useAppSelector(userProfile);
-  const [vipLevelUrl, setVipLevelUrl] = useState('')
-  const [active, setActive] = useState(0)
-  const [createdList, setCreatedList] = useState<any>([])
-  const [collectedList, setCollectedList] = useState<any>([])
-  const [loading, setLoading] = useState(false)
+  const [vipLevelUrl, setVipLevelUrl] = useState('');
+  const [active, setActive] = useState(0);
+  const [createdList, setCreatedList] = useState<any>([]);
+  const [collectedList, setCollectedList] = useState<any>([]);
+  const [loading, setLoading] = useState(false);
 
   const handleLogout = useCallback(() => {
 
-  }, [])
+  }, []);
 
   const switchActiveList = useMemo(() => {
-    return active === 0 ? createdList : collectedList
-  }, [active, createdList, collectedList])
+    return active === 0 ? createdList : collectedList;
+  }, [active, createdList, collectedList]);
 
   const getUserPlayList = useCallback(async () => {
-    setLoading(true)
-    const res: any = await getUserPlaylist(profile.userId)
-    const { playlist } = res
-    const createdList: any[] = []
-    const collectedList: any[]= []
+    setLoading(true);
+    const res: any = await getUserPlaylist(profile.userId);
+    const { playlist } = res;
+    const createdList: any[] = [];
+    const collectedList: any[]= [];
     playlist.forEach((album: any) => {
       if (album.creator.userId === profile.userId) {
-        createdList.push(album)
+        createdList.push(album);
       } else {
-        collectedList.push(album)
+        collectedList.push(album);
       }
-    })
-    setCreatedList(createdList)
-    setCollectedList(collectedList)
-    setLoading(false)
-  }, [profile.userId])
+    });
+    setCreatedList(createdList);
+    setCollectedList(collectedList);
+    setLoading(false);
+  }, [profile.userId]);
 
   const getVip = useCallback(async () => {
     try {
-      const { redVipDynamicIconUrl } = await getVipInfo()
-      setVipLevelUrl(redVipDynamicIconUrl)
+      const { redVipDynamicIconUrl } = await getVipInfo();
+      setVipLevelUrl(redVipDynamicIconUrl);
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
-  }, [])
+  }, []);
 
   const age = useMemo(() => {
-    return getAge(profile.birthday)
-  }, [profile.birthday])
+    return getAge(profile.birthday);
+  }, [profile.birthday]);
 
   const joinTime = useMemo(() => {
-    return new Date(profile.createTime)
-  }, [profile.createTime])
+    return new Date(profile.createTime);
+  }, [profile.createTime]);
 
   useMount(() => {
-    placebo.user.getUserProfile()
-    getVip()
-    getUserPlayList()
-  })
+    placebo.user.getUserProfile();
+    getVip();
+    getUserPlayList();
+  });
 
   return (
     !isEmpty(profile) && !loading
@@ -96,8 +96,8 @@ const User = () => {
         </div>
         <div className={styles.userPlaylists}>
           <div className={styles.userListHeader}>
-            <span className={`${active === 0 ? styles.active : ''}`} onClick={ () => setActive(0)}> PLAYLISTS </span>
-            <span className={`${active === 1 ? styles.active : ''}`} onClick={ () => setActive(1)}> COLLECTIONS </span>
+            <span className={`${active === 0 ? styles.active : ''}`} onClick={ () => { setActive(0); }}> PLAYLISTS </span>
+            <span className={`${active === 1 ? styles.active : ''}`} onClick={ () => { setActive(1); }}> COLLECTIONS </span>
           </div>
           <div className={styles.userList}>
             {
@@ -110,26 +110,26 @@ const User = () => {
                       <div> {item.trackCount} TRACKS </div>
                     </Link>
                   </div>
-                )
+                );
               })
             }
           </div>
           <div className="pc-user-subList">
-            {/*<div className="pc-user-list">*/}
-            {/*  {*/}
-            {/*    subList.map(item => {*/}
-            {/*      return (*/}
-            {/*        <div className="pc-user-list-item" key={item.id}>*/}
-            {/*          <Link to={`/album/${item.id}`} >*/}
-            {/*            <img src={item.coverImgUrl} alt="歌单封面"></img>*/}
-            {/*            <div> {item.name} </div>*/}
-            {/*            <div> {item.trackCount} </div>*/}
-            {/*          </Link>*/}
-            {/*        </div>*/}
-            {/*      )*/}
-            {/*    })*/}
-            {/*  }*/}
-            {/*</div>*/}
+            {/* <div className="pc-user-list"> */}
+            {/*  { */}
+            {/*    subList.map(item => { */}
+            {/*      return ( */}
+            {/*        <div className="pc-user-list-item" key={item.id}> */}
+            {/*          <Link to={`/album/${item.id}`} > */}
+            {/*            <img src={item.coverImgUrl} alt="歌单封面"></img> */}
+            {/*            <div> {item.name} </div> */}
+            {/*            <div> {item.trackCount} </div> */}
+            {/*          </Link> */}
+            {/*        </div> */}
+            {/*      ) */}
+            {/*    }) */}
+            {/*  } */}
+            {/* </div> */}
           </div>
         </div>
       </div>

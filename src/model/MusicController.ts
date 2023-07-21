@@ -1,9 +1,9 @@
-import Player from './Player'
-import { getAlbum, getList, getLyric, getPersonalFM, getPersonalized, getRankingList, getSongUrl } from '../api/music'
-import { Album, AvailableAlbum, AvailableMusic, SpecialAlbum, SwitchDirection } from '../defination/music'
-import { Placebo } from './Placebo'
-import { formatList } from '../util/audio'
-import { isFunction } from 'lodash'
+import Player from './Player';
+import { getAlbum, getList, getLyric, getPersonalFM, getPersonalized, getRankingList, getSongUrl } from '../api/music';
+import { type Album, type AvailableAlbum, AvailableMusic, SpecialAlbum, SwitchDirection } from '../defination/music';
+import { type Placebo } from './Placebo';
+import { formatList } from '../util/audio';
+import { isFunction } from 'lodash';
 
 
 class MusicController {
@@ -56,11 +56,11 @@ class MusicController {
   }
 
   next() {
-    this.placebo.state.switchPlayingMusic(SwitchDirection.Next)
+    this.placebo.state.switchPlayingMusic(SwitchDirection.Next);
   }
 
   prev() {
-    this.placebo.state.switchPlayingMusic(SwitchDirection.Prev)
+    this.placebo.state.switchPlayingMusic(SwitchDirection.Prev);
   }
 
   switchPlayingStatus() {
@@ -96,13 +96,13 @@ class MusicController {
     }
 
     this.player.onPlay = () => this.placebo.state.playingStatus = true;
-    this.player.onEnd = () => switchPlayingMusic(SwitchDirection.Next);
+    this.player.onEnd = () => { switchPlayingMusic(SwitchDirection.Next); };
 
     this.player.initMusic(url);
   }
 
   async getAlbumDetail(id: string | number) {
-    let album, list
+    let album, list;
     try {
       const { playlist } = await getAlbum(+id);
       album = playlist;
@@ -113,11 +113,11 @@ class MusicController {
       list = [];
     }
 
-    return { album, list }
+    return { album, list };
   }
 
   async getPersonalized() {
-    let personalizedList: Album[]
+    let personalizedList: Album[];
     try {
       const { result } = await getPersonalized();
       personalizedList = result;
@@ -150,14 +150,14 @@ class MusicController {
 
   async getPersonalFM() {
     try {
-      const { data } = await getPersonalFM()
-      let album: AvailableAlbum = {
+      const { data } = await getPersonalFM();
+      const album: AvailableAlbum = {
         playlist: formatList(data),
         id: SpecialAlbum.FM,
         name: '私人 FM'
       };
       this.updatePlayingAlbum(album, 0);
-      this.placebo.screen.showPanel()
+      this.placebo.screen.showPanel();
     } catch (error) {
 
     }

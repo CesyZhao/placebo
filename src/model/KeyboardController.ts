@@ -1,6 +1,6 @@
-import { isFunction } from 'lodash'
-import { Placebo } from './Placebo'
-const { ipcRenderer } = window.require('electron')
+import { isFunction } from 'lodash';
+import { type Placebo } from './Placebo';
+const { ipcRenderer } = window.require('electron');
 
 
 class KeyboardController {
@@ -12,13 +12,13 @@ class KeyboardController {
 
 		const events = ['next', 'prev', 'switchPlayingStatus'];
 		for (const event of events) {
-			// @ts-ignore
+			// @ts-expect-error
 			ipcRenderer.on(event, () => {
-				// @ts-ignore
-				isFunction(this.placebo.music[event]) && this.placebo.music[event]()
-			})
+				// @ts-expect-error
+				isFunction(this.placebo.music[event]) && this.placebo.music[event]();
+			});
 		}
 	}
 }
 
-export default KeyboardController
+export default KeyboardController;

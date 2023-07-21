@@ -1,7 +1,7 @@
-import { useEffect } from 'react'
-import { isArray, isFunction } from 'lodash'
-import events from '../util/event'
-import { IEvent } from '../defination/event'
+import { useEffect } from 'react';
+import { isArray, isFunction } from 'lodash';
+import events from '../util/event';
+import { type IEvent } from '../defination/event';
 
 type fn = () => IEvent[]
 type param =  IEvent[]|fn
@@ -14,22 +14,22 @@ type param =  IEvent[]|fn
 const useEvents = (param: param) => {
 
   useEffect(() => {
-    const eventList = isFunction(param) ? param() : param
-    if (!isArray(eventList)) return
+    const eventList = isFunction(param) ? param() : param;
+    if (!isArray(eventList)) return;
     eventList.forEach(e => {
-      const { name, handler } = e
-      if (!handler) return
-      events.on(name, handler)
-    })
+      const { name, handler } = e;
+      if (!handler) return;
+      events.on(name, handler);
+    });
 
     return () => {
       eventList.forEach(e => {
-        const { name, handler } = e
-        events.off(name, handler)
-      })
-    }
+        const { name, handler } = e;
+        events.off(name, handler);
+      });
+    };
 
-  }, [])
-}
+  }, []);
+};
 
-export default useEvents
+export default useEvents;

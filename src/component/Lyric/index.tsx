@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { getLyric } from "../../api/music";
 import {formatLyric} from "../../util/audio";
 import Player from "../Controller/Player";
 import {AvailableMusic} from "../../defination/music";
 import styles from "./style.module.scss";
-import placebo from '../../model/Placebo'
+import placebo from '../../model/Placebo';
 
 interface Props {
   lyric: string;
@@ -14,7 +14,7 @@ interface Props {
 
 const Lyric = (props: Props) => {
 
-  let [nextIndex, setIndex] = useState(0);
+  const [nextIndex, setIndex] = useState(0);
   let timer: any;
 
 
@@ -41,7 +41,7 @@ const Lyric = (props: Props) => {
 
     return () => {
       clearInterval(timer);
-    }
+    };
   }, [times]);
 
   return (
@@ -54,13 +54,13 @@ const Lyric = (props: Props) => {
                       Object.entries(formattedLyric).map(([key, lyric], index) => {
                         return (
                           <li key={key} data-lyric-line={index} className={`${styles.scrollItem} ${nextIndex - 1 === times.indexOf(key) && styles.active}`}>
-                            <div className={styles.lyricRow}>{ lyric  as string}</div>
+                            <div className={styles.lyricRow}>{ lyric }</div>
                             {
                               formattedTranslatedLyric &&
-                              <div className={styles.tlyricRow}>{formattedTranslatedLyric[key] as string}</div>
+                              <div className={styles.tlyricRow}>{formattedTranslatedLyric[key] }</div>
                             }
                           </li>
-                        )
+                        );
                       })
                     }
             </ul>

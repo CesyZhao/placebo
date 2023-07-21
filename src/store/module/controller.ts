@@ -1,7 +1,7 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {RootState} from '../store';
-import {AvailableAlbum, AvailableMusic, Mode, ModeList, SwitchDirection} from "../../defination/music";
-import { shuffle } from 'lodash'
+import {createSlice, type PayloadAction} from '@reduxjs/toolkit';
+import {type RootState} from '../store';
+import {type AvailableAlbum, type AvailableMusic, Mode, ModeList, SwitchDirection} from "../../defination/music";
+import { shuffle } from 'lodash';
 
 
 export interface ControllerState {
@@ -9,7 +9,7 @@ export interface ControllerState {
 	playingList: AvailableMusic[],
 	playingAlbum: AvailableAlbum,
 	mode: Mode,
-	playingStatus: Boolean
+	playingStatus: boolean
 }
 
 const initialState: ControllerState = {
@@ -26,7 +26,7 @@ export const userSlice = createSlice({
 	initialState,
 	// The `reducers` field lets us define reducers and generate associated actions
 	reducers: {
-		updatePlayingStatus(state, action: PayloadAction<Boolean>) {
+		updatePlayingStatus(state, action: PayloadAction<boolean>) {
 			state.playingStatus = action.payload;
 		},
 		updatePlayingMusic(state, action: PayloadAction<AvailableMusic>) {
@@ -37,10 +37,10 @@ export const userSlice = createSlice({
 			const { playlist: tracks, shuffledPlayList = [] } = playingAlbum;
 			const targetList = mode === Mode.Shuffle ? shuffledPlayList : tracks;
 			const { payload } = action;
-			let nextIndex, nextSong
+			let nextIndex, nextSong;
 			let index = targetList.findIndex(e => +e.id === +playingMusic.id);
 			if (mode === Mode.Single) {
-				nextIndex = index
+				nextIndex = index;
 			} else {
 				nextIndex = payload === SwitchDirection.Prev
 					? --index >= 0 ? index : targetList.length - 1
@@ -62,7 +62,7 @@ export const userSlice = createSlice({
 			const index = array.findIndex(s => s === currentMode);
 			state.mode = array[index === array.length - 1 ? 0 : index + 1];
 			if (state.mode === 'shuffle' && !playingAlbum.shuffledPlayList) {
-				playingAlbum.shuffledPlayList = shuffle(playingAlbum.playlist)
+				playingAlbum.shuffledPlayList = shuffle(playingAlbum.playlist);
 			}
 		}
 	},

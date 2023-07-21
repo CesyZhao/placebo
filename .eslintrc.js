@@ -42,6 +42,9 @@ module.exports = {
     "@typescript-eslint/strict-boolean-expressions": 0,
     "@typescript-eslint/ban-ts-comment": 0,
     "@typescript-eslint/ban-types": 1,
+    "@typescript-eslint/consistent-type-assertions": "off",
+    "@typescript-eslint/restrict-plus-operands": "off",
+    "@typescript-eslint/no-floating-promises": "off",
     "react/jsx-uses-react": "off",
     "react/react-in-jsx-scope": "off",
     "semi": [2, "always"]

@@ -1,4 +1,4 @@
-import { configureStore, ThunkAction, Action, combineReducers } from '@reduxjs/toolkit';
+import { configureStore, type ThunkAction, type Action, combineReducers } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import userReducer from './module/user';
@@ -8,7 +8,7 @@ import appReducer from './module/app';
 const config = {
 	key: 'root',
 	storage,
-}
+};
 
 const persistedReducer = persistReducer(
 	config,
@@ -17,7 +17,7 @@ const persistedReducer = persistReducer(
 		controller: controllerReducer,
 		app: appReducer,
 	})
-)
+);
 
 export const store = configureStore({
 	reducer: persistedReducer,

@@ -1,20 +1,20 @@
-import React, { FC, useCallback, useMemo, useRef, useState } from 'react'
-import { useAppSelector } from '../../store/hooks'
-import placebo from '../../model/Placebo'
-import styles from './style.module.scss'
-import { useMount } from 'ahooks/es'
-import { SearchResultMap, SearchType, SearchTypeList } from '../../defination/search'
-import { debounce } from 'lodash'
-import Music from './music'
-import Artist from './artist'
-import Playlist from './playlist'
-import User from './user'
-import InfiniteScroll from 'react-infinite-scroll-component'
-import Loading from '../Loading'
-import { CSSTransition } from "react-transition-group"
+import React, { type FC, useCallback, useMemo, useRef, useState } from 'react';
+import { useAppSelector } from '../../store/hooks';
+import placebo from '../../model/Placebo';
+import styles from './style.module.scss';
+import { useMount } from 'ahooks/es';
+import { SearchResultMap, SearchType, SearchTypeList } from '../../defination/search';
+import { debounce } from 'lodash';
+import Music from './music';
+import Artist from './artist';
+import Playlist from './playlist';
+import User from './user';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import Loading from '../Loading';
+import { CSSTransition } from "react-transition-group";
 
 
-// @ts-ignore
+// @ts-expect-error
 const itemMap = new Map(
   [
     [SearchType.Music, Music],
@@ -22,61 +22,61 @@ const itemMap = new Map(
     [SearchType.Playlist, Playlist],
     [SearchType.User, User]
   ]
-)
+);
 
 const Search: FC = () => {
 
-  const showSearch: boolean = useAppSelector(placebo.screen.showSearch)
-  const [currentType, setCurrentType] = useState(SearchTypeList[0].type)
-  const [lastType, setLastType] = useState<SearchType>(SearchTypeList[0].type)
+  const showSearch: boolean = useAppSelector(placebo.screen.showSearch);
+  const [currentType, setCurrentType] = useState(SearchTypeList[0].type);
+  const [lastType, setLastType] = useState<SearchType>(SearchTypeList[0].type);
 
-  const [result, setResult] = useState<any[]>([])
-  const [page, setPage] = useState(1)
-  const [totalCount, setTotalCount] = useState(0)
-  const [keyword, setKeyword] = useState('')
-  const [searching, setSearching] = useState(false)
+  const [result, setResult] = useState<any[]>([]);
+  const [page, setPage] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
+  const [keyword, setKeyword] = useState('');
+  const [searching, setSearching] = useState(false);
 
   const handleSearch = useCallback(debounce(async (e) => {
-    const { target: { value } } = e
-    setKeyword(value)
-    setPage(1)
-    search(value, 1, currentType)
-  }, 500), [result, currentType, page])
+    const { target: { value } } = e;
+    setKeyword(value);
+    setPage(1);
+    search(value, 1, currentType);
+  }, 500), [result, currentType, page]);
 
   const handleLoadNext = useCallback(() => {
-    setPage(page + 1)
-    search(keyword, page + 1, currentType)
-  }, [keyword, currentType, page, result])
+    setPage(page + 1);
+    search(keyword, page + 1, currentType);
+  }, [keyword, currentType, page, result]);
 
   const search = async (keyword: string, page: number, type: SearchType) => {
-    console.log(page)
-    setSearching(true)
+    console.log(page);
+    setSearching(true);
     try {
-      const searchResult = await placebo.screen.search(keyword, type, page)
-      const newResult = searchResult[SearchResultMap.get(currentType) + 's']
-      const finalResult = lastType === currentType && page > 1 ? [...result, ...newResult] : [...newResult]
-      setResult(finalResult)
-      setTotalCount(searchResult[SearchResultMap.get(currentType) + 'Count'])
+      const searchResult = await placebo.screen.search(keyword, type, page);
+      const newResult = searchResult[SearchResultMap.get(currentType) + 's'];
+      const finalResult = lastType === currentType && page > 1 ? [...result, ...newResult] : [...newResult];
+      setResult(finalResult);
+      setTotalCount(searchResult[SearchResultMap.get(currentType) + 'Count']);
     } catch (e) {
-      setResult([])
-      setTotalCount(0)
+      setResult([]);
+      setTotalCount(0);
     }
-    setSearching(false)
-    setLastType(currentType)
-  }
+    setSearching(false);
+    setLastType(currentType);
+  };
 
   useMount(() => {
-  })
+  });
 
   const item = useMemo(() => {
-    return itemMap.get(currentType)
-  }, [currentType])
+    return itemMap.get(currentType);
+  }, [currentType]);
 
   const hasNextPage = useMemo(() => {
-    return totalCount > result.length
-  }, [result, totalCount])
+    return totalCount > result.length;
+  }, [result, totalCount]);
 
-  const nodeRef = useRef(null)
+  const nodeRef = useRef(null);
 
   return (
      <CSSTransition nodeRef={nodeRef} in={showSearch} timeout={300} unmountOnExit classNames="search-panel">
@@ -90,8 +90,8 @@ const Search: FC = () => {
                     <div
                       key={t.type}
                       className={`${styles.category} ${currentType === t.type ? styles.active : ''}`}
-                      onClick={() => setCurrentType(t.type)}> {t.name} </div>
-                  )
+                      onClick={() => { setCurrentType(t.type); }}> {t.name} </div>
+                  );
                 })
               }
             </div>
@@ -107,9 +107,9 @@ const Search: FC = () => {
                     >
                       {
                         result.map(r => {
-                          const Component = itemMap.get(currentType)
-                          // @ts-ignore
-                          return <Component item={r} key={r.id}></Component>
+                          const Component = itemMap.get(currentType);
+                          // @ts-expect-error
+                          return <Component item={r} key={r.id}></Component>;
                         })
                       }
                     </InfiniteScroll>
@@ -119,7 +119,7 @@ const Search: FC = () => {
           </div>
         </div>
       </CSSTransition>
-  )
-}
+  );
+};
 
-export default Search
+export default Search;

@@ -1,4 +1,4 @@
-import { Howl, HowlCallback, Howler } from 'howler';
+import { Howl, type HowlCallback, Howler } from 'howler';
 
 const BYTE_ARRAY_LENGTH = 4096;
 
@@ -22,7 +22,7 @@ class Player {
       onload: this.play.bind(this),
       onend: this.onEnd.bind(this),
       onplay: this.onPlay.bind(this)
-    })
+    });
   }
 
   play() {
@@ -51,7 +51,7 @@ class Player {
   createAnalyser() {
     const ctx = Howler.ctx;
     const audioSourceNode = ctx.createMediaElementSource(this.player?._sounds?.[0]?._node);
-    let analyser = ctx.createAnalyser();
+    const analyser = ctx.createAnalyser();
     audioSourceNode.connect(analyser);
     analyser.connect(ctx.destination);
     analyser.fftSize = BYTE_ARRAY_LENGTH;

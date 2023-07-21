@@ -7,14 +7,14 @@ import {
   getUserDetail,
   getUserLikeList, likeMusic,
   refreshLoginStatus
-} from '../api/user'
-import placebo, { Placebo } from "./Placebo";
-import { updateUserFavorites } from '../store/module/user'
-import music from '../component/Search/music'
+} from '../api/user';
+import placebo, { type Placebo } from "./Placebo";
+import { updateUserFavorites } from '../store/module/user';
+import music from '../component/Search/music';
 
 class UserController {
 
-  placebo: Placebo
+  placebo: Placebo;
 
   constructor(placebo: Placebo) {
     this.placebo = placebo;
@@ -25,16 +25,16 @@ class UserController {
   }
 
 
-  getQrKeyString() {
-    return getQrKey();
+  async getQrKeyString() {
+    return await getQrKey();
   }
 
-  getQrUrl(key: string) {
-    return getQrCode(key);
+  async getQrUrl(key: string) {
+    return await getQrCode(key);
   }
 
-  checkQrStatus(key: string) {
-    return checkQrCodeStatus(key);
+  async checkQrStatus(key: string) {
+    return await checkQrCodeStatus(key);
   }
 
   async getUserProfile() {
@@ -46,11 +46,11 @@ class UserController {
 
   async refreshLoginStatus() {
     try {
-      const { profile } = await getLoginStatus()
-      profile ? refreshLoginStatus() : (this.placebo.state.userProfile = {})
+      const { profile } = await getLoginStatus();
+      profile ? refreshLoginStatus() : (this.placebo.state.userProfile = {});
     } catch (error) {
-      console.log(error)
-      this.placebo.state.userProfile = {}
+      console.log(error);
+      this.placebo.state.userProfile = {};
     }
   }
 
@@ -62,21 +62,21 @@ class UserController {
     let list: number[] = [];
     if (userId) {
       try {
-        // @ts-ignore
+        // @ts-expect-error
         const { ids } = await getUserLikeList(userId);
         list = ids;
       } catch (e) {
-        list = []
+        list = [];
       }
     }
-    this.placebo.state.favorites = list
+    this.placebo.state.favorites = list;
   }
 
 
   async likeMusic(musicId: number) {
     try {
-      await likeMusic(musicId)
-      this.getLikedSongIds()
+      await likeMusic(musicId);
+      this.getLikedSongIds();
     } catch (e) {
 
     }
@@ -84,4 +84,4 @@ class UserController {
 
 }
 
-export default UserController
+export default UserController;

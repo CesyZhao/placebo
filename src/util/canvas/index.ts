@@ -1,39 +1,44 @@
-import { IAnimation } from "./types"
+import { type IAnimation } from './types';
 
-import { Glob, IGlobOptions } from "./animations/Glob";
+import { Glob, IGlobOptions } from './animations/Glob';
 
 export class Wave {
-    public animations = {
-        "Glob": Glob,
+  public animations = {
+    Glob,
+  };
+
+  private _activeAnimations: IAnimation[] = [];
+  private readonly _canvasContext: CanvasRenderingContext2D;
+  private readonly _player: any;
+
+  constructor(player: any, canvasContext: CanvasRenderingContext2D) {
+    this._player = player;
+    this._canvasContext = canvasContext;
+    this._draw();
+  }
+
+  private _draw(): void {
+    const tick = () => {
+      const data = this._player.getAudioData();
+      this._canvasContext.clearRect(
+        0,
+        0,
+        this._canvasContext.canvas.width,
+        this._canvasContext.canvas.height,
+      );
+      this._activeAnimations.forEach((animation) => {
+        animation.draw(data, this._canvasContext);
+      });
+      window.requestAnimationFrame(tick);
     };
-    private _activeAnimations: IAnimation[] = [];
-    private _canvasContext: CanvasRenderingContext2D;
-    private _player: any;
+    tick();
+  }
 
-    constructor(player: any, canvasContext: CanvasRenderingContext2D) {
-        this._player = player;
-        this._canvasContext = canvasContext;
-        this._draw();
-    }
+  public addAnimation(animation: IAnimation): void {
+    this._activeAnimations.push(animation);
+  }
 
-    private _draw(): void {
-
-        let tick = () => {
-            const data = this._player.getAudioData();
-            this._canvasContext.clearRect(0, 0, this._canvasContext.canvas.width, this._canvasContext.canvas.height);
-            this._activeAnimations.forEach((animation) => {
-                animation.draw(data, this._canvasContext);
-            })
-            window.requestAnimationFrame(tick);
-        }
-        tick();
-    }
-
-    public addAnimation(animation: IAnimation): void {
-        this._activeAnimations.push(animation);
-    }
-
-    public clearAnimations(): void {
-        this._activeAnimations = [];
-    }
+  public clearAnimations(): void {
+    this._activeAnimations = [];
+  }
 }

@@ -1,20 +1,20 @@
-import React, { useCallback, useMemo } from 'react'
-import { menus, Menu as MenuEnum, MenuPathMap } from '../../defination/menu'
+import React, { useCallback, useMemo } from 'react';
+import { menus, Menu as MenuEnum, MenuPathMap } from '../../defination/menu';
 import styles from './style.module.scss';
-import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
 	updateUserFavorites,
 	userAvatar, userProfile
-} from '../../store/module/user'
+} from '../../store/module/user';
 import {Link, useNavigate, useLocation} from "react-router-dom";
 import { isEmpty } from 'lodash';
-import { getList, getUserPlaylist } from '../../api/music'
-import { useMount } from 'ahooks'
-import event from '../../util/event'
-import { PlaceboEvent } from '../../defination/event'
-import placebo from '../../model/Placebo'
-import { AvailableAlbum, SpecialAlbum } from '../../defination/music';
-import { getUserLikeList } from '../../api/user'
+import { getList, getUserPlaylist } from '../../api/music';
+import { useMount } from 'ahooks';
+import event from '../../util/event';
+import { PlaceboEvent } from '../../defination/event';
+import placebo from '../../model/Placebo';
+import { type AvailableAlbum, SpecialAlbum } from '../../defination/music';
+import { getUserLikeList } from '../../api/user';
 
 const Menu = () => {
 	const navigate = useNavigate();
@@ -26,7 +26,7 @@ const Menu = () => {
 
 	const { playing: playingSelector, currentAlbum: currentAlbumSelector } = placebo.music;
 
-	const showSearch = useAppSelector(placebo.screen.showSearch)
+	const showSearch = useAppSelector(placebo.screen.showSearch);
 
 
 	const currentAlbum = useAppSelector<AvailableAlbum>(currentAlbumSelector);
@@ -47,33 +47,33 @@ const Menu = () => {
 				placebo.screen.togglePanel(true);
 			}
 		}
-	}, [currentAlbum, playing])
+	}, [currentAlbum, playing]);
 
 
 	const move = useCallback((direction: number) => {
-		navigate(direction)
-	}, [])
+		navigate(direction);
+	}, []);
 
 	const back = useCallback(() => {
-		move(-1)
-	}, [])
+		move(-1);
+	}, []);
 
 	const forward = useCallback(() => {
-		move(1)
-	}, [])
+		move(1);
+	}, []);
 
 	const canGoBack = useMemo(() => {
-		return location.pathname !== '/'
-	}, [location])
+		return location.pathname !== '/';
+	}, [location]);
 
 	const canGoForward = useMemo(() => {
-		const { length, state } = window.history
+		const { length, state } = window.history;
 		return state.idx < length - 1;
-	}, [window.history, location])
+	}, [window.history, location]);
 
 	const search = () => {
-		placebo.screen.toggleSearch(!showSearch)
-	}
+		placebo.screen.toggleSearch(!showSearch);
+	};
 
 	return (
 		<div className={styles.menusWrapper}>
@@ -81,12 +81,12 @@ const Menu = () => {
 				{
 					menus.map(menu => {
 						return (
-							<Link to={menu.path} key={menu.key} onClick={(e) => handleMenuClick(e, menu)}>
+							<Link to={menu.path} key={menu.key} onClick={(e) => { handleMenuClick(e, menu); }}>
 								<div className={styles.menuItem}>
 									{ menu.title }
 								</div>
 							</Link>
-						)
+						);
 					})
 				}
 			</div>
@@ -103,7 +103,7 @@ const Menu = () => {
 				}
 			</div>
 		</div>
-	)
+	);
 };
 
 export default Menu;

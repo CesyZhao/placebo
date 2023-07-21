@@ -1,5 +1,5 @@
-import React, { createRef } from 'react'
-import { Routes, Route, useLocation, useOutlet, createBrowserRouter, RouterProvider } from 'react-router-dom'
+import React, { createRef } from 'react';
+import { Routes, Route, useLocation, useOutlet, createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Home from '../Home';
 import styles from './style.module.scss';
 import Menu from "../Menu";
@@ -8,9 +8,9 @@ import Controller from "../Controller";
 import PlayingPanel from "../PlayingPanel";
 import Top from "../Top";
 import User from "../User";
-import { TransitionGroup, CSSTransition, SwitchTransition } from 'react-transition-group'
-import Login from '../Login'
-import Search from '../Search'
+import { TransitionGroup, CSSTransition, SwitchTransition } from 'react-transition-group';
+import Login from '../Login';
+import Search from '../Search';
 
 
 
@@ -19,15 +19,15 @@ const routes = [
 	{ path: '/album/:id', name: 'Album', element: <Album />, nodeRef: createRef() },
 	{ path: '/topList', name: 'TopList', element: <Top />, nodeRef: createRef() },
 	{ path: '/user', name: 'User', element: <User />, nodeRef: createRef() }
-]
+];
 
 
 const RouteContainer = () => {
 
-	const location = useLocation()
+	const location = useLocation();
 
-	const currentOutlet = useOutlet()
-	const { nodeRef } = routes.find((route) => route.path === location.pathname) ?? {} as any
+	const currentOutlet = useOutlet();
+	const { nodeRef } = routes.find((route) => route.path === location.pathname) ?? {} as any;
 
 
 	return (
@@ -54,8 +54,8 @@ const RouteContainer = () => {
 			<PlayingPanel></PlayingPanel>
 			<Search></Search>
 		</div>
-	)
-}
+	);
+};
 
 const router = createBrowserRouter([
 	{
@@ -71,6 +71,6 @@ const router = createBrowserRouter([
 		path: '/login',
 		element: <Login />,
 	}
-])
+]);
 
 export default <RouterProvider router={router} />;

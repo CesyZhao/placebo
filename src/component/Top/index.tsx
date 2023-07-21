@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import styles from "./style.module.scss";
 import { humanNumber } from "../../util/number";
 import {getRankingList} from "../../api/music";
-import { PlayList } from "../../defination/music";
-import placebo from '../../model/Placebo'
+import { type PlayList } from "../../defination/music";
+import placebo from '../../model/Placebo';
 
 
 
@@ -23,7 +23,7 @@ const Top = () => {
 
   useEffect(() => {
     getTopList();
-  }, [])
+  }, []);
 
   return (
     <div className={styles.top}>
@@ -40,11 +40,11 @@ const Top = () => {
                 <span className={styles.topItemName}> {item.name} </span>
               </div>
             </Link>
-          )
+          );
         })
       }
     </div>
   );
-}
+};
 
 export default Top;

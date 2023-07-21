@@ -1,15 +1,15 @@
-import { Artist } from '../defination/music'
+import { type Artist } from '../defination/music';
 
 export function formatMusic(music: any) {
   // eslint-disable-next-line
   let {al, album, ar, artists, dt, duration, id, name} = music
   // 处理接口返回的内容属性名称不一的情况
-  al = al || album
-  ar = ar || artists
-  dt = dt || duration
+  al = al || album;
+  ar = ar || artists;
+  dt = dt || duration;
   return {
     id: id.toString(),
-    name: name,
+    name,
     duration: dt,
     album: {
       id: al.id.toString(),
@@ -23,34 +23,34 @@ export function formatMusic(music: any) {
       // Broken link
       link: e.id ? `/artist/${e.id}` : ''
     }))
-  }
+  };
 }
 
 export function formatList(list: any) {
-  let playlist
+  let playlist;
   try{
     playlist = list.map((e: any) => {
-      return formatMusic(e)
-    })
+      return formatMusic(e);
+    });
   } catch (e) {
-    console.error('list not suit for the formation')
+    console.error('list not suit for the formation');
   }
-  return playlist
+  return playlist;
 }
 
 
 export function formatLyric(lyric: string){
-  let result = {} as Record<string, string>;
-  let lyrics = lyric.split('\n');
+  const result = {} as Record<string, string>;
+  const lyrics = lyric.split('\n');
   lyrics.forEach(e => {
-    let match = e.match(/\[.+\]/);
+    const match = e.match(/\[.+\]/);
     if (!match) return null;
-    let timestamp = match[0].replace(/\D/g, ':').replace(/^:|:$/g, '').split(':');
-    let content = e.replace(/\[.+\]/, '');
-    let times: number= (+timestamp[0] * 60 * 1000) + (+timestamp[1] * 1000) + (+timestamp[2]);
+    const timestamp = match[0].replace(/\D/g, ':').replace(/^:|:$/g, '').split(':');
+    const content = e.replace(/\[.+\]/, '');
+    const times: number= (+timestamp[0] * 60 * 1000) + (+timestamp[1] * 1000) + (+timestamp[2]);
     result[times] = content;
-  })
-  return result
+  });
+  return result;
 }
 
 

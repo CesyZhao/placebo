@@ -1,46 +1,46 @@
-import http, {RequestConfig} from '../util/http'
+import http, {type RequestConfig} from '../util/http';
 import {
-	QRKeyResponse,
-	QRCodeResponse,
-	UserSignInEntity,
-	QRCodeStatusResponse,
-	AccountResponse, UserDetailResponse, UserVipInfoResponse, UserLikeListResponse
-} from '../defination/user'
+	type QRKeyResponse,
+	type QRCodeResponse,
+	type UserSignInEntity,
+	type QRCodeStatusResponse,
+	type AccountResponse, type UserDetailResponse, type UserVipInfoResponse, type UserLikeListResponse
+} from '../defination/user';
 
-export const login = (form: UserSignInEntity) => {
+export const login = async (form: UserSignInEntity) => {
 	const { phone, password } = form;
-	return http.get(`/login/cellphone?phone=${phone}&password=${password}`);
-}
+	return await http.get(`/login/cellphone?phone=${phone}&password=${password}`);
+};
 
-export const getQrKey = (): Promise<QRKeyResponse> => {
-	return http.get('/login/qr/key');
-}
+export const getQrKey = async (): Promise<QRKeyResponse> => {
+	return await http.get('/login/qr/key');
+};
 
-export const getQrCode = (key: string): Promise<QRCodeResponse> => {
-	return http.get('/login/qr/create?key='+ key + '&qrimg=true');
-}
+export const getQrCode = async (key: string): Promise<QRCodeResponse> => {
+	return await http.get('/login/qr/create?key='+ key + '&qrimg=true');
+};
 
-export const checkQrCodeStatus = (key: string): Promise<QRCodeStatusResponse> => {
-	return http.get('/login/qr/check?key='+ key + '&timestamp=' + new Date().getTime(), { rawData: true } as RequestConfig);
-}
+export const checkQrCodeStatus = async (key: string): Promise<QRCodeStatusResponse> => {
+	return await http.get('/login/qr/check?key='+ key + '&timestamp=' + new Date().getTime(), { rawData: true } as RequestConfig);
+};
 
-export const getAccount = (): Promise<AccountResponse> => {
-	return http.get('/user/account', { rawData: true } as RequestConfig);
-}
+export const getAccount = async (): Promise<AccountResponse> => {
+	return await http.get('/user/account', { rawData: true } as RequestConfig);
+};
 
-export const getUserDetail = (id: number): Promise<UserDetailResponse> => {
-	return http.get(`/user/detail?uid=${id}`, { rawData: true } as RequestConfig);
-}
+export const getUserDetail = async (id: number): Promise<UserDetailResponse> => {
+	return await http.get(`/user/detail?uid=${id}`, { rawData: true } as RequestConfig);
+};
 
-export const getVipInfo = (): Promise<UserVipInfoResponse> => {
-	return http.get(`/vip/info`);
-}
+export const getVipInfo = async (): Promise<UserVipInfoResponse> => {
+	return await http.get(`/vip/info`);
+};
 
-export const getLoginStatus = (): Promise<AccountResponse> =>  http.get('/login/status');
+export const getLoginStatus = async (): Promise<AccountResponse> =>  await http.get('/login/status');
 
-export const refreshLoginStatus = () => http.get('/login/refresh');
+export const refreshLoginStatus = async () => await http.get('/login/refresh');
 
-export const getUserLikeList = (id: number): Promise<UserLikeListResponse> => http.get(`/likelist?uid=${id}`, { rawData: true } as RequestConfig);
+export const getUserLikeList = async (id: number): Promise<UserLikeListResponse> => await http.get(`/likelist?uid=${id}`, { rawData: true } as RequestConfig);
 
 
-export const likeMusic = (id: number): Promise<UserLikeListResponse> => http.get(`/like?id=${id}`, { rawData: true, needAuth: true } as RequestConfig);
+export const likeMusic = async (id: number): Promise<UserLikeListResponse> => await http.get(`/like?id=${id}`, { rawData: true, needAuth: true } as RequestConfig);

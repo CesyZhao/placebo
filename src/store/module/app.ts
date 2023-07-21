@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../store';
 
 
@@ -23,7 +23,7 @@ export const userSlice = createSlice({
    },
 
     toggleSearch(state, action: PayloadAction<boolean>) {
-     console.log(action.payload)
+     console.log(action.payload);
       state.showSearch = action.payload;
     }
   },

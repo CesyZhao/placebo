@@ -19,17 +19,17 @@ function pad(number: number) {
 * 格式化时间  毫秒 => 秒
 * */
 export function formatDuration(duration: number){
-	let minutes = Math.floor(duration / 1000 / 60);
-	let second = Math.floor(duration / 1000 - minutes * 60);
+	const minutes = Math.floor(duration / 1000 / 60);
+	const second = Math.floor(duration / 1000 - minutes * 60);
 	return `${pad(minutes)}:${pad(second)}`;
 }
 
 
 export function getAge(birthday: number) {
-	//出生时间 毫秒
+	// 出生时间 毫秒
 	const birthDayTime = new Date(birthday).getTime();
-	//当前时间 毫秒
+	// 当前时间 毫秒
 	const nowTime = new Date().getTime();
-	//一年毫秒数(365 * 86400000 = 31536000000)
+	// 一年毫秒数(365 * 86400000 = 31536000000)
 	return Math.ceil((nowTime-birthDayTime)/31536000000);
 }

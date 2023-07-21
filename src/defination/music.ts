@@ -1,4 +1,4 @@
-import {Profile} from "./user";
+import {type Profile} from "./user";
 
 export interface Album {
 	alg?: string;
@@ -58,7 +58,7 @@ export interface PlayList {
 	createTime: number;
 	coverImgUrl: string;
 	tracks: Song[];
-	trackIds: { id: number }[];
+	trackIds: Array<{ id: number }>;
 	playCount: number;
 	subscribedCount: number;
 	subscribed: boolean;
@@ -86,7 +86,7 @@ export const ModeList = new Map([
 	[Mode.List, 'icon-ios-listCirculation'],
 	[Mode.Shuffle, 'icon-ios-shuffle'],
 	[Mode.Single, 'icon-ios-singleCirculation'],
-])
+]);
 
 
 export enum SwitchDirection {
