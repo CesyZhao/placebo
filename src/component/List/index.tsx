@@ -24,7 +24,7 @@ interface Props extends ComponentProps<any> {
 const List = forwardRef((props: Props, ref) => {
 
   const [searching, setSearching] = useState(false);
-  const [filterList, setList] = useState([] as AvailableMusic[]);
+  const [filterList, setList] = useState(props.list);
   const inputRef: any = createRef();
 
   useImperativeHandle(ref, () => {
@@ -40,7 +40,8 @@ const List = forwardRef((props: Props, ref) => {
   const onSearch = useCallback(debounce((e: FormEvent) => {
     const { target } = e;
     const { value } = target as any;
-    const filterList = props.list.filter(song => song.name.includes(value));
+    console.log(value, '-----------')
+    const filterList = value ? props.list.filter(song => song.name.includes(value)) : props.list;
     setList(filterList);
   }, 500), []);
 

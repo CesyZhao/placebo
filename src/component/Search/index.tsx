@@ -81,29 +81,34 @@ const Search: FC = () => {
   return (
      <CSSTransition nodeRef={nodeRef} in={showSearch} timeout={300} unmountOnExit classNames="search-panel">
         <div ref={nodeRef} className={styles.searchPanel}>
-          <input type="text" placeholder="Search..." autoFocus onInput={handleSearch}/>
-          <div className={styles.results}>
-            <div className={styles.categories}>
-              {
-                SearchTypeList.map(t => {
-                  return (
-                    <div
-                      key={t.type}
-                      className={`${styles.category} ${currentType === t.type ? styles.active : ''}`}
-                      onClick={() => { setCurrentType(t.type); }}> {t.name} </div>
-                  );
-                })
-              }
-            </div>
-            <div className={styles.scrollWrapper}>
-              {
-                result.length
-                  ?  <InfiniteScroll
-                    dataLength={result.length}
-                    next={handleLoadNext}
-                    hasMore={true}
-                    height={240}
-                    loader={<Loading />}
+          <div className={styles.inputWrapper}>
+            <input type="text" placeholder="Search..." autoFocus onInput={handleSearch}/>
+            { keyword && <i className="iconfont icon-close"></i> }
+          </div>
+          {
+            keyword &&
+            <div className={styles.results}>
+              <div className={styles.categories}>
+                {
+                  SearchTypeList.map(t => {
+                    return (
+                      <div
+                        key={t.type}
+                        className={`${styles.category} ${currentType === t.type ? styles.active : ''}`}
+                        onClick={() => { setCurrentType(t.type); }}> {t.name} </div>
+                    );
+                  })
+                }
+              </div>
+              <div className={styles.scrollWrapper}>
+                {
+                  result.length
+                    ?  <InfiniteScroll
+                      dataLength={result.length}
+                      next={handleLoadNext}
+                      hasMore={true}
+                      height={240}
+                      loader={<Loading />}
                     >
                       {
                         result.map(r => {
@@ -113,10 +118,11 @@ const Search: FC = () => {
                         })
                       }
                     </InfiniteScroll>
-                  : <div className={styles.empty}>No result</div>
-              }
+                    : <div className={styles.empty}>No result</div>
+                }
+              </div>
             </div>
-          </div>
+          }
         </div>
       </CSSTransition>
   );
