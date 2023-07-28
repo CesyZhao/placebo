@@ -49,7 +49,6 @@ const Search: FC = () => {
   }, [keyword, currentType, page, result]);
 
   const search = async (keyword: string, page: number, type: SearchType) => {
-    console.log(page);
     setSearching(true);
     try {
       const searchResult = await placebo.screen.search(keyword, type, page);
@@ -79,7 +78,7 @@ const Search: FC = () => {
   const nodeRef = useRef(null);
 
   return (
-     <CSSTransition nodeRef={nodeRef} in={showSearch} timeout={300} unmountOnExit classNames="search-panel">
+     <CSSTransition nodeRef={nodeRef} in={showSearch} timeout={200} unmountOnExit classNames="search-panel">
         <div ref={nodeRef} className={styles.searchPanel}>
           <div className={styles.inputWrapper}>
             <input type="text" placeholder="Search..." autoFocus onInput={handleSearch}/>
