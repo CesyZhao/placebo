@@ -84,8 +84,7 @@ const Search: FC = () => {
             <input type="text" placeholder="Search..." autoFocus onInput={handleSearch}/>
             { keyword && <i className="iconfont icon-close"></i> }
           </div>
-          {
-            keyword &&
+          <CSSTransition in={!!keyword} timeout={200} unmountOnExit classNames="results">
             <div className={styles.results}>
               <div className={styles.categories}>
                 {
@@ -121,7 +120,7 @@ const Search: FC = () => {
                 }
               </div>
             </div>
-          }
+          </CSSTransition>
         </div>
       </CSSTransition>
   );
