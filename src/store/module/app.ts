@@ -18,12 +18,11 @@ export const userSlice = createSlice({
   initialState,
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {
-   togglePanel(state, action: PayloadAction<boolean>) {
-     state.showPanel = action.payload;
-   },
+    togglePanel(state, action: PayloadAction<boolean>) {
+      state.showPanel = action.payload;
+    },
 
     toggleSearch(state, action: PayloadAction<boolean>) {
-     console.log(action.payload);
       state.showSearch = action.payload;
     }
   },
