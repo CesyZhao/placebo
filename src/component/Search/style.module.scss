@@ -1,9 +1,9 @@
 @import "../../theme/vars";
 .searchPanel{
   position: fixed;
-  top: 30%;
+  top: 20%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
   z-index: 888;
   transition: all .2s ease-in-out;
   .inputWrapper {
@@ -16,7 +16,10 @@
     background: rgba(255, 255, 255, 1);
     box-shadow: 0 4px 12px 0 #aaa;
     overflow-x: hidden;
-
+    i {
+      margin-right: 12px;
+      cursor: pointer;
+    }
   }
   input {
     flex: 1;
@@ -27,13 +30,13 @@
     margin:0 12px;
   }
   .results {
-    height: calc(100% - 56px);
-    max-height: calc(100% - 56px);
+    max-height: 50vh;
     margin-top: 12px;
     border-radius: 2px;
     background: rgba(255, 255, 255, .95);
     box-shadow: 0 4px 12px 0 #aaa;
     color: #777;
+    transition: all .1s ease-in-out;
   }
   .categories {
     display: flex;
@@ -108,5 +111,18 @@
   }
   .search-panel-exit-active {
     width: 0;
+  }
+
+  .results-enter {
+    height: 0;
+  }
+  .results-enter-done {
+    height: 50vh;
+  }
+  .results-exit {
+    height: 50vh;
+  }
+  .results-exit-active {
+    height: 0;
   }
 }

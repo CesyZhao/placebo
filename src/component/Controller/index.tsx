@@ -84,10 +84,10 @@ const Controller = () => {
 	useEffect(() => {
 		setCurrentTime(0);
 		setType(0);
-		placebo.music.playMusicById(music.id)
-			.then(() => {
-				setType(1);
-			});
+		// placebo.music.playMusicById(music.id)
+		// 	.then(() => {
+		// 		setType(1);
+		// 	});
 	}, [music]);
 
 	useEffect(() => {

@@ -43,6 +43,10 @@ const Search: FC = () => {
     search(value, 1, currentType);
   }, 500), [result, currentType, page]);
 
+  const handleClear = () => {
+
+  }
+
   const handleLoadNext = useCallback(() => {
     setPage(page + 1);
     search(keyword, page + 1, currentType);
@@ -82,9 +86,9 @@ const Search: FC = () => {
         <div ref={nodeRef} className={styles.searchPanel}>
           <div className={styles.inputWrapper}>
             <input type="text" placeholder="Search..." autoFocus onInput={handleSearch}/>
-            { keyword && <i className="iconfont icon-close"></i> }
+            { keyword && <i className="iconfont icon-close" onClick={handleClear}></i> }
           </div>
-          <CSSTransition in={!!keyword} timeout={200} unmountOnExit classNames="results">
+          <CSSTransition in={!!keyword} timeout={100} unmountOnExit classNames="results">
             <div className={styles.results}>
               <div className={styles.categories}>
                 {
