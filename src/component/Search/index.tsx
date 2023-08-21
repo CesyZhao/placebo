@@ -1,4 +1,4 @@
-import React, { type FC, useCallback, useMemo, useRef, useState } from 'react';
+import React, { type FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useAppSelector } from '../../store/hooks';
 import placebo from '../../model/Placebo';
 import styles from './style.module.scss';
@@ -30,22 +30,30 @@ const Search: FC = () => {
   const [currentType, setCurrentType] = useState(SearchTypeList[0].type);
   const [lastType, setLastType] = useState<SearchType>(SearchTypeList[0].type);
 
+  const inputRef: any = useRef<HTMLElement>()
+
   const [result, setResult] = useState<any[]>([]);
   const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const [keyword, setKeyword] = useState('');
   const [searching, setSearching] = useState(false);
 
-  const handleSearch = useCallback(debounce(async (e) => {
+  const handleSearch = useCallback((e) => {
+    console.log(e, '+++++++++')
     const { target: { value } } = e;
     setKeyword(value);
     setPage(1);
-    search(value, 1, currentType);
-  }, 500), [result, currentType, page]);
+  }, [currentType]);
 
   const handleClear = () => {
-
+    console.log('----------')
+    setKeyword('');
+    setPage(1);
   }
+
+  useEffect(debounce(() => {
+    search(keyword, 1, currentType);
+  }, 500), [currentType, keyword])
 
   const handleLoadNext = useCallback(() => {
     setPage(page + 1);
@@ -53,6 +61,7 @@ const Search: FC = () => {
   }, [keyword, currentType, page, result]);
 
   const search = async (keyword: string, page: number, type: SearchType) => {
+    if (!keyword) return
     setSearching(true);
     try {
       const searchResult = await placebo.screen.search(keyword, type, page);
@@ -85,7 +94,7 @@ const Search: FC = () => {
      <CSSTransition nodeRef={nodeRef} in={showSearch} timeout={200} unmountOnExit classNames="search-panel">
         <div ref={nodeRef} className={styles.searchPanel}>
           <div className={styles.inputWrapper}>
-            <input type="text" placeholder="Search..." autoFocus onInput={handleSearch}/>
+            <input type="text" placeholder="Search..." value={keyword} autoFocus onInput={handleSearch}/>
             { keyword && <i className="iconfont icon-close" onClick={handleClear}></i> }
           </div>
           <CSSTransition in={!!keyword} timeout={100} unmountOnExit classNames="results">
