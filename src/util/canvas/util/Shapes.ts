@@ -61,6 +61,7 @@ export class Shapes {
     const img = new Image();
     img.src = srcUrl;
 
+    // eslint-disable-next-line promise/param-names
     return await new Promise((res, rej) => {
       img.onload = () => {
         const pattern = this._canvasContext.createPattern(img, 'repeat');

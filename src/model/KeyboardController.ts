@@ -12,7 +12,6 @@ class KeyboardController {
 
 		const events = ['next', 'prev', 'switchPlayingStatus'];
 		for (const event of events) {
-			// @ts-expect-error
 			ipcRenderer.on(event, () => {
 				// @ts-expect-error
 				isFunction(this.placebo.music[event]) && this.placebo.music[event]();

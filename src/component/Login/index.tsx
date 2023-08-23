@@ -44,7 +44,7 @@ const Login = () => {
 	const checkQrStatus = useCallback(async (qrKey: string) => {
 		try {
 			const { code } = await Placebo.user.checkQrStatus(qrKey);
-			setMessage(QRCodeStatusMap.get(code) || '');
+			setMessage(QRCodeStatusMap.get(code) ?? '');
 			if (code === QRCodeStatus.Authorized) {
 				getAccountInfo();
 			}

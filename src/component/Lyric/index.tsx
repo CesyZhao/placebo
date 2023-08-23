@@ -53,6 +53,7 @@ const Lyric = (props: Props) => {
                     {
                       Object.entries(formattedLyric).map(([key, lyric], index) => {
                         return (
+                          // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
                           <li key={key} data-lyric-line={index} className={`${styles.scrollItem} ${nextIndex - 1 === times.indexOf(key) && styles.active}`}>
                             <div className={styles.lyricRow}>{ lyric }</div>
                             {

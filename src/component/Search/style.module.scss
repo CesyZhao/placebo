@@ -87,6 +87,26 @@
   text-overflow: ellipsis;
 }
 
+.artist {
+  height: 56px;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  overflow: hidden;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.artistName {
+  flex: 1;
+  margin-left: 18px;
+}
+
 .scrollWrapper {
   max-height: 240px;
   overflow: auto;

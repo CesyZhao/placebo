@@ -62,7 +62,6 @@ class UserController {
     let list: number[] = [];
     if (userId) {
       try {
-        // @ts-expect-error
         const { ids } = await getUserLikeList(userId);
         list = ids;
       } catch (e) {

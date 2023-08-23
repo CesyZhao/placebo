@@ -14,13 +14,16 @@ export function formatMusic(music: any) {
     album: {
       id: al.id.toString(),
       name: al.name,
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       picUrl: al.picUrl?.endsWith('?param=100y100') ? al.picUrl : `${al.picUrl}?param=100y100`,
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       link: `/player/1/${al.id}`
     },
     artists: ar.map((e: any) => ({
       id: e.id.toString(),
       name: e.name,
       // Broken link
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       link: e.id ? `/artist/${e.id}` : ''
     }))
   };

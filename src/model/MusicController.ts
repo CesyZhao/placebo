@@ -95,7 +95,7 @@ class MusicController {
       // TODO handle error
     }
 
-    this.player.onPlay = () => this.placebo.state.playingStatus = true;
+    this.player.onPlay = () => { this.placebo.state.playingStatus = true; };
     this.player.onEnd = () => { switchPlayingMusic(SwitchDirection.Next); };
 
     this.player.initMusic(url);

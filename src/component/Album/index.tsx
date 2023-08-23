@@ -1,9 +1,9 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import styles from "./style.module.scss";
 import { useParams } from "react-router-dom";
 import { useMount } from "ahooks";
 import {getAlbum, getList} from "../../api/music";
-import { AvailableAlbum, AvailableMusic, PlayList } from '../../defination/music'
+import { type AvailableAlbum, type AvailableMusic, type PlayList } from '../../defination/music';
 import { humanNumber } from "../../util/number";
 import LazyImage from "../LazyImage";
 import List from "../List";
@@ -12,13 +12,13 @@ import {
 	playingMusic,
 	updatePlayingMusic,
 	updatePlayingAlbum, playingAlbum, playingStatus
-} from '../../store/module/controller'
+} from '../../store/module/controller';
 import {useAppDispatch, useAppSelector} from "../../store/hooks";
-import event from '../../util/event'
-import { userProfile } from '../../store/module/user'
-import Loading from '../Loading'
+import event from '../../util/event';
+import { userProfile } from '../../store/module/user';
+import Loading from '../Loading';
 import placebo from "../../model/Placebo";
-import { Profile } from '../../defination/user';
+import { type Profile } from '../../defination/user';
 
 const Album = () => {
   const { currentMusic, playing: playingSelector, currentAlbum: currentAlbumSelector } = placebo.music;
@@ -39,11 +39,11 @@ const Album = () => {
 
 	const isOwner = useMemo(() => {
 		return profile?.userId === album?.creator?.userId;
-	}, [album, profile])
+	}, [album, profile]);
 
 	const handleSearch = useCallback(() => {
-		listRef.current.search(true)
-	}, [])
+		listRef.current.search(true);
+	}, []);
 
 	const getSongList = useCallback( async () => {
 		setLoading(true);
@@ -56,33 +56,33 @@ const Album = () => {
 			setList([]);
 		}
 		setLoading(false);
-	}, [])
+	}, []);
 
 	const dispatch = useAppDispatch();
 
 	const handleSongPlay = useCallback((index: number) => {
-		const nextAlbum = { playlist: list, id: album.id, name: album.name }
-		placebo.music.updatePlayingAlbum(nextAlbum, index)
-	}, [ list ])
+		const nextAlbum = { playlist: list, id: album.id, name: album.name };
+		placebo.music.updatePlayingAlbum(nextAlbum, index);
+	}, [ list ]);
 
 	const handleAlbumPlay = useCallback(() => {
 		if (!isCurrentList) {
 			handleSongPlay(0);
 		}
 		placebo.music.switchPlayingStatus();
-	}, [list, playing])
+	}, [list, playing]);
 
 	const isCurrentList = useMemo(() => {
-		return album.id === currentAlbum.id
-	}, [album, currentAlbum,])
+		return album.id === currentAlbum.id;
+	}, [album, currentAlbum,]);
 
 	const isCurrentListPlaying = useMemo(() => {
 		return isCurrentList && playing;
-	}, [isCurrentList, playing])
+	}, [isCurrentList, playing]);
 
 	useMount(() => {
 		getSongList();
-	})
+	});
 
 	return (
 			album.id && !loading ?
@@ -120,7 +120,7 @@ const Album = () => {
 				</div>
 			</div>
 		: <Loading></Loading>
-	)
-}
+	);
+};
 
 export default Album;

@@ -58,7 +58,6 @@ const PlayingPanel = () => {
 				rounded: true,
 				mirroredX: true
 			};
-			// @ts-expect-error
 			wave.addAnimation(new wave.animations.Glob({
 				fillColor: { gradient: ["#9B30FF", "#7BA3FF", "#57E1E7"], rotate: 70 },
 				glow: { strength: 15, color: "#7BA3FF" },
@@ -66,7 +65,6 @@ const PlayingPanel = () => {
 				...commonOptions,
 				count: 45
 			}));
-			// @ts-expect-error
 			wave.addAnimation(new wave.animations.Glob({
 				fillColor: { gradient: ["#57E1E7", "#7BA3FF", "#9B30FF"], rotate: 90 },
 				glow: { strength: 5, color: "#9B30FF" },

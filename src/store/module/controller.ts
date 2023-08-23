@@ -37,7 +37,7 @@ export const userSlice = createSlice({
 			const { playlist: tracks, shuffledPlayList = [] } = playingAlbum;
 			const targetList = mode === Mode.Shuffle ? shuffledPlayList : tracks;
 			const { payload } = action;
-			let nextIndex, nextSong;
+			let nextIndex;
 			let index = targetList.findIndex(e => +e.id === +playingMusic.id);
 			if (mode === Mode.Single) {
 				nextIndex = index;
@@ -46,7 +46,7 @@ export const userSlice = createSlice({
 					? --index >= 0 ? index : targetList.length - 1
 					: ++index < targetList.length ? index : 0;
 			}
-			nextSong = targetList[nextIndex];
+			const nextSong = targetList[nextIndex];
 			state.playingMusic = {...nextSong};
 		},
 		updatePlayingList(state, action: PayloadAction<AvailableMusic[]>) {

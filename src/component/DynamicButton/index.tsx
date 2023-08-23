@@ -11,6 +11,7 @@ const DynamicButtons: FC<PropsWithChildren> = (props) => {
 
   const rotateBg = () => {
     if (buttonRef.current) {
+      // eslint-disable-next-line react/no-find-dom-node
       const nativeNode = ReactDOM.findDOMNode(
         buttonRef.current
       ) as HTMLButtonElement;

@@ -22,5 +22,5 @@ export const menus = [
 	Menu.FM,
 	Menu.Top,
 ].map(menu => {
-	return { key: menu, title: MenuMap.get(menu), path: MenuPathMap.get(menu) || '/'  };
+	return { key: menu, title: MenuMap.get(menu), path: MenuPathMap.get(menu) ?? '/'  };
 });

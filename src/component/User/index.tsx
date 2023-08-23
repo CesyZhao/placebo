@@ -20,6 +20,7 @@ const User = () => {
   const [collectedList, setCollectedList] = useState<any>([]);
   const [loading, setLoading] = useState(false);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleLogout = useCallback(() => {
 
   }, []);
@@ -104,6 +105,7 @@ const User = () => {
               switchActiveList.map((item: any) => {
                 return (
                   <div className={styles.userListItem} key={item.id}>
+                    {/* eslint-disable-next-line @typescript-eslint/restrict-template-expressions */}
                     <Link to={`/album/${item.id}`} >
                       <img src={item.coverImgUrl} alt="歌单封面"></img>
                       <div className={styles.userListItemName}> {item.name} </div>

@@ -1,4 +1,4 @@
-import React, { type FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { type FC, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useAppSelector } from '../../store/hooks';
 import placebo from '../../model/Placebo';
 import styles from './style.module.scss';
@@ -13,8 +13,6 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import Loading from '../Loading';
 import { CSSTransition } from "react-transition-group";
 
-
-// @ts-expect-error
 const itemMap = new Map(
   [
     [SearchType.Music, Music],
@@ -30,7 +28,7 @@ const Search: FC = () => {
   const [currentType, setCurrentType] = useState(SearchTypeList[0].type);
   const [lastType, setLastType] = useState<SearchType>(SearchTypeList[0].type);
 
-  const inputRef: any = useRef<HTMLElement>()
+  const inputRef: any = useRef<HTMLElement>();
 
   const [result, setResult] = useState<any[]>([]);
   const [page, setPage] = useState(1);
@@ -38,22 +36,20 @@ const Search: FC = () => {
   const [keyword, setKeyword] = useState('');
   const [searching, setSearching] = useState(false);
 
-  const handleSearch = useCallback((e) => {
-    console.log(e, '+++++++++')
+  const handleSearch = useCallback((e: any) => {
     const { target: { value } } = e;
     setKeyword(value);
     setPage(1);
   }, [currentType]);
 
   const handleClear = () => {
-    console.log('----------')
     setKeyword('');
     setPage(1);
-  }
+  };
 
   useEffect(debounce(() => {
     search(keyword, 1, currentType);
-  }, 500), [currentType, keyword])
+  }, 500, { leading: true }), [currentType, keyword]);
 
   const handleLoadNext = useCallback(() => {
     setPage(page + 1);
@@ -61,7 +57,7 @@ const Search: FC = () => {
   }, [keyword, currentType, page, result]);
 
   const search = async (keyword: string, page: number, type: SearchType) => {
-    if (!keyword) return
+    if (!keyword) return;
     setSearching(true);
     try {
       const searchResult = await placebo.screen.search(keyword, type, page);
@@ -76,13 +72,6 @@ const Search: FC = () => {
     setSearching(false);
     setLastType(currentType);
   };
-
-  useMount(() => {
-  });
-
-  const item = useMemo(() => {
-    return itemMap.get(currentType);
-  }, [currentType]);
 
   const hasNextPage = useMemo(() => {
     return totalCount > result.length;
@@ -113,7 +102,7 @@ const Search: FC = () => {
               </div>
               <div className={styles.scrollWrapper}>
                 {
-                  result.length
+                  !searching && result.length
                     ?  <InfiniteScroll
                       dataLength={result.length}
                       next={handleLoadNext}

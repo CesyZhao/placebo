@@ -1,9 +1,13 @@
 import React from 'react';
+import styles from './style.module.scss';
 
 const Artist = (props: any) => {
-  const { index, data } = props;
+  const { item } = props;
   return (
-    <div style={{ height: '30px' }}>{index}</div>
+    <div className={`${styles.result} ${styles.artist}`}>
+      <div className={styles.avatar}><img src={item.picUrl} alt=""/> </div>
+      <div className={styles.artistName}>{item.name}</div>
+    </div>
   );
 };
 

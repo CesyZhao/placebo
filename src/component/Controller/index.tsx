@@ -1,12 +1,11 @@
-import React, { createRef, useCallback, useEffect, useMemo, useState } from 'react';
-import styles from "./styles.module.scss";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { switchMusic } from '../../store/module/controller';
-import { formatDuration } from "../../util/number";
-import { type AvailableAlbum, type AvailableMusic, ModeList, SpecialAlbum, SwitchDirection } from '../../defination/music';
-import placebo from '../../model/Placebo';
-import LazyImage from '../LazyImage';
-import { useUnmount } from 'ahooks';
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import styles from './styles.module.scss'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
+import { formatDuration } from '../../util/number'
+import { type AvailableAlbum, type AvailableMusic, Mode, ModeList, SpecialAlbum } from '../../defination/music'
+import placebo from '../../model/Placebo'
+import LazyImage from '../LazyImage'
+import { useUnmount } from 'ahooks'
 
 
 const Controller = () => {
@@ -144,6 +143,7 @@ const Controller = () => {
 					<div className={styles.controls}>
 						<i className={`iconfont ${liked ? 'icon-heart1' : 'icon-heart'}`} onClick={handleLikeMusic}></i>
 						{
+              // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 							!isPersonalFM && <i className={`iconfont ${currentModeIcon}`} onClick={switchMode}></i>
 						}
 						<span onClick={() => { placebo.screen.togglePanel(true); }}>LRC</span>

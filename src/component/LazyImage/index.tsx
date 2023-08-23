@@ -13,21 +13,22 @@ const LazyImage = (props: Props) => {
   const ref: any = useRef();
 
   useEffect(() => {
-    let url = props.url
+    let url = props.url;
     if (!props.url?.endsWith('?param=100y100')) {
-      url = url + '?param=100y100'
+      url = url + '?param=100y100';
     }
-    setUrl(url)
-  }, [props])
+    setUrl(url);
+  }, [props]);
 
   const onImageLoad = useCallback(() => {
     const { width } = ref.current;
-    setUrl(props.url.replace('100y100', `${width}y${width}`))
-  }, [ref, props])
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    setUrl(props.url.replace('100y100', `${width}y${width}`));
+  }, [ref, props]);
 
   return (
     <img ref={ref} alt="lazyImage" className={style.lazyImage} src={url} onLoad={onImageLoad} />
-  )
-}
+  );
+};
 
 export default LazyImage;
