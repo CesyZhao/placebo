@@ -28,8 +28,6 @@ const Search: FC = () => {
   const [currentType, setCurrentType] = useState(SearchTypeList[0].type);
   const [lastType, setLastType] = useState<SearchType>(SearchTypeList[0].type);
 
-  const inputRef: any = useRef<HTMLElement>();
-
   const [result, setResult] = useState<any[]>([]);
   const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);

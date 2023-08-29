@@ -33,8 +33,6 @@ const Home = () => {
 		}
 	});
 
-	console.log(placebo.music.currentActiveAlbum);
-
 	const [currentIndex, setCurrentIndex] = useState(placebo.music.currentActiveAlbum);
 	const getClassName = (index: number) => {
 		if (currentIndex === index) {
@@ -86,9 +84,12 @@ const Home = () => {
 				}
 			</div>
 			<div className={styles.currentAlbum}>
-				<div className={styles.name}>{ currentAlbum.name }</div>
+				<div className={styles.name}>
+          { currentAlbum.name }
+          <p className={styles.fakeName}><span>{ currentAlbum.name }</span></p>
+        </div>
 				<div className={styles.info}>
-					<span> <span className={styles.number}>{humanNumber(currentAlbum.playCount)}</span> PLAY COUNTS</span>
+					<span> <span className={styles.number}>{humanNumber(currentAlbum.playCount)}</span> PLAYED</span>
 					<span> <span className={styles.number}>{humanNumber(currentAlbum.trackCount)}</span>  TRACKS</span>
 				</div>
 				<div className={styles.buttons}>

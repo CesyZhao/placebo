@@ -14,7 +14,8 @@
 		cursor: pointer;
 		z-index: 222;
 		text-align: center;
-		&:hover{
+    animation: shining ease-in-out 2s infinite alternate;
+    &:hover{
 			border: 1px solid #ddd;
 			color: #aaa;
 		}
@@ -23,6 +24,7 @@
 		}
 		&.nextButton{
 			right: 12px;
+
 		}
 	}
 	.albumsWrapper {
@@ -48,7 +50,7 @@
 		cursor: pointer;
 		transition: all ease-in-out .2s;
 		display: none;
-		box-shadow: 0 10px 20px -10px #ccc;
+		box-shadow: 0 10px 20px -10px #aaa;
 		&.current, &.prev, &.prev2, &.next{
 			display: flex;
 		}
@@ -95,7 +97,15 @@
 			-webkit-box-orient: vertical;
 			word-break: break-all;
 			-webkit-line-clamp: 3;
+      position: relative;
 		}
+    .fakeName {
+      position: absolute;
+      left: 0;
+      top: 0;
+      padding: 0;
+      margin: 0;
+    }
 		.info {
 			margin-bottom: 48px;
 			color: #aaa;
@@ -113,4 +123,17 @@
 			display: flex;
 		}
 	}
+}
+
+@keyframes shining {
+  100% {
+    border: 1px solid #ddd;
+    color: #aaa;
+  }
+}
+
+@property --p {
+  syntax: '<percentage>';
+  initial-value: 0%;
+  inherit: false;
 }

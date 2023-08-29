@@ -64,7 +64,7 @@
       margin-bottom: 12px;
     }
     .playCount {
-      font-size: 12px;
+      font-size: 10px;
     }
   }
   .creator{
@@ -98,9 +98,9 @@
   }
   .number {
     color: $color-normal;
-    font-size: 14px;
+    font-size: 12px;
     &:nth-of-type(2) {
-      margin-left: 12px;
+      margin-left: 8px;
     }
   }
   .counts{

@@ -9,7 +9,7 @@ export interface AppState {
 
 const initialState: AppState = {
   showPanel: false,
-  showSearch: true
+  showSearch: false
 };
 
 
