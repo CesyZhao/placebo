@@ -29,5 +29,5 @@ export const getUserPlaylist = async (uid: number) => {
 
 export const getPersonalFM = async (): Promise<FMResponse> => {
   const timestamp = new Date().getTime();
-  return await http.get(`/personal_fm?timestamp=${timestamp}`,  { rawData: true } as RequestConfig);
+  return await http.get(`/personal_fm?timestamp=${timestamp}`,  { rawData: true, needAuth: true } as RequestConfig);
 };

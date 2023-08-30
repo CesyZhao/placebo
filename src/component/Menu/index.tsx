@@ -34,7 +34,7 @@ const Menu = () => {
 
 
 
-	const handleMenuClick = useCallback((e: any, menu: any) => {
+	const handleMenuClick = useCallback(async (e: any, menu: any) => {
 		if (menu.path === MenuPathMap.get(MenuEnum.FM)) {
 			e.preventDefault();
 			if (currentAlbum.id === SpecialAlbum.FM) {
@@ -43,7 +43,7 @@ const Menu = () => {
 				}
 				placebo.screen.togglePanel(true);
 			} else {
-				placebo.music.getPersonalFM();
+				await placebo.music.getPersonalFM();
 				placebo.screen.togglePanel(true);
 			}
 		}
