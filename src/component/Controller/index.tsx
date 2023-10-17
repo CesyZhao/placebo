@@ -83,10 +83,10 @@ const Controller = () => {
 	useEffect(() => {
 		setCurrentTime(0);
 		setType(0);
-		// placebo.music.playMusicById(music.id)
-		// 	.then(() => {
-		// 		setType(1);
-		// 	});
+		placebo.music.playMusicById(music.id)
+			.then(() => {
+				setType(1);
+			});
 	}, [music]);
 
 	useEffect(() => {
@@ -136,7 +136,7 @@ const Controller = () => {
 						</div>
 					</div>
 					<div className={styles.ops}>
-						<i className={`iconfont icon-ios-rewind ${isPersonalFM ? styles.hidden : ''}`} onClick={() => { placebo.music.prev(); }}></i>
+						<i className={`iconfont icon-ios-rewind ${isPersonalFM ? styles.disabled : ''}`} onClick={() => { placebo.music.prev(); }}></i>
 						<i className={`iconfont ${playing ? 'icon-ios-pause' : 'icon-iosplay'}`} onClick={onPause}></i>
 						<i className="iconfont icon-ios-fastforward" onClick={handleNext}></i>
 					</div>

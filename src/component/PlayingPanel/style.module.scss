@@ -153,3 +153,8 @@ canvas{
 		}
 	}
 }
+
+.disabled {
+  color: #777;
+  pointer-events: none;
+}

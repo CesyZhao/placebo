@@ -5,7 +5,7 @@ import {playingMusic} from "../../store/module/controller";
 import {CSSTransition} from "react-transition-group";
 import Player from "../Controller/Player";
 import styles from "./style.module.scss";
-import {SwitchDirection} from "../../defination/music";
+import { AvailableAlbum, SpecialAlbum, SwitchDirection } from '../../defination/music'
 import {Wave} from "../../util/canvas";
 import {useMount} from "ahooks";
 import Lyric from "../Lyric";
@@ -17,11 +17,18 @@ const CANVAS_WIDTH = 400;
 const CANVAS_HEIGHT = 548;
 const PlayingPanel = () => {
 
+  const { currentAlbum: currentAlbumSelector } = placebo.music;
+
   const music = useAppSelector(playingMusic) || {};
 	const playing = useAppSelector(placebo.music.playing);
 	const showPlayingPanel: boolean = useAppSelector(placebo.screen.showPanel);
 	const [lyric, setLyric] = useState('');
 	const [translatedLyric, setTranslatedLyric] = useState('');
+
+  const currentAlbum = useAppSelector<AvailableAlbum>(currentAlbumSelector) || {};
+  const isPersonalFM = useMemo(() => {
+    return currentAlbum.id === SpecialAlbum.FM;
+  }, [currentAlbum]);
 
 	const dismiss = useCallback(() => {
 		placebo.screen.togglePanel(false);
@@ -97,7 +104,7 @@ const PlayingPanel = () => {
 	                      {/*  // this.state.mode === '歌词模式' && */}
 	                      {/* } */}
 						    {/* <i className={`iconfont ${favorites.get(song.id) ? 'icon-iosheart' : 'icon-iosheartoutline'}`} onClick={() => this.likeSong(song)}></i> */}
-						    <i className="iconfont icon-ios-rewind" onClick={() => { placebo.music.prev(); }}></i>
+						    <i className={`iconfont icon-ios-rewind ${isPersonalFM ? styles.disabled : ''}`} onClick={() => { placebo.music.prev(); }}></i>
 						    <i className={`iconfont ${playing ? 'icon-ios-pause' : 'icon-iosplay'}`} onClick={() => { placebo.music.switchPlayingStatus(); }}></i>
 						    <i className="iconfont icon-ios-fastforward" onClick={() => { placebo.music.next(); }}></i>
 	                      {/* <Link to="/comment" onClick={this.dismiss}><i className="iconfont icon-aui-icon-comment"></i></Link> */}

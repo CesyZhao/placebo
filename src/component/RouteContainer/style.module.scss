@@ -5,7 +5,7 @@
 	position: relative;
 	box-sizing: border-box;
 	overflow: hidden;
-	background: linear-gradient(to right, #ffffff 0%, #ccc calc(35% - 4px), #ccc calc(35% - 4px), #fff 95%, #fff 100%) padding-box, repeating-linear-gradient(-45deg, #aaa 0, #ccc .25em, white 0, white .75em);
+  background: linear-gradient(to right, #ffffff 0%, #ffffff calc(35% - 4px), rgb(244, 243, 243) calc(35% - 4px), rgb(244, 243, 243) 100%) padding-box, repeating-linear-gradient(-45deg, #aaa 0, #ccc .25em, white 0, white .75em);
 	color: #333;
 }
 .content {
