@@ -10,6 +10,7 @@ const Music = (props: any) => {
   return (
     music
     ? <div className={styles.result}>
+        <img src={music.album.picUrl} alt=""/>
         <div className={styles.musicName}>{music.name}</div>
         <div className={styles.musicArtist}>{getArtistNames(music.artists)}</div>
         <div>{formatDuration(music.duration)}</div>

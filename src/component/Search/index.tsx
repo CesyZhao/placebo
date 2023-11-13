@@ -100,7 +100,7 @@ const Search: FC = () => {
               </div>
               <div className={styles.scrollWrapper}>
                 {
-                  !searching && result.length
+                  result.length
                     ?  <InfiniteScroll
                       dataLength={result.length}
                       next={handleLoadNext}

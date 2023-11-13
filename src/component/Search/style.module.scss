@@ -68,14 +68,18 @@
 
 .result {
   padding: 0 24px;
-  height: 30px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin: 8px 0;
+  img {
+    width: 36px;
+    height: 36px;
+  }
 }
 
 .musicName {
-  width: 45%;
+  width: 40%;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

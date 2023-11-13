@@ -1,9 +1,14 @@
 import React from 'react';
+import styles from './style.module.scss'
 
 const Playlist = (props: any) => {
-  const { index, data } = props;
+  const { item } = props;
   return (
-    <div style={{ height: '30px' }}>{index}</div>
+    <div className={`${styles.result} ${styles.playlist}`}>
+
+      <div>{item.name}</div>
+      <div>{item.trackCount} TRACKS</div>
+    </div>
   );
 };
 
