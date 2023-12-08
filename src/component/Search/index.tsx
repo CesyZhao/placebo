@@ -75,7 +75,17 @@ const Search: FC = () => {
     return totalCount > result.length;
   }, [result, totalCount]);
 
-  const nodeRef = useRef(null);
+  const nodeRef: any = useRef(null);
+
+  useEffect(() => {
+    if (showSearch) {
+      document.body.addEventListener('click', (e) => {
+        if (e.target !== nodeRef.current && !nodeRef.current?.contains(e.target)) {
+          placebo.screen.toggleSearch(false);
+        }
+      });
+    }
+  }, [showSearch]);
 
   return (
      <CSSTransition nodeRef={nodeRef} in={showSearch} timeout={200} unmountOnExit classNames="search-panel">
