@@ -1,5 +1,5 @@
 import { type RootState, store } from '../store/store';
-import { setBackwardsStatus, togglePanel, toggleSearch } from '../store/module/app'
+import { setBackwardsStatus, togglePanel, toggleSearch } from '../store/module/app';
 import {
   playingAlbum,
   switchMusic,

@@ -5,12 +5,12 @@ import {type Profile, type UnionProfile} from "../../defination/user";
 
 export interface UserState {
 	userProfile: Profile,
-	userFavorites: number[]
+	userFavorites: number[],
 }
 
 const initialState: UserState = {
 	userProfile: {} as Profile,
-	userFavorites: []
+	userFavorites: [],
 };
 
 

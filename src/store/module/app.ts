@@ -11,7 +11,7 @@ export interface AppState {
 const initialState: AppState = {
   showPanel: false,
   showSearch: false,
-  backwardsStatus: false
+  backwardsStatus: false,
 };
 
 
