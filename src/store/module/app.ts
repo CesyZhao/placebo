@@ -5,15 +5,17 @@ import { RootState } from '../store';
 export interface AppState {
   showPanel: boolean;
   showSearch: boolean;
+  backwardsStatus: boolean;
 }
 
 const initialState: AppState = {
   showPanel: false,
-  showSearch: false
+  showSearch: false,
+  backwardsStatus: false
 };
 
 
-export const userSlice = createSlice({
+export const appSlice = createSlice({
   name: 'app',
   initialState,
   // The `reducers` field lets us define reducers and generate associated actions
@@ -24,10 +26,14 @@ export const userSlice = createSlice({
 
     toggleSearch(state, action: PayloadAction<boolean>) {
       state.showSearch = action.payload;
+    },
+
+    setBackwardsStatus(state, action: PayloadAction<boolean>) {
+      state.backwardsStatus = action.payload;
     }
   },
 });
 
-export const { togglePanel, toggleSearch } = userSlice.actions;
+export const { togglePanel, toggleSearch, setBackwardsStatus } = appSlice.actions;
 
-export default userSlice.reducer;
+export default appSlice.reducer;

@@ -11,6 +11,8 @@ import User from "../User";
 import { TransitionGroup, CSSTransition, SwitchTransition } from 'react-transition-group';
 import Login from '../Login';
 import Search from '../Search';
+import { useAppSelector } from '../../store/hooks'
+import placebo from '../../model/Placebo'
 
 
 
@@ -26,9 +28,15 @@ const RouteContainer = () => {
 
 	const location = useLocation();
 
+  const backwardsStatus: boolean = useAppSelector(placebo.screen.backwardsStatus);
+
 	const currentOutlet = useOutlet();
+
 	const { nodeRef } = routes.find((route) => route.path === location.pathname) ?? {} as any;
 
+  const handlePageEntered = () => {
+    placebo.screen.setBackwardsStatus(false);
+  };
 
 	return (
 		<div className={styles.routeContainer}>
@@ -39,8 +47,9 @@ const RouteContainer = () => {
 						key={location.pathname}
 						nodeRef={nodeRef}
 						timeout={300}
-						classNames="fade"
+						classNames={`${backwardsStatus ? 'back' : 'fade'}`}
 						unmountOnExit
+            onEntered={handlePageEntered}
 					>
 						{(state) => (
 							<div ref={nodeRef} className={styles.page}>

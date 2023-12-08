@@ -101,13 +101,13 @@ const Search: FC = () => {
               <div className={styles.scrollWrapper}>
                 {
                   result.length
-                    ?  <InfiniteScroll
-                      dataLength={result.length}
-                      next={handleLoadNext}
-                      hasMore={true}
-                      height={240}
-                      loader={<Loading />}
-                    >
+                    ? <InfiniteScroll
+                        dataLength={result.length}
+                        next={handleLoadNext}
+                        hasMore={true}
+                        height={240}
+                        loader={<Loading />}
+                      >
                       {
                         result.map(r => {
                           const Component = itemMap.get(currentType);

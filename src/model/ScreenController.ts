@@ -20,6 +20,14 @@ class ScreenController {
     return this.placebo.state.showSearch;
   }
 
+  get backwardsStatus() {
+    return this.placebo.state.backwardsStatus;
+  }
+
+  setBackwardsStatus(status: boolean) {
+    this.placebo.state.backwardsStatus = status;
+  }
+
   togglePanel(visible: boolean) {
     this.placebo.state.showPanel = visible;
   }

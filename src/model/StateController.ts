@@ -1,5 +1,5 @@
 import { type RootState, store } from '../store/store';
-import { togglePanel, toggleSearch } from '../store/module/app';
+import { setBackwardsStatus, togglePanel, toggleSearch } from '../store/module/app'
 import {
   playingAlbum,
   switchMusic,
@@ -62,6 +62,14 @@ class StateController {
 
   set showSearch(visible: any) {
     store.dispatch(toggleSearch(visible));
+  }
+
+  get backwardsStatus() {
+    return (state: RootState) => state.app.backwardsStatus;
+  }
+
+  set backwardsStatus(status: any) {
+    store.dispatch(setBackwardsStatus(status));
   }
 
   get userProfile() {

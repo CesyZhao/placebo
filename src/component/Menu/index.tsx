@@ -55,6 +55,7 @@ const Menu = () => {
 	}, []);
 
 	const back = useCallback(() => {
+    placebo.screen.setBackwardsStatus(true);
 		move(-1);
 	}, []);
 
