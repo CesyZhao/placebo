@@ -79,11 +79,14 @@ const Search: FC = () => {
 
   useEffect(() => {
     if (showSearch) {
-      document.body.addEventListener('click', (e) => {
+      const handler = (e: MouseEvent) => {
+        console.log(e.target)
         if (e.target !== nodeRef.current && !nodeRef.current?.contains(e.target)) {
           placebo.screen.toggleSearch(false);
+          document.body.removeEventListener('click', handler);
         }
-      });
+      };
+      document.body.addEventListener('click', handler);
     }
   }, [showSearch]);
 
