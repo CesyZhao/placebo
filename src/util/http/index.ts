@@ -33,12 +33,13 @@ instance.interceptors.response.use(
   (resp) => {
     const { data, config } = resp;
     const { rawData } = config as RequestConfig;
-    // if (data.code !== 200) {
-    // 	return Promise.reject(rawData ? data : data.data);
-    // }
     return rawData ? data : data.data;
   },
   async (error) => {
+    const { response } = error;
+    if (response.status === 406) {
+      window.location.href = '/login';
+    }
     return await Promise.reject(error);
   },
 );

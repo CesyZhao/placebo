@@ -80,7 +80,6 @@ const Search: FC = () => {
   useEffect(() => {
     if (showSearch) {
       const handler = (e: MouseEvent) => {
-        console.log(e.target)
         if (e.target !== nodeRef.current && !nodeRef.current?.contains(e.target)) {
           placebo.screen.toggleSearch(false);
           document.body.removeEventListener('click', handler);
