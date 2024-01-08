@@ -77,7 +77,9 @@ const Home = () => {
 						return (
               // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
 							<div key={album.id} className={`${styles.album} ${getClassName(index)}`}>
-								<img src={album.picUrl} alt=""/>
+								<div className={styles.albumInner}>
+                  <img src={album.picUrl} alt=""/>
+                </div>
 							</div>
 						);
 					})
