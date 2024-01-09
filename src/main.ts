@@ -50,7 +50,7 @@ function createWindow() {
     fullscreenable: false,
     transparent: true,
     width: 864,
-    height: 548
+    height: 508
   };
   mainWindow = new BrowserWindow(windowConfig);
   mainWindow.once('ready-to-show', () => {

@@ -14,7 +14,7 @@ import LazyImage from '../LazyImage';
 
 
 const CANVAS_WIDTH = 400;
-const CANVAS_HEIGHT = 548;
+const CANVAS_HEIGHT = 508;
 const PlayingPanel = () => {
 
   const { currentAlbum: currentAlbumSelector } = placebo.music;

@@ -1,16 +1,15 @@
 .contentWrapper {
 	height: 100%;
 	padding: 24px;
+  display: flex;
+  align-items: center;
 	.switchButton {
-		position: absolute;
-		top: 50%;
 		width: 32px;
 		height: 32px;
 		line-height: 32px;
 		border-radius: 50%;
 		border: 1px solid #efefef;
 		color: #ddd;
-		transform: translateY(-50%);
 		cursor: pointer;
 		z-index: 222;
 		text-align: center;
@@ -24,18 +23,12 @@
 		}
 		&.nextButton{
 			right: 12px;
-
 		}
 	}
 	.albumsWrapper {
 		position: relative;
-		left: 36px;
-		right: 0;
-		top: 50%;
-		bottom: 0;
 		width: calc(51% - 36px);
 		height: 85%;
-		transform: translateY(-50%);
 		overflow: hidden;
 	}
 	.album {
@@ -86,19 +79,11 @@
 		}
 	}
 	.currentAlbum {
-		position: absolute;
-		top: 55%;
-		right: 36px;
-		height: calc(60% - 36px);
-		transform: translateY(-50%);
 		width: calc(50% - 36px);
 		padding: 0 24px;
 		text-align: left;
 		box-sizing: border-box;
 		z-index: 222;
-		>div {
-			position: absolute;
-		}
 		.name{
 			font-size: 32px;
 			margin-bottom: 48px;
@@ -118,9 +103,8 @@
       margin: 0;
     }
 		.info {
-			margin-bottom: 48px;
+			margin: 24px 0;
 			color: #aaa;
-			top: 55%;
 			&>span{
 				margin-right: 12px;
 			}
@@ -130,7 +114,6 @@
 			}
 		}
 		.buttons{
-			top: 70%;
 			display: flex;
 		}
 	}
