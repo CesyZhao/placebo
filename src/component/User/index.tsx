@@ -49,8 +49,9 @@ const User = () => {
 
   const getVip = useCallback(async () => {
     try {
-      const { redVipDynamicIconUrl } = await getVipInfo();
-      setVipLevelUrl(redVipDynamicIconUrl);
+      const res = await getVipInfo();
+      const { dynamicIconUrl } = res.associator;
+      setVipLevelUrl(dynamicIconUrl);
     } catch (e) {
       console.log(e);
     }

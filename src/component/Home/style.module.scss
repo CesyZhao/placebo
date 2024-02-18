@@ -1,6 +1,6 @@
 .contentWrapper {
 	height: 100%;
-	padding: 24px;
+	padding: 24px 12px;
   display: flex;
   align-items: center;
 	.switchButton {
@@ -17,12 +17,6 @@
     &:hover{
 			border: 1px solid #ddd;
 			color: #aaa;
-		}
-		&.prevButton{
-			left: 12px;
-		}
-		&.nextButton{
-			right: 12px;
 		}
 	}
 	.albumsWrapper {
@@ -124,10 +118,4 @@
     border: 1px solid #ddd;
     color: #aaa;
   }
-}
-
-@property --p {
-  syntax: '<percentage>';
-  initial-value: 0%;
-  inherit: false;
 }
