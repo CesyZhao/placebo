@@ -43,6 +43,7 @@ const Search: FC = () => {
   const handleClear = () => {
     setKeyword('');
     setPage(1);
+    placebo.screen.toggleSearch(false);
   };
 
   useEffect(debounce(() => {
@@ -75,18 +76,23 @@ const Search: FC = () => {
     return totalCount > result.length;
   }, [result, totalCount]);
 
+  const switchType = (type: SearchType) => {
+    setResult([]);
+    setCurrentType(type);
+  };
+
   const nodeRef: any = useRef(null);
 
   useEffect(() => {
-    if (showSearch) {
-      const handler = (e: MouseEvent) => {
-        if (e.target !== nodeRef.current && !nodeRef.current?.contains(e.target)) {
-          placebo.screen.toggleSearch(false);
-          document.body.removeEventListener('click', handler);
-        }
-      };
-      document.body.addEventListener('click', handler);
-    }
+    // if (showSearch) {
+    //   const handler = (e: MouseEvent) => {
+    //     if (e.target !== nodeRef.current && !nodeRef.current?.contains(e.target)) {
+    //       placebo.screen.toggleSearch(false);
+    //       document.body.removeEventListener('click', handler);
+    //     }
+    //   };
+    //   document.body.addEventListener('click', handler);
+    // }
   }, [showSearch]);
 
   return (
@@ -94,7 +100,7 @@ const Search: FC = () => {
         <div ref={nodeRef} className={styles.searchPanel}>
           <div className={styles.inputWrapper}>
             <input type="text" placeholder="Search..." value={keyword} autoFocus onInput={handleSearch}/>
-            { keyword && <i className="iconfont icon-close" onClick={handleClear}></i> }
+            <i className="iconfont icon-close" onClick={handleClear}></i>
           </div>
           <CSSTransition in={!!keyword} timeout={100} unmountOnExit classNames="results">
             <div className={styles.results}>
@@ -105,7 +111,7 @@ const Search: FC = () => {
                       <div
                         key={t.type}
                         className={`${styles.category} ${currentType === t.type ? styles.active : ''}`}
-                        onClick={() => { setCurrentType(t.type); }}> {t.name} </div>
+                        onClick={() => { switchType(t.type); }}> {t.name} </div>
                     );
                   })
                 }
@@ -117,7 +123,7 @@ const Search: FC = () => {
                         dataLength={result.length}
                         next={handleLoadNext}
                         hasMore={true}
-                        height={240}
+                        height={440}
                         loader={<Loading />}
                       >
                       {
